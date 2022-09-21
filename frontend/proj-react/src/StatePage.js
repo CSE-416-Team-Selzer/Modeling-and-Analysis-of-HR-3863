@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
+import StateMap from "./StateMap.js";
 
 function StatePage() {
     const params = useParams();
@@ -29,7 +30,9 @@ function StatePage() {
             <h1 style={{textAlign: 'center'}}>Welcome to {styledStateName}</h1>
             <Container className="text-center">
                 <Row className="gx-3">
-                    {map}
+                    <Col>
+                        <StateMap/>
+                    </Col>
                     <Col>
                         <Card className="bg-dark text-light">
                             <Card.Body>
