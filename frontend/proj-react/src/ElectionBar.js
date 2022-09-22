@@ -18,12 +18,23 @@ class ElectionBar extends React.Component {
                             <h2 className="lead">SMD Election</h2>
                         </Col>
                         <Col>
+                        <Accordion>
+                          <Accordion.Item eventKey="0">
+                            <Accordion.Header>How are these votes tabulated?</Accordion.Header>
+                            <Accordion.Body>
+                              For the SMD election, these votes are the typical 'first past the post' votes, where every vote is tabulated individually. For the MMD election, the votes listed
+                              are the ones that have 'waterfalled' from people's second and third choices. As a result, there are more votes represented on the MMD side than the SMD side.
+                            </Accordion.Body>
+                          </Accordion.Item>
+                        </Accordion>
+                        </Col>
+                        <Col>
                             <h2 className="lead">MMD Simulated Election</h2>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <Representative name="Generic Name" flavor="Middle Eastern Republican Representative" img = "https://randomuser.me/api/portraits/men/23.jpg"/> 
+                            <Representative name="Muhammad Amin" flavor="Middle Eastern Republican Representative" img = "https://randomuser.me/api/portraits/men/23.jpg"/> 
                             <br/>
                             <Button variant="dark" size="sm">Show More</Button>
                         </Col>
@@ -34,14 +45,14 @@ class ElectionBar extends React.Component {
                         <ApexBarChartTwo/>
                         </Col>
                         <Col>
-                            <Representative name="Generic Name" flavor="White Democratic Representative" img="https://randomuser.me/api/portraits/men/10.jpg"/>
+                            <Representative name="Paul Whistler" flavor="White Democratic Representative" img="https://randomuser.me/api/portraits/men/10.jpg"/>
                             <br/>
                             <Button variant="dark" size="sm">Show More</Button>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <Representative name="Generic Name" flavor="White Democratic Representative" img = "https://randomuser.me/api/portraits/men/32.jpg"/> 
+                            <Representative name="Steven Miller" flavor="White Democratic Representative" img = "https://randomuser.me/api/portraits/men/32.jpg"/> 
                             <br/>
                             <Button variant="dark" size="sm">Show More</Button>
                         </Col>
@@ -53,7 +64,7 @@ class ElectionBar extends React.Component {
                         <ApexBarChartTwo/>
                         </Col>
                         <Col>
-                            <Representative name="Generic Name" flavor="Hispanic Democratic Representative" img="https://randomuser.me/api/portraits/men/12.jpg"/>
+                            <Representative name="George Estevez" flavor="Hispanic Democratic Representative" img="https://randomuser.me/api/portraits/men/12.jpg"/>
                             <br/>
                             <Button variant="dark" size="sm">Show More</Button>
                         </Col>
@@ -140,7 +151,7 @@ class ApexBarChartTwo extends React.Component {
     this.state = {
     
       series: [{
-        data: [300, 130, 248, 150]
+        data: [700, 330, 448, 350]
       }],
       options: {
         chart: {
