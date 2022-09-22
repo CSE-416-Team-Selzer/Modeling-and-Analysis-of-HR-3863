@@ -1,23 +1,27 @@
-import { React, useState, useMemo }from "react";
+import { React, useState }from "react";
+import { useLocation } from 'react-router-dom';
 import { MapContainer, TileLayer, useMap, Popup, Marker, GeoJSON } from 'react-leaflet'
+import { useNavigate } from "react-router-dom";
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import StateMap from "./StateMap.js";
 const states = require('./geoJSON/us-states.json');
+const az = require('./geoJSON/az.json')
+const tx = require('./geoJSON/tx.json')
+const ut = require('./geoJSON/ut.json')
 
 const position = [39, -98];
 
 function SetBoundsStates() {
     const [bounds, setBounds] = useState()
-    const map = useMap()
-  
-    const innerHandlers = useMemo(
-      () => ({
-        click(e) {
-            console.log(e.target);
-            map.setView([e.latlng.lat, e.latlng.lng], 6);
-        },
-      }),
-      [map],
-    )
+    
+    const map = useMap();
+    
+    let navigate = useNavigate(); 
+    const routeChange = (state) =>{ 
+      if(state != window.location.pathname)
+        navigate(state);
+    }
 
     function highlightState(e) {
         var layer = e.target;
@@ -44,6 +48,10 @@ function SetBoundsStates() {
 
     function zoomToState(e) {
         map.fitBounds(e.target.getBounds());
+
+        let state = e.target.feature.properties.name.toLowerCase();
+        
+        routeChange(state);
     }
 
     function onEachFeature(feature, layer) {
@@ -67,6 +75,8 @@ function SetBoundsStates() {
 
 
 function HomeMap() {
+    let location = useLocation();
+
     return(
         <MapContainer 
             style={{ height: 500, width: 1000 }} 
@@ -74,7 +84,7 @@ function HomeMap() {
             zoom={2.5} 
             scrollWheelZoom={true}
         >
-            <SetBoundsStates />
+           { location.pathname ? <SetBoundsStates /> : <StateMap stateName = {location.pathname}/> }
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
