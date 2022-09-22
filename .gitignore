@@ -1,7 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 frontend/node_modules/
-frontend/index.html
 frontend/package-lock.json
 frontend/package.json
 preprocessing/raw_data
