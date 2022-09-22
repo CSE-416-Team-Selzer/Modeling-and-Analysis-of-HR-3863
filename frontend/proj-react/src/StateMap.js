@@ -5,19 +5,34 @@ const states = require('./geoJSON/us-states.json');
 const az = require('./geoJSON/az.json')
 const tx = require('./geoJSON/tx.json')
 const ut = require('./geoJSON/ut.json')
+const azs = require('./geoJSON/azs.json')
+const azm = require('./geoJSON/azm.json')
+const txs = require('./geoJSON/txs.json')
+const txm = require('./geoJSON/txm.json')
+const uts = require('./geoJSON/uts.json')
+const utm = require('./geoJSON/utm.json')
 
 const position = [39, -98];
 
-function resolveStateName(state) {
+
+function resolveStateName(state, smdOpen) {
+  console.log(state)
+  console.log(smdOpen)
   switch(state.toLowerCase()) {
     case 'arizona':
-      return az;
+      if(smdOpen)
+        return azs;
+      return azm
     case 'texas':
-      return tx;
+      if(smdOpen)
+        return txs;
+      return txm
     case 'utah':
-      return ut;
+      if(smdOpen)
+        return uts;
+      return utm
     default:
-      return states
+      return az
   }
 }
 
@@ -68,7 +83,8 @@ function SetBoundsStates(props) {
             color: 'red',
         });
     
-       
+        layer.openPopup();
+        
         layer.bringToFront();
     }
 
@@ -79,7 +95,8 @@ function SetBoundsStates(props) {
             color: 'blue',
         });
     
-       
+        layer.closePopup();
+        
         layer.bringToFront();
     }
 
@@ -89,6 +106,9 @@ function SetBoundsStates(props) {
     }
 
     function onEachFeature(feature, layer) {
+      console.log(feature.properties)
+        layer.bindPopup('District: ' + feature.properties.district.toString())
+
         layer.on({
             mouseover: highlightState,
             mouseout: resetHighlight,
@@ -99,16 +119,18 @@ function SetBoundsStates(props) {
     return (
       <>
         <GeoJSON
-        data={resolveStateName(props.stateName)}
+        data={resolveStateName(props.stateName, props.smdOpen)}
         onEachFeature= {onEachFeature}
         pathOptions={ {color: 'blue'}}
-        />
+        >
+        </GeoJSON>
       </>
     )
   }
 
 
 function StateMap(props) {
+    console.log(props.smdOpen)
     return(
         <MapContainer 
             style={{ height: 500, width: 800 }} 
@@ -116,7 +138,7 @@ function StateMap(props) {
             zoom={resolveZoom(props.stateName)} 
             scrollWheelZoom={true}
         >
-            <SetBoundsStates stateName = {props.stateName}/>
+            <SetBoundsStates stateName = {props.stateName} smdOpen = {props.smdOpen}/>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

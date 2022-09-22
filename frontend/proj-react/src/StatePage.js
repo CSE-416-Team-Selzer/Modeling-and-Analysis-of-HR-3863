@@ -31,8 +31,8 @@ class StatePage extends React.Component {
                 <h1 style={{textAlign: 'center'}}>Welcome to {styledStateName}</h1>
                 <Container fluid className="text-center w-100 pb-1">
                     <Row className="gx-3 w-100">
-                        <Col xs={9}>
-                            <StateMap stateName = {this.state.stateName}/>
+                        <Col xs={9} key = {this.state.smdOpen}>
+                            <StateMap stateName = {this.state.stateName} smdOpen = {this.state.smdOpen}/>
                         </Col>
                         <Col>
                             <Card className="bg-dark text-light">
