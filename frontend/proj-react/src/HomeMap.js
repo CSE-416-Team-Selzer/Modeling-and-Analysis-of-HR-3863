@@ -79,7 +79,7 @@ function HomeMap() {
 
     return(
         <MapContainer 
-            style={{ height: 500, width: 1000 }} 
+            style={{ height: 800, width: "100%" }} 
             center={position} 
             zoom={2.5} 
             scrollWheelZoom={true}

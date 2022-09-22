@@ -133,7 +133,7 @@ function StateMap(props) {
     console.log(props.smdOpen)
     return(
         <MapContainer 
-            style={{ height: 500, width: 800 }} 
+            style={{ height: 500, width: "100%" }} 
             center={resolvePosition(props.stateName)} 
             zoom={resolveZoom(props.stateName)} 
             scrollWheelZoom={true}
