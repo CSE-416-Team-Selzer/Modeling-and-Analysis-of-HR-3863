@@ -9,6 +9,8 @@ import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import StateMap from "./StateMap.js";
 import ElectionBar from "./ElectionBar.js";
+import Chart from 'react-apexcharts';
+import SpecificElection from "./SpecificElection.js";
 
 class StatePage extends React.Component {
     constructor(props){
@@ -16,9 +18,6 @@ class StatePage extends React.Component {
         this.state = {
             stateName: "",
             smdOpen: true,
-            statsCarousel: 0,
-            smdCompCarousel: 0,
-            mmdCompCarousel: 0,
         }
         this.state.stateName = this.props.stateName;
         console.log(this.state.stateName);
@@ -62,50 +61,159 @@ class StatePage extends React.Component {
                     </Row>
                 </Container>
                 <Container className="text-center">
-                    <Row className="text-center">
-                        <h2>Interesting Statistics</h2>
+                    <Row>
                         <Col>
-                        <div>
-                            <img src={"images/example-" + (this.state.statsCarousel === 0 ? "political" : (this.state.statsCarousel === 1 ? "ethnic" : "other")) + ".png"} class="w-50" alt=""></img>
-                            <div class="d-none d-md-block">
-                                <h5>{(this.state.statsCarousel === 0 ? "Political" : (this.state.statsCarousel === 1 ? "Ethnic" : "Other")) + " Demographics"}</h5>
-                                <p>{this.state.statsCarousel === 0 ? "Demographics of political parties active in the region." : (this.state.statsCarousel === 1 ? "Demographics of the ethnic composition of the state." : "Other interesting demographics; Here pictured are some fake numbers for 'Religiousness.'")}</p>
-                                <br></br>
-                            </div>
-                        </div>
-                        <Button variant="dark" onClick={() => this.setState((old) => ({statsCarousel: (old.statsCarousel+1)%3}))}>Next Statistic</Button>
+                            <h2>Demographics</h2>
+                        </Col>
+                        <Col>
+                            <h2>SMD/MMD Comparison</h2>
                         </Col>
                     </Row>
-                </Container>
-                <Container className="text-center pb-5">
-                    <Row className="text-center">
-                        <h2>SMD vs MMD Comparison</h2>
+                    <Row>
                         <Col>
-                        <div>
-                            <img src="images/example-whisker.jpg" class="w-50" alt=""></img>
-                            <div class="d-none d-md-block">
-                                <h5>{this.state.smdCompCarousel === 0 ? "Election Wins for a Party" : (this.state.smdCompCarousel === 1 ? "Ethnic Wins" : "Other Wins")}</h5>
-                                <p>{this.state.smdCompCarousel === 0 ? "Box and Whisker of election wins compared to supporters in that region." : (this.state.smdCompCarousel === 1 ? "Demographics of the ethnic composition of the state as compared to the winners of that demographic." : "Other interesting demographics; Here pictured are some fake numbers for 'Religiousness.'")}</p>
-                                <br></br>
-                            </div>
-                        </div>
-                        <Button variant="dark" size="sm" onClick={() => this.setState((old) => ({smdCompCarousel: (old.smdCompCarousel+1)%3}))}>Next Statistic</Button>
+                            <VertChart/>
                         </Col>
                         <Col>
-                        <div>
-                            <img src="images/example-whisker.jpg" class="w-50" alt=""></img>
-                            <div class="d-none d-md-block">
-                                <h5>{this.state.mmdCompCarousel === 0 ? "Election Wins for a Party" : (this.state.mmdCompCarousel === 1 ? "Ethnic Wins" : "Other Wins")}</h5>
-                                <p>{this.state.mmdCompCarousel === 0 ? "Box and Whisker of election wins compared to supporters in that region." : (this.state.mmdCompCarousel === 1 ? "Demographics of the ethnic composition of the state as compared to the winners of that demographic." : "Other interesting demographics; Here pictured are some fake numbers for 'Religiousness.'")}</p>
-                                <br></br>
-                            </div>
-                        </div>
-                        <Button variant="dark" size="sm" onClick={() => this.setState((old) => ({mmdCompCarousel: (old.mmdCompCarousel+1)%3}))}>Next Statistic</Button>
+                            <ComaprisonChart/>
                         </Col>
                     </Row>
                 </Container>
                 <ElectionBar/>
 
+            </div>
+        );
+    }
+}
+
+class ComaprisonChart extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            series: [
+                {
+                    type: 'boxPlot',
+                    data: [
+                        {
+                            x: 'Dem SMD',
+                            y: [54, 66, 69, 75, 88]
+                        },
+                        {
+                            x: 'Dem MMD',
+                            y: [30, 36, 49, 55, 68]
+                        },
+                        {
+                            x: 'Rep SMD',
+                            y: [43, 65, 69, 76, 81]
+                        },
+                        {
+                            x: 'Rep MMD',
+                            y: [44, 75, 79, 82, 87]
+                        },
+                        {
+                            x: 'Black SMD',
+                            y: [31, 39, 45, 51, 59]
+                        },
+                        {
+                            x: 'Black MMD',
+                            y: [35, 42, 47, 56, 62]
+                        },
+                        {
+                            x: 'White SMD',
+                            y: [39, 46, 55, 65, 71]
+                        },
+                        {
+                            x: 'White MMD',
+                            y: [29, 36, 45, 55, 61]
+                        },
+                        {
+                            x: 'Hispanic SMD',
+                            y: [29, 31, 35, 39, 44]
+                        },
+                        {
+                            x: 'Hispanic MMD',
+                            y: [34, 37, 40, 45, 50]
+                        },
+                    ]
+                }
+            ],
+            options: {
+                chart: {
+                    type: 'boxPlot',
+                    height: 350
+                },
+                title: {
+                    text: 'Votes Converted to Representation (%)',
+                    align: 'left'
+                },
+                plotOptions: {
+                    boxPlot: {
+                        colors: {
+                            upper: '#5C0000',
+                            lower: '#00A5A5'
+                        }
+                    }
+                }
+            },
+
+
+        };
+    }
+    render() {
+        return (
+            <div id="chart">
+                <Chart options={this.state.options} series={this.state.series} type="boxPlot" height={350} />
+            </div>
+        );
+    }
+}
+
+class VertChart extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            series: [{
+                name: '',
+                data: [130, 150, 200, 50, 75, 250, 40]
+            }],
+            options: {
+                chart: {
+                    type: 'bar',
+                    height: 350
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '90%',
+                        endingShape: 'rounded',
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ["transparent"]
+                },
+                xaxis: {
+                    categories: ['Democrat', 'Republican', 'White', 'Black', 'Hispanic', 'Religious', 'Areligious'],
+                },
+                yaxis: {
+                    title: {
+                        text: 'Thousands of People'
+                    }
+                },
+                fill: {
+                    opacity: 1,
+                    colors: ["#d42424", "#3232d1"]
+                },
+            },
+        };
+    }
+    render() {
+        return (
+            <div id="chart">
+                <Chart options={this.state.options} series={this.state.series} type="bar" height={350} />
             </div>
         );
     }

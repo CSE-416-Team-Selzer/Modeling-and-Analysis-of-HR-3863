@@ -7,8 +7,24 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import Chart from 'react-apexcharts';
+import SpecificElection from "./SpecificElection";
+import Representative from "./Representative";
 
 class ElectionBar extends React.Component {
+    constructor(props){
+      super(props);
+      this.state = {
+        candidateList: [
+          {name: "Muhammad Amin", flavor: "Middle Eastern Republican Representative", img: "https://randomuser.me/api/portraits/men/23.jpg"},
+          {name: "Paul Whistler", flavor: "White Democratic Representative", img: "https://randomuser.me/api/portraits/men/10.jpg"},
+          {name: "Steven Miller", flavor: "White Democratic Representative", img: "https://randomuser.me/api/portraits/men/32.jpg"},
+          {name: "George Estevez", flavor: "Hispanic Democratic Representative", img: "https://randomuser.me/api/portraits/men/12.jpg"}
+        ],
+        electionViewCandidate: null,
+        electionViewLetter: "S",
+      }
+      this.state.electionViewCandidate = this.state.candidateList[0];
+    }
     render(){
         return (
             <div className="text-center pt-2 pb-2 w-100">
@@ -34,7 +50,7 @@ class ElectionBar extends React.Component {
                     </Row>
                     <Row>
                         <Col>
-                            <Representative name="Muhammad Amin" flavor="Middle Eastern Republican Representative" img = "https://randomuser.me/api/portraits/men/23.jpg"/> 
+                            <Representative name={this.state.candidateList[0].name} flavor={this.state.candidateList[0].flavor} img ={this.state.candidateList[0].img}/> 
                             <br/>
                             <Button variant="dark" size="sm">Show More</Button>
                         </Col>
@@ -45,14 +61,14 @@ class ElectionBar extends React.Component {
                         <ApexBarChartTwo/>
                         </Col>
                         <Col>
-                            <Representative name="Paul Whistler" flavor="White Democratic Representative" img="https://randomuser.me/api/portraits/men/10.jpg"/>
+                            <Representative name={this.state.candidateList[1].name} flavor={this.state.candidateList[1].flavor} img={this.state.candidateList[1].img}/>
                             <br/>
                             <Button variant="dark" size="sm">Show More</Button>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <Representative name="Steven Miller" flavor="White Democratic Representative" img = "https://randomuser.me/api/portraits/men/32.jpg"/> 
+                            <Representative name={this.state.candidateList[2].name} flavor={this.state.candidateList[2].flavor} img ={this.state.candidateList[2].img}/> 
                             <br/>
                             <Button variant="dark" size="sm">Show More</Button>
                         </Col>
@@ -64,92 +80,62 @@ class ElectionBar extends React.Component {
                         <ApexBarChartTwo/>
                         </Col>
                         <Col>
-                            <Representative name="George Estevez" flavor="Hispanic Democratic Representative" img="https://randomuser.me/api/portraits/men/12.jpg"/>
+                            <Representative name={this.state.candidateList[3].name} flavor={this.state.candidateList[3].flavor} img={this.state.candidateList[3].img}/>
                             <br/>
                             <Button variant="dark" size="sm">Show More</Button>
                         </Col>
                     </Row>
                 </Container>
+                <SpecificElection rep={this.state.electionViewCandidate} s={this.state.electionViewLetter}/>
             </div>
         )
     }
 }
 
-class Representative extends React.Component{
-    construtor(props){
-        this.state={
-        }
-    }
-    componentDidMount(){
-        this.setState({randPort: 10})
-    }
-    render(){
-        return (
-            <div>
-                <div class="card-body text-center">
-                    <img src={this.props.img} alt="" className="rounded-circle mb-3 img-fluid"/>
-                    <h3 class="card-title">{this.props.name}</h3>
-                    <p class="card-text">{this.props.flavor}</p>
-                </div>
-            </div>
-        )
-    }
-}
 class ApexBarChartOne extends React.Component {
-    constructor(props) {
-      super(props);
+  constructor(props) {
+    super(props);
 
-      this.state = {
-      
-        series: [{
-          data: [200, 430, 448, 100]
-        }],
-        options: {
-          chart: {
-            type: 'bar',
-            width: "100%",
-            height: 100
-          },
-          plotOptions: {
-            bar: {
-              borderRadius: 4,
-              horizontal: true,
-            }
-          },
-          dataLabels: {
-            enabled: false
-          },
-          xaxis: {
-            categories: ['Democrat', 'Republican', 'White', 'Black',
-            ],
+    this.state = {
+
+      series: [{
+        data: [200, 430, 448, 100]
+      }],
+      options: {
+        chart: {
+          type: 'bar',
+          width: "100%",
+          height: 100
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            horizontal: true,
           }
         },
-      
-      
-      };
-    }
-
-  
-
-    render() {
-      return (
-        
-
-
-  <div id="chart">
-    <Chart options={this.state.options} series={this.state.series} type="bar" height={350} />
-    </div>
-
-);
-}
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          categories: ['Democrat', 'Republican', 'White', 'Black',
+          ],
+        }
+      },
+    };
+  }
+  render() {
+    return (
+      <div id="chart">
+        <Chart options={this.state.options} series={this.state.series} type="bar" height={350} />
+      </div>
+    );
+  }
 }
 
 class ApexBarChartTwo extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-    
       series: [{
         data: [700, 330, 448, 350]
       }],
@@ -175,24 +161,15 @@ class ApexBarChartTwo extends React.Component {
           reversed: true,
         }
       },
-    
-    
     };
   }
-
-
-
   render() {
     return (
-      
-
-
-<div id="chart">
-  <Chart options={this.state.options} series={this.state.series} type="bar" height={350} />
-  </div>
-
-);
-}
+      <div id="chart">
+        <Chart options={this.state.options} series={this.state.series} type="bar" height={350} />
+      </div>
+    );
+  }
 }
 
 
