@@ -22,12 +22,20 @@ class ElectionBar extends React.Component {
         ],
         electionViewCandidate: null,
         electionViewLetter: "S",
+        electionViewEnabled: true,
       }
       this.state.electionViewCandidate = this.state.candidateList[0];
+    }
+    onClickShowMore(candidate, letter){
+      this.setState({electionViewCandidate: candidate, electionViewLetter: letter, electionViewEnabled: false});
+    }
+    onClickElectionBack = () => {
+      this.setState({electionViewEnabled: true});
     }
     render(){
         return (
             <div className="text-center pt-2 pb-2 w-100">
+              { this.state.electionViewEnabled ? 
                 <Container fluid>
                     <Row>
                         <Col>
@@ -52,7 +60,7 @@ class ElectionBar extends React.Component {
                         <Col>
                             <Representative name={this.state.candidateList[0].name} flavor={this.state.candidateList[0].flavor} img ={this.state.candidateList[0].img}/> 
                             <br/>
-                            <Button variant="dark" size="sm">Show More</Button>
+                            <Button variant="dark" size="sm" onClick={()=>this.onClickShowMore(this.state.candidateList[0], "S")}>Show More</Button>
                         </Col>
                         <Col>
                         <ApexBarChartOne/>
@@ -63,14 +71,14 @@ class ElectionBar extends React.Component {
                         <Col>
                             <Representative name={this.state.candidateList[1].name} flavor={this.state.candidateList[1].flavor} img={this.state.candidateList[1].img}/>
                             <br/>
-                            <Button variant="dark" size="sm">Show More</Button>
+                            <Button variant="dark" size="sm" onClick={()=>this.onClickShowMore(this.state.candidateList[1], "M")}>Show More</Button>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
                             <Representative name={this.state.candidateList[2].name} flavor={this.state.candidateList[2].flavor} img ={this.state.candidateList[2].img}/> 
                             <br/>
-                            <Button variant="dark" size="sm">Show More</Button>
+                            <Button variant="dark" size="sm" onClick={()=>this.onClickShowMore(this.state.candidateList[2], "S")}>Show More</Button>
                         </Col>
                         <Col>
                         <ApexBarChartOne/>
@@ -82,11 +90,11 @@ class ElectionBar extends React.Component {
                         <Col>
                             <Representative name={this.state.candidateList[3].name} flavor={this.state.candidateList[3].flavor} img={this.state.candidateList[3].img}/>
                             <br/>
-                            <Button variant="dark" size="sm">Show More</Button>
+                            <Button variant="dark" size="sm" onClick={()=>this.onClickShowMore(this.state.candidateList[3], "M")}>Show More</Button>
                         </Col>
                     </Row>
-                </Container>
-                <SpecificElection rep={this.state.electionViewCandidate} s={this.state.electionViewLetter}/>
+                </Container> :
+                <SpecificElection rep={this.state.electionViewCandidate} s={this.state.electionViewLetter} cBack={this.onClickElectionBack}/> }
             </div>
         )
     }
@@ -126,7 +134,7 @@ class ApexBarChartOne extends React.Component {
   render() {
     return (
       <div id="chart">
-        <Chart options={this.state.options} series={this.state.series} type="bar" height={350} />
+        <Chart options={this.state.options} series={this.state.series} type="bar" height={250} />
       </div>
     );
   }
@@ -166,7 +174,7 @@ class ApexBarChartTwo extends React.Component {
   render() {
     return (
       <div id="chart">
-        <Chart options={this.state.options} series={this.state.series} type="bar" height={350} />
+        <Chart options={this.state.options} series={this.state.series} type="bar" height={250} />
       </div>
     );
   }
