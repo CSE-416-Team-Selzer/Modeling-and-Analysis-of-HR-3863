@@ -46,7 +46,9 @@ class StatePage extends React.Component {
                                         <Accordion.Item eventKey="fairnessOne">
                                             <Accordion.Header>How is fairness calculated?</Accordion.Header>
                                             <Accordion.Body>
-                                            Somehow. When we actually figure out a real fairness score, we'll explain it here.
+                                                For now, we hypothesize that fairness can be calculated from the average vote conversion percentage. I.E., if there are 10% of republicans
+                                                who vote for 6% republican candidates, then we would expect that 6% of candidates would be republican based on their votes. Same thing with
+                                                minority groups.
                                             </Accordion.Body>
                                         </Accordion.Item>
                                     </Accordion>
