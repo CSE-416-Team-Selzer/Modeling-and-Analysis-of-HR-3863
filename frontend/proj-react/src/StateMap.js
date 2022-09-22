@@ -8,7 +8,46 @@ const ut = require('./geoJSON/ut.json')
 
 const position = [39, -98];
 
-function SetBoundsStates() {
+function resolveStateName(state) {
+  switch(state.toLowerCase()) {
+    case 'arizona':
+      return az;
+    case 'texas':
+      return tx;
+    case 'utah':
+      return ut;
+    default:
+      return states
+  }
+}
+
+function resolvePosition(state) {
+  switch(state.toLowerCase()) {
+    case 'arizona':
+      return [34, -112];
+    case 'texas':
+      return [31, -100];
+    case 'utah':
+      return [39, -112];
+    default:
+      return [39, -98]
+  }
+}
+
+function resolveZoom(state) {
+  switch(state.toLowerCase()) {
+    case 'arizona':
+      return 6;
+    case 'texas':
+      return 5;
+    case 'utah':
+      return 6;
+    default:
+      return 2
+  }
+}
+
+function SetBoundsStates(props) {
     const [bounds, setBounds] = useState()
     const map = useMap()
   
@@ -60,7 +99,7 @@ function SetBoundsStates() {
     return (
       <>
         <GeoJSON
-        data={tx}
+        data={resolveStateName(props.stateName)}
         onEachFeature= {onEachFeature}
         pathOptions={ {color: 'blue'}}
         />
@@ -69,15 +108,15 @@ function SetBoundsStates() {
   }
 
 
-function StateMap() {
+function StateMap(props) {
     return(
         <MapContainer 
             style={{ height: 500, width: 800 }} 
-            center={position} 
-            zoom={2.5} 
+            center={resolvePosition(props.stateName)} 
+            zoom={resolveZoom(props.stateName)} 
             scrollWheelZoom={true}
         >
-            <SetBoundsStates />
+            <SetBoundsStates stateName = {props.stateName}/>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

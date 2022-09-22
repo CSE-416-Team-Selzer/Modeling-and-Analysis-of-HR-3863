@@ -32,7 +32,7 @@ class StatePage extends React.Component {
                 <Container fluid className="text-center w-100 pb-1">
                     <Row className="gx-3 w-100">
                         <Col xs={9}>
-                            <StateMap/>
+                            <StateMap stateName = {this.state.stateName}/>
                         </Col>
                         <Col>
                             <Card className="bg-dark text-light">
