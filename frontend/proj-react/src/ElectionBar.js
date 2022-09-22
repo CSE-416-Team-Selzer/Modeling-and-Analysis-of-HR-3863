@@ -11,7 +11,7 @@ import Chart from 'react-apexcharts';
 class ElectionBar extends React.Component {
     render(){
         return (
-            <div className="bg-dark text-light text-center pt-2 pb-2 w-100">
+            <div className="text-center pt-2 pb-2 w-100">
                 <Container fluid>
                     <Row>
                         <Col>
@@ -23,16 +23,39 @@ class ElectionBar extends React.Component {
                     </Row>
                     <Row>
                         <Col>
-                            <Representative name="Generic Name" flavor="Middle Eastern Republican Representative" img = "https://randomuser.me/api/portraits/men/23.jpg"/>
+                            <Representative name="Generic Name" flavor="Middle Eastern Republican Representative" img = "https://randomuser.me/api/portraits/men/23.jpg"/> 
+                            <br/>
+                            <Button variant="dark" size="sm">Show More</Button>
                         </Col>
-                        <ApexChart/>
                         <Col>
+                        <ApexBarChartOne/>
                         </Col>
                         <Col>
-                        
+                        <ApexBarChartTwo/>
                         </Col>
                         <Col>
                             <Representative name="Generic Name" flavor="White Democratic Representative" img="https://randomuser.me/api/portraits/men/10.jpg"/>
+                            <br/>
+                            <Button variant="dark" size="sm">Show More</Button>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Representative name="Generic Name" flavor="White Democratic Representative" img = "https://randomuser.me/api/portraits/men/32.jpg"/> 
+                            <br/>
+                            <Button variant="dark" size="sm">Show More</Button>
+                        </Col>
+                        <Col>
+                        <ApexBarChartOne/>
+                        </Col>
+                        <Col>
+                          
+                        <ApexBarChartTwo/>
+                        </Col>
+                        <Col>
+                            <Representative name="Generic Name" flavor="Hispanic Democratic Representative" img="https://randomuser.me/api/portraits/men/12.jpg"/>
+                            <br/>
+                            <Button variant="dark" size="sm">Show More</Button>
                         </Col>
                     </Row>
                 </Container>
@@ -61,19 +84,20 @@ class Representative extends React.Component{
         )
     }
 }
-class ApexChart extends React.Component {
+class ApexBarChartOne extends React.Component {
     constructor(props) {
       super(props);
 
       this.state = {
       
         series: [{
-          data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+          data: [200, 430, 448, 100]
         }],
         options: {
           chart: {
             type: 'bar',
-            height: 350
+            width: "100%",
+            height: 100
           },
           plotOptions: {
             bar: {
@@ -85,8 +109,7 @@ class ApexChart extends React.Component {
             enabled: false
           },
           xaxis: {
-            categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-              'United States', 'China', 'Germany'
+            categories: ['Democrat', 'Republican', 'White', 'Black',
             ],
           }
         },
@@ -109,4 +132,57 @@ class ApexChart extends React.Component {
 );
 }
 }
+
+class ApexBarChartTwo extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+    
+      series: [{
+        data: [300, 130, 248, 150]
+      }],
+      options: {
+        chart: {
+          type: 'bar',
+          height: 100
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            horizontal: true,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          categories: ['Democrat', 'Republican', 'White', 'Black',
+          ],
+        },
+        yaxis: {
+          reversed: true,
+        }
+      },
+    
+    
+    };
+  }
+
+
+
+  render() {
+    return (
+      
+
+
+<div id="chart">
+  <Chart options={this.state.options} series={this.state.series} type="bar" height={350} />
+  </div>
+
+);
+}
+}
+
+
 export default ElectionBar;
