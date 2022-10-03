@@ -9,6 +9,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import Chart from 'react-apexcharts';
 import SpecificElection from "./SpecificElection";
 import Representative from "./Representative";
+import api from './api'
 
 class ElectionBar extends React.Component {
     constructor(props){
@@ -107,7 +108,7 @@ class ApexBarChartOne extends React.Component {
     this.state = {
 
       series: [{
-        data: [200, 430, 448, 100]
+        data: []
       }],
       options: {
         chart: {
@@ -131,6 +132,28 @@ class ApexBarChartOne extends React.Component {
       },
     };
   }
+  componentDidMount() {
+    const fetchData = async () => {
+        
+
+        const data = await api.getPlanWinners("dummy_smd_1")
+        
+        let voters = data.data[0].voterDemographic;
+        let votersArray = [voters.democratVotes, voters.republicanVotes, voters.whiteVotes, voters.blackVotes ];
+        console.log(votersArray)
+
+        this.setState( {
+            series: [{
+                name: '',
+                data: votersArray
+            }]
+        } );
+        
+    }
+
+    fetchData()
+      .catch(console.error);
+  };
   render() {
     return (
       <div id="chart">
@@ -145,7 +168,7 @@ class ApexBarChartTwo extends React.Component {
     super(props);
     this.state = {
       series: [{
-        data: [700, 330, 448, 350]
+        data: []
       }],
       options: {
         chart: {
@@ -171,6 +194,30 @@ class ApexBarChartTwo extends React.Component {
       },
     };
   }
+
+    componentDidMount() {
+      const fetchData = async () => {
+          
+
+          const data = await api.getPlanWinners("dummy_mmd_1")
+          
+          let voters = data.data[0].voterDemographic;
+          let votersArray = [voters.democratVotes, voters.republicanVotes, voters.whiteVotes, voters.blackVotes ];
+          console.log(votersArray)
+
+          this.setState( {
+              series: [{
+                  name: '',
+                  data: votersArray
+              }]
+          } );
+          
+      }
+
+      fetchData()
+        .catch(console.error);
+  };
+
   render() {
     return (
       <div id="chart">

@@ -3,6 +3,7 @@ package com.project.server.state;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "state")
 public class StateController {

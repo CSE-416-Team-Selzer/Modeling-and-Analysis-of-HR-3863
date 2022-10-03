@@ -1,23 +1,29 @@
-import { React, useState, useMemo }from "react";
+import { React, useState, useMemo, useEffect }from "react";
 import { MapContainer, TileLayer, useMap, Popup, Marker, GeoJSON } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
+import api from './api'
+
 const states = require('./geoJSON/us-states.json');
 const az = require('./geoJSON/az.json')
 const tx = require('./geoJSON/tx.json')
 const ut = require('./geoJSON/ut.json')
-const azs = require('./geoJSON/azs.json')
+let azs;
 const azm = require('./geoJSON/azm.json')
-const txs = require('./geoJSON/txs.json')
+let txs;
 const txm = require('./geoJSON/txm.json')
-const uts = require('./geoJSON/uts.json')
+let uts;
 const utm = require('./geoJSON/utm.json')
 
 const position = [39, -98];
+
+api.getState()
 
 
 function resolveStateName(state, smdOpen) {
   console.log(state)
   console.log(smdOpen)
+  
+  
   switch(state.toLowerCase()) {
     case 'arizona':
       if(smdOpen)
@@ -64,6 +70,8 @@ function resolveZoom(state) {
 
 function SetBoundsStates(props) {
     const [bounds, setBounds] = useState()
+    
+
     const map = useMap()
   
     const innerHandlers = useMemo(
@@ -131,20 +139,48 @@ function SetBoundsStates(props) {
 
 function StateMap(props) {
     console.log(props.smdOpen)
-    return(
-        <MapContainer 
-            style={{ height: 500, width: "100%" }} 
-            center={resolvePosition(props.stateName)} 
-            zoom={resolveZoom(props.stateName)} 
-            scrollWheelZoom={true}
-        >
-            <SetBoundsStates stateName = {props.stateName} smdOpen = {props.smdOpen}/>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-      </MapContainer>
-    );
+
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+
+      const fetchData = async () => {
+        let currentState = props.stateName
+        const data = await api.getPlanGeoJson(`${currentState}_smd_1`);
+       
+        let stateGeoJson = data.data;
+
+        if(currentState == "texas"){
+          txs = stateGeoJson;
+        } else if(currentState == "utah"){
+          uts = stateGeoJson;
+        } else if(currentState == "arizona"){
+          azs = stateGeoJson;
+        }
+
+        setLoading(false)
+      }
+
+      fetchData()
+        .catch(console.error);
+
+    },[])
+
+    if(!isLoading)
+      return(
+          <MapContainer 
+              style={{ height: 500, width: "100%" }} 
+              center={resolvePosition(props.stateName)} 
+              zoom={resolveZoom(props.stateName)} 
+              scrollWheelZoom={true}
+          >
+              <SetBoundsStates stateName = {props.stateName} smdOpen = {props.smdOpen}/>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+        </MapContainer>
+      );
 }
 
 export default StateMap;

@@ -11,12 +11,13 @@ import StateMap from "./StateMap.js";
 import ElectionBar from "./ElectionBar.js";
 import Chart from 'react-apexcharts';
 import SpecificElection from "./SpecificElection.js";
+import api from './api'
 
 class StatePage extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            stateName: "",
+            stateName: this.props.stateName,
             smdOpen: true,
         }
         this.state.stateName = this.props.stateName;
@@ -73,23 +74,28 @@ class StatePage extends React.Component {
                     </Row>
                     <Row>
                         <Col>
-                            <VertChart/>
+                            <VertChart stateName = {this.state.stateName}/>
                         </Col>
                         <Col>
-                            <ComaprisonChart/>
+                            <ComaprisonChart />
                         </Col>
                     </Row>
                 </Container>
-                <ElectionBar/>
+                <ElectionBar stateName = {this.state.stateName} />
 
             </div>
         );
     }
 }
 
+
 class ComaprisonChart extends React.Component {
+
+
+
     constructor(props) {
         super(props);
+        
         this.state = {
             series: [
                 {
@@ -157,10 +163,13 @@ class ComaprisonChart extends React.Component {
                 }
             },
 
-
         };
     }
+
+    
     render() {
+        
+
         return (
             <div id="chart">
                 <Chart options={this.state.options} series={this.state.series} type="boxPlot" height={350} />
@@ -170,12 +179,16 @@ class ComaprisonChart extends React.Component {
 }
 
 class VertChart extends React.Component {
+
+    
+
+
     constructor(props) {
         super(props);
         this.state = {
             series: [{
                 name: '',
-                data: [130, 150, 200, 50, 75, 250, 40]
+                data: []
             }],
             options: {
                 chart: {
@@ -212,6 +225,31 @@ class VertChart extends React.Component {
             },
         };
     }
+
+    componentDidMount() {
+        const fetchData = async () => {
+            
+            let currentState = this.props.stateName;
+            const data = await api.getStateDemographics( (currentState.charAt(0).toUpperCase() + currentState.slice(1)) );
+            
+            let demographics = data.data;
+            let demographicsArray = [ demographics.democratPopulation, demographics.republicanPopulation, demographics.whitePopulation, demographics.blackPopulation, demographics.hispanicPopulation, demographics.religiousPopulation, demographics.areligiousPopulation];
+            console.log(demographicsArray)
+
+            this.setState( {
+                series: [{
+                    name: '',
+                    data: demographicsArray
+                }]
+            } );
+            console.log(this.state.series)
+        }
+  
+        fetchData()
+          .catch(console.error);
+    };
+
+
     render() {
         return (
             <div id="chart">
