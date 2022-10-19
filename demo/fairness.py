@@ -6,11 +6,11 @@ politicalNumbers = []
 ethnicNumbers = []
 
 print("Type 'stop' to stop queries. You cannot stop population queries. Type the corresponding values for each group. The last one will autofill based on total population.")
-print("Population:")
+print("Population:", end=" ")
 population = int(input())
 stop = False
 while(not stop):
-    print('Political Party Name:')
+    print('Political Party Name:', end=" ")
     query = str(input())
     if(query.lower() == "stop"):
         stop = True
@@ -18,7 +18,7 @@ while(not stop):
         politicalNames.append(query)
 stop = False
 while(not stop):
-    print('Ethnicity Name:')
+    print('Ethnicity Name:', end=" ")
     query = str(input())
     if(query.lower() == "stop"):
         stop = True
@@ -26,7 +26,7 @@ while(not stop):
         ethnicNames.append(query)
 
 for x in range(len(politicalNames)-1):
-    print(politicalNames[x], "Population:")
+    print(politicalNames[x], "Population:", end=" ")
     politicalNumbers.append(int(input()))
 sum = 0
 for x in politicalNumbers:
@@ -34,20 +34,19 @@ for x in politicalNumbers:
 politicalNumbers.append(population-sum)
 
 for x in range(len(ethnicNames)-1):
-    print(ethnicNames[x], "Population:")
+    print(ethnicNames[x], "Population:", end=" ")
     ethnicNumbers.append(int(input()))
 sum = 0
 for x in ethnicNumbers:
     sum += x
 ethnicNumbers.append(population-sum)
 
-print("Now we'll be covering seat share.")
-print("Total Seats:")
+print("Total Seats:", end=" ")
 seats = int(input())
 politicalSeats = []
 ethnicSeats = []
 for x in range(len(politicalNames)-1):
-    print(politicalNames[x], "Seats:")
+    print(politicalNames[x], "Seats:", end=" ")
     politicalSeats.append(int(input()))
 sum = 0
 for x in politicalSeats:
@@ -55,7 +54,7 @@ for x in politicalSeats:
 politicalSeats.append(seats-sum)
 
 for x in range(len(ethnicNames)-1):
-    print(ethnicNames[x], "Seats:")
+    print(ethnicNames[x], "Seats:", end=" ")
     ethnicSeats.append(int(input()))
 sum = 0
 for x in ethnicSeats:
