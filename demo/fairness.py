@@ -116,4 +116,5 @@ print("================")
 print("Overall Ethnic Fairness:", totEthFair, "%")
 for x in range(len(ethnicNames)):
     print(ethnicNames[x], "Fairness:", ethnicFairnesses[x], "%")
-
+print("================")    
+print("Overall Fairness:", ((totEthFair+totPolFair)/2),"%")
