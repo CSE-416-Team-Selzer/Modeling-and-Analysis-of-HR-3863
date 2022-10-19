@@ -41,12 +41,6 @@ for x in ethnicNumbers:
     sum += x
 ethnicNumbers.append(population-sum)
 
-print("Population:", population)
-for x in range(len(politicalNames)):
-    print(politicalNames[x], ":", politicalNumbers[x])
-for x in range(len(ethnicNames)):
-    print(ethnicNames[x],":",ethnicNumbers[x])
-
 print("Now we'll be covering seat share.")
 print("Total Seats:")
 seats = int(input())
@@ -67,12 +61,6 @@ sum = 0
 for x in ethnicSeats:
     sum += x
 ethnicSeats.append(seats-sum)
-
-print("Total Seats:", seats)
-for x in range(len(politicalNames)):
-    print(politicalNames[x], ":", politicalSeats[x])
-for x in range(len(ethnicNames)):
-    print(ethnicNames[x],":",ethnicSeats[x])
 
 politicalFairnesses = []
 ethnicFairnesses = []
@@ -98,6 +86,18 @@ for x in range(len(ethnicNames)):
     ethnicFairnesses.append(figure)
     totEthFair += figure*ethnicNumbers[x]
 totEthFair /= population
+
+print("Population:", population)
+for x in range(len(politicalNames)):
+    print(politicalNames[x], ":", politicalNumbers[x])
+for x in range(len(ethnicNames)):
+    print(ethnicNames[x],":",ethnicNumbers[x])
+
+print("Total Seats:", seats)
+for x in range(len(politicalNames)):
+    print(politicalNames[x], ":", politicalSeats[x])
+for x in range(len(ethnicNames)):
+    print(ethnicNames[x],":",ethnicSeats[x])
 
 print("Overall Political Fairness:", totPolFair,"%")
 for x in range(len(politicalNames)):
