@@ -71,7 +71,10 @@ totPolFair = 0
 totEthFair = 0
 
 for x in range(len(politicalNames)):
-    figure = (politicalNumbers[x]/population) / (politicalSeats[x]/seats)
+    if(ethnicSeats[x] != 0):
+        figure = (politicalNumbers[x]/population) / (politicalSeats[x]/seats)
+    else:
+        figure = 0
     if(figure > 1):
         figure = 1/figure
     figure *= 100
@@ -79,7 +82,10 @@ for x in range(len(politicalNames)):
     totPolFair += figure*politicalNumbers[x]
 totPolFair /= population
 for x in range(len(ethnicNames)):
-    figure = (ethnicNumbers[x]/population) / (ethnicSeats[x]/seats)
+    if(ethnicSeats[x] != 0):
+        figure = (ethnicNumbers[x]/population) / (ethnicSeats[x]/seats)
+    else:
+        figure = 0
     if(figure > 1):
         figure = 1/figure
     figure *= 100
@@ -103,7 +109,7 @@ print("Overall Political Fairness:", totPolFair,"%")
 for x in range(len(politicalNames)):
     print(politicalNames[x], "Fairness:", politicalFairnesses[x], "%")
     
-print("Overall Ethnic Fairness:", totEthFair)
+print("Overall Ethnic Fairness:", totEthFair, "%")
 for x in range(len(ethnicNames)):
     print(ethnicNames[x], "Fairness:", ethnicFairnesses[x], "%")
 
