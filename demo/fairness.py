@@ -63,7 +63,7 @@ ethnicSeats.append(seats-sum)
 
 politicalFairnesses = []
 ethnicFairnesses = []
-
+print("")
 print("Given a population of people with ethnic and political distributions, the general equation for fairness are:\nfairnessFigure = numberOfGroup/totalPop / seatShare/totalSeats\nif fairnessFigure > 1, fairnessFigure = 1/fairnessFigure\noverallFairness = the sum of all numberOfGroup * fairnessFigure divided by totalPop\n")
 
 totPolFair = 0
