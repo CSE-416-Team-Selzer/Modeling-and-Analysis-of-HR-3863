@@ -5,7 +5,7 @@ ethnicNames = []
 politicalNumbers = []
 ethnicNumbers = []
 
-print("Type 'stop' to stop queries. You cannot stop population queries. Type the corresponding values for each group. The last one will autofill based on total population.")
+print("\n\nType 'stop' to stop queries. You cannot stop population queries. Type the corresponding values for each group. The last one will autofill based on total population.\n")
 print("Population:", end=" ")
 population = int(input())
 stop = False
