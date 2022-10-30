@@ -1,4 +1,4 @@
-package com.project.server.plans;
+package com.project.server.state;
 
 public class Representative {
     private String name;
