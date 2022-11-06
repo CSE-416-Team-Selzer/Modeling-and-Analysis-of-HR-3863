@@ -7,7 +7,7 @@ Key: - undone | + done | o in progress
 	- Create & structure Election page.
 	- Restructure specific election page
 	- Create & structure Demographics (Whisker plot) page
-	- Add 'sources' page.
+	+ Add 'sources' page.
 
 
 - Election page

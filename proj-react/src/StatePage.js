@@ -179,10 +179,6 @@ class ComaprisonChart extends React.Component {
 }
 
 class VertChart extends React.Component {
-
-    
-
-
     constructor(props) {
         super(props);
         this.state = {
