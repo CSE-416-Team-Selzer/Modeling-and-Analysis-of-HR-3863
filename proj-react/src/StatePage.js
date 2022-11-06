@@ -27,7 +27,7 @@ class StatePage extends React.Component {
         var styledStateName = this.state.stateName[0].toUpperCase() + this.state.stateName.substring(1);
         return (
             <div style={{width:"100%"}}>
-                <StatesNavbar/>
+                <StatesNavbar stateSelect={true}/>
                 <h1 style={{textAlign: 'center'}}>Welcome to {styledStateName}</h1>
                 <Container fluid className="text-center w-100 pb-1">
                     <Row className="gx-3 w-100">

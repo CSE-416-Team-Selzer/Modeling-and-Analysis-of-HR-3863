@@ -34,7 +34,10 @@ class ElectionBar extends React.Component {
       this.setState({electionViewEnabled: true});
     }
     render(){
-        return (
+      for(let cand in this.state.candidateList){
+        
+      }
+      return (
             <div className="text-center pt-2 pb-2 w-100">
               { this.state.electionViewEnabled ? 
                 <Container fluid>
@@ -64,10 +67,10 @@ class ElectionBar extends React.Component {
                             <Button variant="dark" size="sm" onClick={()=>this.onClickShowMore(this.state.candidateList[0], "S")}>Show More</Button>
                         </Col>
                         <Col>
-                        <ApexBarChartOne/>
+                        <SMDVotesChart/>
                         </Col>
                         <Col>
-                        <ApexBarChartTwo/>
+                        <MMDVotesChart/>
                         </Col>
                         <Col>
                             <Representative name={this.state.candidateList[1].name} flavor={this.state.candidateList[1].flavor} img={this.state.candidateList[1].img}/>
@@ -82,11 +85,11 @@ class ElectionBar extends React.Component {
                             <Button variant="dark" size="sm" onClick={()=>this.onClickShowMore(this.state.candidateList[2], "S")}>Show More</Button>
                         </Col>
                         <Col>
-                        <ApexBarChartOne/>
+                        <SMDVotesChart/>
                         </Col>
                         <Col>
                           
-                        <ApexBarChartTwo/>
+                        <MMDVotesChart/>
                         </Col>
                         <Col>
                             <Representative name={this.state.candidateList[3].name} flavor={this.state.candidateList[3].flavor} img={this.state.candidateList[3].img}/>
@@ -101,7 +104,7 @@ class ElectionBar extends React.Component {
     }
 }
 
-class ApexBarChartOne extends React.Component {
+class SMDVotesChart extends React.Component {
   constructor(props) {
     super(props);
 
@@ -139,7 +142,7 @@ class ApexBarChartOne extends React.Component {
         const data = await api.getPlanWinners("dummy_smd_1")
         
         let voters = data.data[0].voterDemographic;
-        let votersArray = [voters.democratVotes, voters.republicanVotes, voters.whiteVotes, voters.blackVotes ];
+        let votersArray = [voters.democratVotes, voters.republicanVotes, voters.whiteVotes, voters.blackVotes];
         console.log(votersArray)
 
         this.setState( {
@@ -163,7 +166,7 @@ class ApexBarChartOne extends React.Component {
   }
 }
 
-class ApexBarChartTwo extends React.Component {
+class MMDVotesChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

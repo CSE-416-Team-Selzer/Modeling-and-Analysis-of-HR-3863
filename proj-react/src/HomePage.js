@@ -25,7 +25,7 @@ export default class HomePage extends React.Component {
     render() {
         return (
             <div>
-                <StatesNavbar/>
+                <StatesNavbar stateSelect={false}/>
                 <Container fluid className="text-center">
                     <Row>
                         <Col>

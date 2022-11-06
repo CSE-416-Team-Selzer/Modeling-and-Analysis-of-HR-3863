@@ -1,0 +1,39 @@
+// Note: This is literally just for me, you can ignore this folder if you want to.
+
+Key: - undone | + done | o in progress
+
+- Restructure everything
+	- Restructure State page to focus on map / summary data
+	- Create & structure Election page.
+	- Restructure specific election page
+	- Create & structure Demographics (Whisker plot) page
+	- Add 'sources' page.
+
+
+- Election page
+	- Total votes
+	- Swappable between MMD and SMD 
+	- "Tells us more" whatever THAT means
+		- maybe total votes > granular votes?
+			- make granular votes an option instead of the default
+	- Display party allegiance, race ([PIC] [RACE], [Party (D./R.), District X)
+	- 
+
+- Specific election page
+	- "Tells us more" - mirror Election page
+	- Format better
+
+- Demographics Page
+	- Set up box & Whisker
+	- Set up swappable options menu (probably dropdown)
+	- Set up mixed graph (this will be spicy)
+
+
+- State Page
+	- Ability to take current SMD plan
+	- Display better summary data.
+	- Restructure based on displaying one plan at a time > all the plans
+	- Display whether 3/4/5
+
+- Sources Page
+	- Ezclap
