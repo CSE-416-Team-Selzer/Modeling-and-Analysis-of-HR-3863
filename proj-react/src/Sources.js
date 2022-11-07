@@ -14,7 +14,7 @@ class SourcesPage extends React.Component {
     render(){
         return(
             <div style={{width:"100%"}}>
-                <StatesNavbar stateSelect={true}/>
+                <StatesNavbar stateSelect={false}/>
                 <div>
                     <Container fluid className="text-left">
                         <Row>

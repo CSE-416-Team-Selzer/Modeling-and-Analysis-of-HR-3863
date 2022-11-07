@@ -37,9 +37,9 @@ class StatesNavbar extends React.Component {
               <>
                 <Nav.Link href="elec">Elections</Nav.Link>
                 <Nav.Link href="demo">Demographics</Nav.Link>
-                <Nav.Link href="src">Sources</Nav.Link>
               </> : <></>
             }
+            <Nav.Link href="src">Sources</Nav.Link>
             
           </Nav>
         </Navbar.Collapse>
