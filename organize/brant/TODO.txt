@@ -6,34 +6,32 @@ Key: - undone | + done | o in progress
 	- Restructure State page to focus on map / summary data
 	- Create & structure Election page.
 	- Restructure specific election page
-	- Create & structure Demographics (Whisker plot) page
+	+ Create & structure Demographics (Whisker plot) page
 	+ Add 'sources' page.
 
-
 - Election page
-	- Total votes
+	o Total votes
 	- Swappable between MMD and SMD 
-	- "Tells us more" whatever THAT means
+	o "Tells us more" whatever THAT means
 		- maybe total votes > granular votes?
 			- make granular votes an option instead of the default
-	- Display party allegiance, race ([PIC] [RACE], [Party (D./R.), District X)
-	- 
+	o Display party allegiance, race ([PIC] [RACE], [Party (D./R.), District X)
 
 - Specific election page
 	- "Tells us more" - mirror Election page
 	- Format better
 
-- Demographics Page
-	- Set up box & Whisker
-	- Set up swappable options menu (probably dropdown)
-	- Set up mixed graph (this will be spicy)
++ Demographics Page
+	+ Set up box & Whisker
+	+ Set up swappable options menu (used tabs)
+	? Set up mixed graph (this is painful)
 
 
 - State Page
-	- Ability to take current SMD plan
-	- Display better summary data.
-	- Restructure based on displaying one plan at a time > all the plans
+	o Ability to take current SMD plan
+	o Display better summary data.
+	o Restructure based on displaying one plan at a time > all the plans
 	- Display whether 3/4/5
 
-- Sources Page
-	- Ezclap
++ Sources Page
+	+ Ezclap
