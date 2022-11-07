@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import StatesNavbar from './StatesNavbar.js';
 
 class ElectionsPage extends React.Component {
