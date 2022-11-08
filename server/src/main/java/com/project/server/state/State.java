@@ -9,26 +9,23 @@ public class State {
 
     private String name;
 
-    private Demographics demographics;
-
     private int numSeats;
 
-    //id of the current district plan
-    private String currentPlan;
+    private Demographics demographics;
 
-    //ids of the sample of single member district plans available
-    private String[] smdPlans;
+    private EnsembleData ensembleData;
 
-    //ids of the sample of multi member district plans available
-    private String[] mmdPlans;
+    private Plan currentPlan;
 
+    private Plan[] smdPlans;
 
+    private Plan[] mmdPlans;
 
-
-    public State(String name, Demographics demographics, int numSeats, String currentPlan, String[] smdPlans, String[] mmdPlans) {
+    public State(String name, int numSeats, Demographics demographics, EnsembleData ensembleData, Plan currentPlan, Plan[] smdPlans, Plan[] mmdPlans) {
         this.name = name;
-        this.demographics = demographics;
         this.numSeats = numSeats;
+        this.demographics = demographics;
+        this.ensembleData = ensembleData;
         this.currentPlan = currentPlan;
         this.smdPlans = smdPlans;
         this.mmdPlans = mmdPlans;
@@ -40,30 +37,6 @@ public class State {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setCurrentPlan(String currentPlan) {
-        this.currentPlan = currentPlan;
-    }
-
-    public void setSmdPlans(String[] smdPlans) {
-        this.smdPlans = smdPlans;
-    }
-
-    public void setMmdPlans(String[] mmdPlans) {
-        this.mmdPlans = mmdPlans;
-    }
-
-    public String getCurrentPlan() {
-        return currentPlan;
-    }
-
-    public String[] getSmdPlans() {
-        return smdPlans;
-    }
-
-    public String[] getMmdPlans() {
-        return mmdPlans;
     }
 
     public int getNumSeats() {
@@ -80,5 +53,37 @@ public class State {
 
     public void setDemographics(Demographics demographics) {
         this.demographics = demographics;
+    }
+
+    public EnsembleData getEnsembleData() {
+        return ensembleData;
+    }
+
+    public void setEnsembleData(EnsembleData ensembleData) {
+        this.ensembleData = ensembleData;
+    }
+
+    public Plan getCurrentPlan() {
+        return currentPlan;
+    }
+
+    public void setCurrentPlan(Plan currentPlan) {
+        this.currentPlan = currentPlan;
+    }
+
+    public Plan[] getSmdPlans() {
+        return smdPlans;
+    }
+
+    public void setSmdPlans(Plan[] smdPlans) {
+        this.smdPlans = smdPlans;
+    }
+
+    public Plan[] getMmdPlans() {
+        return mmdPlans;
+    }
+
+    public void setMmdPlans(Plan[] mmdPlans) {
+        this.mmdPlans = mmdPlans;
     }
 }
