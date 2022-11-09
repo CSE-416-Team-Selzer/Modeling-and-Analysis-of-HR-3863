@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.lang.Object;
 
 @Document("plans")
 public class Plan {
@@ -12,11 +13,11 @@ public class Plan {
 
     private Tags tag;
 
-    private String geojson;
+    private Object geojson;
 
     private District districts[];
 
-    public Plan(boolean smd, Tags tag, String geojson, District[] districts) {
+    public Plan(boolean smd, Tags tag, Object geojson, District[] districts) {
         this.smd = smd;
         this.tag = tag;
         this.geojson = geojson;
@@ -39,11 +40,11 @@ public class Plan {
         this.tag = tag;
     }
 
-    public String getGeojson() {
+    public Object getGeojson() {
         return geojson;
     }
 
-    public void setGeojson(String geojson) {
+    public void setGeojson(Object geojson) {
         this.geojson = geojson;
     }
 

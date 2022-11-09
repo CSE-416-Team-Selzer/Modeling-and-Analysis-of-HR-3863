@@ -21,38 +21,32 @@ public class StateController {
 
     @GetMapping
     public State getState(@RequestParam String name){
-        if(loadedState == null){
-            loadedState = stateService.getState(name);
-        }
-        return loadedState;
+        return stateService.getState(name);
     }
 
     @GetMapping("/demographics")
     public Demographics getStateDemographics(@RequestParam String name){
-        if(loadedState == null){
-            loadedState = stateService.getState(name);
-        }
-        return loadedState.getDemographics();
+        return stateService.getDemographics(name);
     }
 
     @GetMapping("/plans/smd")
-    public Plan getSmdPlanByTag(@RequestParam Tags tag){
-        return stateService.getSmdPlanByTag(tag, loadedState);
+    public Plan getSmdPlanByTag(@RequestParam Tags tag, @RequestParam String name){
+        return stateService.getSmdPlanByTag(tag, name);
     }
 
     @GetMapping("/plans/mmd")
-    public Plan getMmdPlanByTag(@RequestParam Tags tag){
-        return stateService.getMmdPlanByTag(tag, loadedState);
+    public Plan getMmdPlanByTag(@RequestParam Tags tag, @RequestParam String name){
+        return stateService.getMmdPlanByTag(tag, name);
     }
 
     @GetMapping("/ensemble/smd/district")
     public List<EnsembleDistrict> getSmdEnsembleDistrictsByTag(@RequestParam DistrictTags tag){
-        return stateService.getSmdEnsembleDistrictsByTag(tag, loadedState);
+        return stateService.getSmdEnsembleDistrictsByTag(tag);
     }
 
     @GetMapping("/ensemble/mmd/district")
     public List<EnsembleDistrict> getMmdEnsembleDistrictsByTag(@RequestParam DistrictTags tag){
-        return stateService.getMmdEnsembleDistrictsByTag(tag, loadedState);
+        return stateService.getMmdEnsembleDistrictsByTag(tag);
     }
 
     @PostMapping("/addState")

@@ -14,19 +14,15 @@ public class State {
     private Demographics demographics;
 
     private EnsembleData ensembleData;
-
-    private Plan currentPlan;
-
     private Plan[] smdPlans;
 
     private Plan[] mmdPlans;
 
-    public State(String name, int numSeats, Demographics demographics, EnsembleData ensembleData, Plan currentPlan, Plan[] smdPlans, Plan[] mmdPlans) {
+    public State(String name, int numSeats, Demographics demographics, EnsembleData ensembleData, Plan[] smdPlans, Plan[] mmdPlans) {
         this.name = name;
         this.numSeats = numSeats;
         this.demographics = demographics;
         this.ensembleData = ensembleData;
-        this.currentPlan = currentPlan;
         this.smdPlans = smdPlans;
         this.mmdPlans = mmdPlans;
     }
@@ -61,14 +57,6 @@ public class State {
 
     public void setEnsembleData(EnsembleData ensembleData) {
         this.ensembleData = ensembleData;
-    }
-
-    public Plan getCurrentPlan() {
-        return currentPlan;
-    }
-
-    public void setCurrentPlan(Plan currentPlan) {
-        this.currentPlan = currentPlan;
     }
 
     public Plan[] getSmdPlans() {
