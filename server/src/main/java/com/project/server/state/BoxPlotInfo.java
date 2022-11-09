@@ -7,17 +7,14 @@ public class BoxPlotInfo {
 
     private float thirdQuartile;
 
-    private float fourthQuartile;
-
     private float max;
 
     private float min;
 
-    public BoxPlotInfo(float firstQuartile, float median, float thirdQuartile, float fourthQuartile, float max, float min) {
+    public BoxPlotInfo(float firstQuartile, float median, float thirdQuartile, float max, float min) {
         this.firstQuartile = firstQuartile;
         this.median = median;
         this.thirdQuartile = thirdQuartile;
-        this.fourthQuartile = fourthQuartile;
         this.max = max;
         this.min = min;
     }
@@ -44,14 +41,6 @@ public class BoxPlotInfo {
 
     public void setThirdQuartile(float thirdQuartile) {
         this.thirdQuartile = thirdQuartile;
-    }
-
-    public float getFourthQuartile() {
-        return fourthQuartile;
-    }
-
-    public void setFourthQuartile(float fourthQuartile) {
-        this.fourthQuartile = fourthQuartile;
     }
 
     public float getMax() {

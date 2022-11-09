@@ -6,4 +6,6 @@ public enum Tags {
     extremeAfricanAmerican,
     extremeCaucasian,
     extremeLatino,
+    current,
+    average
 }

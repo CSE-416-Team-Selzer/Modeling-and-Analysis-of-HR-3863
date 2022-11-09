@@ -142,29 +142,33 @@ function StateMap(props) {
 
     const [isLoading, setLoading] = useState(true);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-      const fetchData = async () => {
-        let currentState = props.stateName
-        const data = await api.getPlanGeoJson(`${currentState}_smd_1`);
+    //   const fetchData = async () => {
+    //     let currentState = props.stateName
+    //     const data = await api.getSmdPlanByTag("current");
        
-        let stateGeoJson = data.data;
+        
+    //     let stateGeoJson = data.data.geojson;
 
-        if(currentState == "texas"){
-          txs = stateGeoJson;
-        } else if(currentState == "utah"){
-          uts = stateGeoJson;
-        } else if(currentState == "arizona"){
-          azs = stateGeoJson;
-        }
+    //     console.log(stateGeoJson)
 
-        setLoading(false)
-      }
+    //     console.log(JSON.parse(stateGeoJson))
 
-      fetchData()
-        .catch(console.error);
+    //     if(currentState == "texas"){
+    //       txs = stateGeoJson;
+    //     } else if(currentState == "utah"){
+    //       uts = stateGeoJson;
+    //     } else if(currentState == "arizona"){
+    //       azs = stateGeoJson;
+    //     }
 
-    },[])
+    //     setLoading(false)
+    //   }
+
+    //   fetchData()
+    //     .catch(console.error);
+    // },[])
 
     if(!isLoading)
       return(

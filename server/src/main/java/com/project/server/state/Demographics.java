@@ -13,19 +13,16 @@ public class Demographics {
 
     private int hispanicPopulation;
 
-    private int religiousPopulation;
+    private int otherVotes;
 
-    private int areligiousPopulation;
-
-    public Demographics(int population, int democratPopulation, int republicanPopulation, int whitePopulation, int blackPopulation, int hispanicPopulation, int religiousPopulation, int areligiousPopulation) {
+    public Demographics(int population, int democratPopulation, int republicanPopulation, int whitePopulation, int blackPopulation, int hispanicPopulation, int otherVotes) {
         this.population = population;
         this.democratPopulation = democratPopulation;
         this.republicanPopulation = republicanPopulation;
         this.whitePopulation = whitePopulation;
         this.blackPopulation = blackPopulation;
         this.hispanicPopulation = hispanicPopulation;
-        this.religiousPopulation = religiousPopulation;
-        this.areligiousPopulation = areligiousPopulation;
+        this.otherVotes = otherVotes;
     }
 
     public int getPopulation() {
@@ -76,19 +73,11 @@ public class Demographics {
         this.hispanicPopulation = hispanicPopulation;
     }
 
-    public int getReligiousPopulation() {
-        return religiousPopulation;
+    public int getOtherVotes() {
+        return otherVotes;
     }
 
-    public void setReligiousPopulation(int religiousPopulation) {
-        this.religiousPopulation = religiousPopulation;
-    }
-
-    public int getAreligiousPopulation() {
-        return areligiousPopulation;
-    }
-
-    public void setAreligiousPopulation(int areligiousPopulation) {
-        this.areligiousPopulation = areligiousPopulation;
+    public void setOtherVotes(int otherVotes) {
+        this.otherVotes = otherVotes;
     }
 }

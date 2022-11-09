@@ -86,4 +86,27 @@ public class State {
     public void setMmdPlans(Plan[] mmdPlans) {
         this.mmdPlans = mmdPlans;
     }
+
+    public Plan getSmdPlanByTag(Tags tag) {
+        for(int i = 0; i < smdPlans.length; i++){
+            Plan plan = smdPlans[i];
+
+            if(plan.getTag() == tag){
+                return plan;
+            }
+        }
+
+        return null;
+    }
+
+    public Plan getMmdPlanByTag(Tags tag) {
+        for(int i = 0; i < mmdPlans.length; i++){
+            Plan plan = mmdPlans[i];
+
+            if(plan.getTag() == tag){
+                return plan;
+            }
+        }
+        return null;
+    }
 }
