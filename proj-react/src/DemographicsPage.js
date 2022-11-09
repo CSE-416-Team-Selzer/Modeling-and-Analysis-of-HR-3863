@@ -36,11 +36,12 @@ class DemographicsPage extends React.Component {
             ]
         }
 
+        console.log(props.stateName)
 
        for(let tag in Enums.groups){ 
             console.log(tag)
             let dataSMD = this.state.dataSMD;
-            api.getSmdEnsembleDistrictsByTag(tag)
+            api.getSmdEnsembleDistrictsByTag(tag, "arizona")
                 .then( function (response) {
                     let data = response.data;
 
@@ -56,7 +57,7 @@ class DemographicsPage extends React.Component {
             })
 
             let dataMMD = this.state.dataMMD;
-            api.getMmdEnsembleDistrictsByTag(tag)
+            api.getMmdEnsembleDistrictsByTag(tag, "arizona")
                 .then( function (response) {
                     console.log(response)
                     let data = response.data;
