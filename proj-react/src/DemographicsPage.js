@@ -30,12 +30,12 @@ class DemographicsPage extends React.Component {
             console.log(tag)
             let dataSMD = this.state.dataSMD;
             api.getSmdEnsembleDistrictsByTag(tag)
-                .then( function (response) {
+                .then( (response)=> {
                     let data = response.data;
 
                     for(let i = 0; i < data.length; i++){
                         let box = data[i].demographicsBox;
-                        dataSMD[tag].push(
+                        this.state.dataSMD[tag].push(
                             {
                                 x: `district ${i+1}`,
                                 y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
