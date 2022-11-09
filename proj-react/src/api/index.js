@@ -16,13 +16,20 @@ export const getPlanGeoJson = (id) => api.get(`/plans/geojson?id=${id}`)
 export const getPlanWinners = (id) => api.get(`/plans/winners?id=${id}`)
 
 
+export const getSmdEnsembleDistrictsByTag = (tag) => api.get(`/state/ensemble/smd/district?tag=${tag}`)
+
+export const getMmdEnsembleDistrictsByTag = (tag) => api.get(`/state/ensemble/mmd/district?tag=${tag}`)
+
+
 
 const apis = {
     getState,
     getPlan,
     getPlanGeoJson,
     getStateDemographics,
-    getPlanWinners
+    getPlanWinners,
+    getSmdEnsembleDistrictsByTag,
+    getMmdEnsembleDistrictsByTag
 }
 
 

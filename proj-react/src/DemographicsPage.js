@@ -7,6 +7,8 @@ import Enums from "./Enums.js";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import api from './api'
+
 // TODO: Figure out how to get data from the server to the client
 class DemographicsPage extends React.Component {
     constructor(props){
@@ -22,49 +24,55 @@ class DemographicsPage extends React.Component {
             boxPlotsMMD: [],
             boxPlotsCompared: [],
         }
-        // FOR ANEES: fill the following code
-        /*
-        for(let tag of Enums.groups){
-            // get a the boxplot data for that enum tag with x = the district number and y = the boxplot data
-            //formatted like this:
-            [
-                {
-                    x: "district 1",
-                    y: [1, 2, 3, 4, 5]          // boxplot data
-                },
-                {
-                    x: "district 2",
-                    y: [5,6,7,8,9]
-                }
-            ]
-        }
-        for(let data of this.state.data){
 
-        }
-        */
-       // delete this after you do that.
-       for(let tag in Enums.groups){ 
+        //initialize otherwise errors
+        for(let tag in Enums.groups){ 
             this.state.dataSMD[tag] = [
-                {
-                    x: "district 1",
-                    y: [1, 2, 3, 4, 5]          // boxplot data
-                },
-                {
-                    x: "district 2",
-                    y: [5,6,7,8,9]
-                }
+                
             ];
+            
             this.state.dataMMD[tag] = [
-                {
-                    x: "district 1",
-                    y: [3, 4, 5, 7, 9]          // boxplot data
-                },
-                {
-                    x: "district 2",
-                    y: [8,11,12,13,14]
-                }
+                
             ]
         }
+
+
+       for(let tag in Enums.groups){ 
+            console.log(tag)
+            let dataSMD = this.state.dataSMD;
+            api.getSmdEnsembleDistrictsByTag(tag)
+                .then( function (response) {
+                    let data = response.data;
+
+                    for(let i = 0; i < data.length; i++){
+                        let box = data[i].demographicsBox;
+                        dataSMD[tag].push(
+                            {
+                                x: `district ${i+1}`,
+                                y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
+                            }
+                        ) 
+                    }
+            })
+
+            let dataMMD = this.state.dataMMD;
+            api.getMmdEnsembleDistrictsByTag(tag)
+                .then( function (response) {
+                    console.log(response)
+                    let data = response.data;
+
+                    for(let i = 0; i < data.length; i++){
+                        let box = data[i].demographicsBox;
+                        dataMMD[tag].push(
+                            {
+                                x: `district ${i+1}`,
+                                y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
+                            }
+                        ) 
+                    }
+            })
+        }
+        
         for(let tag in Enums.groups){
             this.state.lineDataSMD[tag] = []
             for(let data of this.state.dataSMD[tag]){
