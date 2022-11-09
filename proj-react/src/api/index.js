@@ -20,9 +20,9 @@ export const getSmdEnsembleDistrictsByTag = (tag) => api.get(`/state/ensemble/sm
 
 export const getMmdEnsembleDistrictsByTag = (tag) => api.get(`/state/ensemble/mmd/district?tag=${tag}`)
 
-export const getSmdPlanByTag = (tag) => api.get(`/state/plans/smd?tag=${tag}`)
+export const getSmdPlanByTag = (tag, name) => api.get(`/state/plans/smd?tag=${tag}&name=${name}`)
 
-export const getMmdPlanByTag = (tag) => api.get(`/state/plans/mmd?tag=${tag}`)
+export const getMmdPlanByTag = (tag, name) => api.get(`/state/plans/mmd?tag=${tag}&name=${name}`)
 
 
 

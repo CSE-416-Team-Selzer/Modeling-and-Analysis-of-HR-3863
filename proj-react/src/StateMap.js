@@ -142,33 +142,41 @@ function StateMap(props) {
 
     const [isLoading, setLoading] = useState(true);
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //   const fetchData = async () => {
-    //     let currentState = props.stateName
-    //     const data = await api.getSmdPlanByTag("current");
+      const fetchData = async () => {
+        let currentState = props.stateName
+        let data = await api.getSmdPlanByTag("current", currentState);
        
-        
-    //     let stateGeoJson = data.data.geojson;
+        let stateGeoJson = data.data.geojson;
 
-    //     console.log(stateGeoJson)
+        console.log(stateGeoJson)
 
-    //     console.log(JSON.parse(stateGeoJson))
+        if(currentState == "texas"){
+          txs = stateGeoJson;
+        } else if(currentState == "utah"){
+          uts = stateGeoJson;
+        } else if(currentState == "arizona"){
+          azs = stateGeoJson;
+        }
 
-    //     if(currentState == "texas"){
-    //       txs = stateGeoJson;
-    //     } else if(currentState == "utah"){
-    //       uts = stateGeoJson;
-    //     } else if(currentState == "arizona"){
-    //       azs = stateGeoJson;
-    //     }
+        // data = await api.getMmdPlanByTag("average", currentState);
+        // stateGeoJson = data.data.geojson;
 
-    //     setLoading(false)
-    //   }
+        // if(currentState == "texas"){
+        //   txm = stateGeoJson;
+        // } else if(currentState == "utah"){
+        //   utm = stateGeoJson;
+        // } else if(currentState == "arizona"){
+        //   azm = stateGeoJson;
+        // }
 
-    //   fetchData()
-    //     .catch(console.error);
-    // },[])
+        setLoading(false)
+      }
+
+      fetchData()
+        .catch(console.error);
+    },[])
 
     if(!isLoading)
       return(
