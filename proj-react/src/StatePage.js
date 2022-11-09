@@ -19,9 +19,13 @@ class StatePage extends React.Component {
         }
         this.state.stateName = this.props.stateName;
         console.log(this.state.stateName);
+        /* FOR ANEES - Same thing you did with Demographics, just for the plan geojsons.
+        */
+
     }
     render(){
         var styledStateName = this.state.stateName[0].toUpperCase() + this.state.stateName.substring(1);
+        // note: alter state map so that it can take a plan tag and pull the corresponding geojson out of the server
         return (
             <div style={{width:"100%"}}>
                 <StatesNavbar stateSelect={true}/>
@@ -47,9 +51,12 @@ class StatePage extends React.Component {
                             </Tabs>
                         </Col>
                         <Col>
-                            <Tabs defaultActiveKey="summary">
-                                <Tab eventKey="summary" title="Summary">
-                                    <SummaryData stateName={this.state.stateName}/>
+                            <Tabs defaultActiveKey="demog">
+                                <Tab eventKey="demog" title="Demographics">
+                                    <PopulationChart stateName={this.state.stateName}/>
+                                </Tab>
+                                <Tab eventKey="electsplits" title="Electoral Splits">
+                                    <PopulationChart stateName={this.state.stateName}/>
                                 </Tab>
                             </Tabs>
                         </Col>
@@ -78,7 +85,7 @@ class SummaryData extends React.Component {
             </Row>
             <Row>
                 <Col>
-                    <PopulationChart stateName={this.props.stateName}/>
+                    
                 </Col>
             </Row>
         </Container>);

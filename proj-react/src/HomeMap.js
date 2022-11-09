@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import StateMap from "./StateMap.js";
-const states = require('./geoJSON/us-states.json');
+const states = require('./geoJSON/us-states-pruned.json');
 const az = require('./geoJSON/az.json')
 const tx = require('./geoJSON/tx.json')
 const ut = require('./geoJSON/ut.json')

@@ -9,35 +9,23 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import api from './api'
 
-// TODO: Figure out how to get data from the server to the client
 class DemographicsPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             selected: "democrat",
-            dataSMD: [ // 0 = democrat, 1 = republican, 2 = black, 3 = white, 4 = hispanic, 5 = other
-            ],
+            dataSMD: [],
             dataMMD: [],
-            lineDataSMD: [], // dw about this, its generated
+            lineDataSMD: [],
             lineDataMMD: [],
             boxPlotsSMD: [],
             boxPlotsMMD: [],
             boxPlotsCompared: [],
         }
-
-        //initialize otherwise errors
         for(let tag in Enums.groups){ 
-            this.state.dataSMD[tag] = [
-                
-            ];
-            
-            this.state.dataMMD[tag] = [
-                
-            ]
+            this.state.dataSMD[tag] = [];
+            this.state.dataMMD[tag] = []
         }
-
-        console.log(props.stateName)
-
        for(let tag in Enums.groups){ 
             console.log(tag)
             let dataSMD = this.state.dataSMD;
@@ -55,7 +43,6 @@ class DemographicsPage extends React.Component {
                         ) 
                     }
             })
-
             let dataMMD = this.state.dataMMD;
             api.getMmdEnsembleDistrictsByTag(tag)
                 .then( function (response) {
@@ -73,7 +60,6 @@ class DemographicsPage extends React.Component {
                     }
             })
         }
-        
         for(let tag in Enums.groups){
             this.state.lineDataSMD[tag] = []
             for(let data of this.state.dataSMD[tag]){
@@ -99,16 +85,9 @@ class DemographicsPage extends React.Component {
         for(let tag in Enums.groups){
             this.state.boxPlotsCompared.push([
                 <Tab id={Enums.groups[tag].toLowerCase() + "mix"} title={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1)} eventKey={Enums.groups[tag]}>
-                     <Container fluid id={Enums.groups[tag].toLowerCase() + "mix-cont"}>
-                    <Row id={Enums.groups[tag].toLowerCase() + "mix-row"}>
-                        <Col id={Enums.groups[tag].toLowerCase() + "mix-col1"}>
-                    <BoxandWhisker boxData={this.state.dataSMD[tag]} lineData={this.state.lineDataSMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " SMD"}/><br/>
-                    </Col>
-                        <Col id={Enums.groups[tag].toLowerCase() + "mix-col2"}>
-                    <BoxandWhisker boxData={this.state.dataMMD[tag]} lineData={this.state.lineDataMMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " MMD"}/>
-                        </Col>
-                    </Row>
-                    </Container>
+                    <BoxandWhiskerCompared boxDataSMD={this.state.dataSMD[tag]} lineDataSMD={this.state.lineDataSMD[tag]}
+                        boxDataMMD={this.state.dataMMD[tag]} lineDataMMD={this.state.lineDataMMD[tag]} 
+                        type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " Mix"}/>
                 </Tab>
             ])
         }
@@ -141,18 +120,19 @@ class DemographicsPage extends React.Component {
                     </Row>
                     </Container>
   */
+ /* SIDE BY SIDE
+ <Container fluid id={Enums.groups[tag].toLowerCase() + "mix-cont"}>
+                    <Row id={Enums.groups[tag].toLowerCase() + "mix-row"}>
+                        <Col id={Enums.groups[tag].toLowerCase() + "mix-col1"}>
+                    <BoxandWhisker boxData={this.state.dataSMD[tag]} lineData={this.state.lineDataSMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " SMD"}/><br/>
+                    </Col>
+                        <Col id={Enums.groups[tag].toLowerCase() + "mix-col2"}>
+                    <BoxandWhisker boxData={this.state.dataMMD[tag]} lineData={this.state.lineDataMMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " MMD"}/>
+                        </Col>
+                    </Row>
+                    </Container>
+ */
     render(){
-        
-        let districtData = [
-            {
-                x: "district 1",
-                y: [1, 2, 3, 4, 5]          // boxplot data
-            },
-            {
-                x: "district 2",
-                y: [5,6,7,8,9]
-            }
-        ];
         return(
             <div style={{width:"100%"}}>
                 <StatesNavbar stateSelect={true}/>
@@ -222,11 +202,7 @@ class BoxandWhisker extends React.Component {
 
         };
     }
-
-    
     render() {
-        
-
         return (
             <div id="chart">
                 <Chart options={this.state.options} series={this.state.series} type="boxPlot" height={350} />
@@ -246,26 +222,15 @@ class BoxandWhiskerCompared extends React.Component {
                     data: this.props.lineDataSMD,
                 },
                 {
-                    name: 'Box & Whisker Data - SMD',
-                    type: 'boxPlot',
-                    data: this.props.boxDataSMD,
-                },
-                {
                     name: 'Line of Best Fit - MMD',
                     type: 'line',
                     data: this.props.lineDataMMD,
                 },
-                {
-                    name: 'Box & Whisker Data - MMD',
-                    type: 'boxPlot',
-                    data: this.props.boxDataMMD,
-                },
             ],
             options: {
                 chart: {
-                    type: 'boxPlot',
+                    type: 'line',
                     height: 350,
-                    stacked: true,
                     toolbar:{
                         show: false,
                     },
@@ -290,14 +255,9 @@ class BoxandWhiskerCompared extends React.Component {
                     palette: 'palette2'
                 }
             },
-
         };
     }
-
-    
-    render() {
-        
-
+    render() {   
         return (
             <div id="chart">
                 <Chart options={this.state.options} series={this.state.series} type="boxPlot" height={350} />
