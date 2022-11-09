@@ -11,7 +11,6 @@ public class StateController {
     @Autowired
     private final StateService stateService;
 
-
     public StateController(StateService stateService) {
         this.stateService = stateService;
     }
@@ -25,7 +24,6 @@ public class StateController {
     public Demographics getStateDemographics(@RequestParam String name){
         return stateService.getState(name).getDemographics();
     }
-
 
     @PostMapping("/addState")
     public String addState(@RequestBody State state){

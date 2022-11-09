@@ -1,19 +1,31 @@
 package com.project.server.state;
 
 public class Representative {
+
+    private boolean winner;
+
     private String name;
-    private String race;
-    private String party;
-    private String gender;
 
-    private VoterDemographics voterDemographic;
+    private Race race;
 
-    public Representative(String name, String race, String party, String gender, VoterDemographics voterDemographic) {
+    private Party party;
+
+    private VoterDemographics voterDemographics;
+
+    public Representative(boolean winner, String name, Race race, Party party, VoterDemographics voterDemographics) {
+        this.winner = winner;
         this.name = name;
         this.race = race;
         this.party = party;
-        this.gender = gender;
-        this.voterDemographic = voterDemographic;
+        this.voterDemographics = voterDemographics;
+    }
+
+    public boolean isWinner() {
+        return winner;
+    }
+
+    public void setWinner(boolean winner) {
+        this.winner = winner;
     }
 
     public String getName() {
@@ -24,35 +36,27 @@ public class Representative {
         this.name = name;
     }
 
-    public String getRace() {
+    public Race getRace() {
         return race;
     }
 
-    public void setRace(String race) {
+    public void setRace(Race race) {
         this.race = race;
     }
 
-    public String getParty() {
+    public Party getParty() {
         return party;
     }
 
-    public void setParty(String party) {
+    public void setParty(Party party) {
         this.party = party;
     }
 
-    public String getGender() {
-        return gender;
+    public VoterDemographics getVoterDemographics() {
+        return voterDemographics;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public VoterDemographics getVoterDemographic() {
-        return voterDemographic;
-    }
-
-    public void setVoterDemographic(VoterDemographics voterDemographic) {
-        this.voterDemographic = voterDemographic;
+    public void setVoterDemographics(VoterDemographics voterDemographics) {
+        this.voterDemographics = voterDemographics;
     }
 }

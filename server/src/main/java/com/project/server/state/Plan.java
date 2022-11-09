@@ -8,56 +8,35 @@ import java.util.List;
 @Document("plans")
 public class Plan {
 
-    @Id
-    private String id;
+    private boolean smd;
 
-    private boolean isSmd;
+    private Tags tag;
 
-//    private int republicanFairness;
-//
-//    private int democraticFairness;
-//
-//    private int whiteFairness;
-//
-//    private int blackFairness;
-//
-//    private int hispanicFairness;
-
-    //Winners from simulated election results or current reps if it's the current plan
-    private List<Representative> winners;
-
-    //geojson of this district plan
     private String geojson;
 
-    public Plan(String id, boolean isSmd, List<Representative> winners, String geojson) {
-        this.id = id;
-        this.isSmd = isSmd;
-        this.winners = winners;
+    private District districts[];
+
+    public Plan(boolean smd, Tags tag, String geojson, District[] districts) {
+        this.smd = smd;
+        this.tag = tag;
         this.geojson = geojson;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.districts = districts;
     }
 
     public boolean isSmd() {
-        return isSmd;
+        return smd;
     }
 
     public void setSmd(boolean smd) {
-        isSmd = smd;
+        this.smd = smd;
     }
 
-    public List<Representative> getWinners() {
-        return winners;
+    public Tags getTag() {
+        return tag;
     }
 
-    public void setWinners(List<Representative> winners) {
-        this.winners = winners;
+    public void setTag(Tags tag) {
+        this.tag = tag;
     }
 
     public String getGeojson() {
@@ -66,5 +45,13 @@ public class Plan {
 
     public void setGeojson(String geojson) {
         this.geojson = geojson;
+    }
+
+    public District[] getDistricts() {
+        return districts;
+    }
+
+    public void setDistricts(District[] districts) {
+        this.districts = districts;
     }
 }
