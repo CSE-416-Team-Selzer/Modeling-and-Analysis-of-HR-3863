@@ -16,9 +16,9 @@ export const getPlanGeoJson = (id) => api.get(`/plans/geojson?id=${id}`)
 export const getPlanWinners = (id) => api.get(`/plans/winners?id=${id}`)
 
 
-export const getSmdEnsembleDistrictsByTag = (tag, name) => api.get(`/state/ensemble/smd/district?tag=${tag}&name=${name}`)
+export const getSmdEnsembleDistrictsByTag = (tag, name) => api.get(`/state/ensemble/smd/district?tag=${tag}`)
 
-export const getMmdEnsembleDistrictsByTag = (tag, name) => api.get(`/state/ensemble/mmd/district?tag=${tag}&name=${name}`)
+export const getMmdEnsembleDistrictsByTag = (tag, name) => api.get(`/state/ensemble/mmd/district?tag=${tag}`)
 
 export const getSmdPlanByTag = (tag, name) => api.get(`/state/plans/smd?tag=${tag}&name=${name}`)
 
