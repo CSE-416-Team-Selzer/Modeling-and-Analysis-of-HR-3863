@@ -133,28 +133,22 @@ class PopulationChart extends React.Component {
     }
 
     componentDidMount() {
-        /*const fetchData = async () => {
+        const fetchData = async () => {
             
             let currentState = this.props.stateName;
-            const data = await api.getStateDemographics( (currentState.charAt(0).toUpperCase() + currentState.slice(1)) );
-            
-            let demographics = data.data;
-            let demographicsArray = [ demographics.democratPopulation, demographics.republicanPopulation, demographics.whitePopulation, demographics.blackPopulation, demographics.hispanicPopulation, demographics.religiousPopulation, demographics.areligiousPopulation];
-            console.log(demographicsArray)
-
+            const req = await api.getStateDemographics(currentState);
+            let demographics = req.data;
+            let demographicsArray = [ demographics.population, demographics.democratPopulation, demographics.republicanPopulation, demographics.whitePopulation, demographics.blackPopulation, demographics.hispanicPopulation, demographics.otherVotes];
             this.setState( {
                 series: [{
                     name: '',
                     data: demographicsArray
                 }]
             } );
-            console.log(this.state.series)
         }
-  
         fetchData()
-          .catch(console.error);*/
+          .catch( err => {console.error(err)});
     };
-
 
     render() {
         return (
