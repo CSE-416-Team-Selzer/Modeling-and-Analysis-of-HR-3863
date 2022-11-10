@@ -1,8 +1,7 @@
 import './App.css';
-import HomePage from './HomePage.js';
-import StatePage from './StatePage.js';
+import HomePage from './home_page.js';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import StatePageShell from './StatePageShell.js';
+import StatePageShell from './state_page_shell.js';
 
 function App() {
   return (

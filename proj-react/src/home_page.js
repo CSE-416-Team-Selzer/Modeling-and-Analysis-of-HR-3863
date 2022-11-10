@@ -1,6 +1,6 @@
 import React from "react";
-import StatesNavbar from './StatesNavbar.js';
-import HomeMap from './HomeMap.js';
+import StatesNavbar from './states_navbar.js';
+import HomeMap from './home_map.js';
 import { useParams } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,10 +8,10 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
-import StateMap from "./StateMap.js";
-import ElectionBar from "./ElectionBar.js";
+import StateMap from "./state_map.js";
+import ElectionBar from "./election_bar.js";
 import Chart from 'react-apexcharts';
-import SpecificElection from "./SpecificElection.js";
+import SpecificElection from "./specific_election.js";
 
 
 export default class HomePage extends React.Component {

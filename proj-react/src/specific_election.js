@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import Chart from 'react-apexcharts';
-import Representative from "./Representative";
+import Representative from "./representative";
 
 class SpecificElection extends React.Component {
     // rep struct passed as a prompt
@@ -55,9 +55,7 @@ class SpecificElection extends React.Component {
 class ApexBarChartDetailed extends React.Component {
     constructor(props) {
       super(props);
-  
       this.state = {
-  
         series: [{
           data: [200, 430, 448, 100, 220, 350, 23]
         }],

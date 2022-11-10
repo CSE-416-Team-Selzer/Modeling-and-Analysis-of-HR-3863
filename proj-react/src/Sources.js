@@ -1,5 +1,5 @@
 import React from "react";
-import StatesNavbar from './StatesNavbar.js';
+import StatesNavbar from './states_navbar.js';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';

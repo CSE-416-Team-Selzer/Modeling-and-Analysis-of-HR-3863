@@ -1,14 +1,15 @@
 import React from "react";
-import StatesNavbar from './StatesNavbar.js';
+import StatesNavbar from './states_navbar.js';
 import Chart from 'react-apexcharts';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import Enums from "./Enums.js";
+import Enums from "./enums.js";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import api from './api'
 
+const median = 2;
 class DemographicsPage extends React.Component {
     constructor(props){
         super(props);
@@ -46,13 +47,13 @@ class DemographicsPage extends React.Component {
                         let box = data[i].demographicsBox;
                         this.state.dataSMD[tag].push(
                             {
-                                x: `district ${i+1}`,
+                                x: `District ${i+1}`,
                                 y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
                             }
                         ) 
                     }
                     for(let data of this.state.dataSMD[tag]){
-                        this.state.lineDataSMD[tag].push({x: data.x, y: data.y[2]})     // y[2] will always be the midpoint
+                        this.state.lineDataSMD[tag].push({x: data.x, y: data.y[median]})     // y[2] will always be the midpoint
                     }
                     this.setState({finishedUpdatingSMD:true});
             })
@@ -65,7 +66,7 @@ class DemographicsPage extends React.Component {
                         let box = data[i].demographicsBox;
                         this.state.dataMMD[tag].push(
                             {
-                                x: `district ${i+1}`,
+                                x: `District ${i+1}`,
                                 y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
                             }
                         ) 
@@ -138,19 +139,19 @@ class DemographicsPage extends React.Component {
         return(
             <div style={{width:"100%"}}>
                 <StatesNavbar stateSelect={true}/>
-                <Tabs defaultActiveKey="smd" id="tab-outer" className="mb-3">    
+                <Tabs defaultActiveKey="" id="tab-outer" className="mb-3">    
                     <Tab eventKey="smd" title="SMD">
-                        <Tabs defaultActiveKey="democrat" id="tab-smd" className="mb-3">
+                        <Tabs defaultActiveKey="" id="tab-smd" className="mb-3">
                             {this.state.boxPlotsSMD}
                         </Tabs>
                     </Tab>
                     <Tab eventKey="mmd" title="MMD">
-                        <Tabs defaultActiveKey="democrat" id="tab-mmd" className="mb-3">
+                        <Tabs defaultActiveKey="" id="tab-mmd" className="mb-3">
                             {this.state.boxPlotsMMD}
                         </Tabs>
                     </Tab>
                     <Tab eventKey="mix" title="Compared">
-                        <Tabs defaultActiveKey="democrat" id="tab-mmd" className="mb-3">
+                        <Tabs defaultActiveKey="" id="tab-mmd" className="mb-3">
                             {this.state.boxPlotsCompared}
                         </Tabs>
                     </Tab>
