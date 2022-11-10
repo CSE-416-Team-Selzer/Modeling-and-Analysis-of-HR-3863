@@ -30,9 +30,7 @@ class ElectionsPage extends React.Component {
 class VotesChart extends React.Component {
     constructor(props) {
       super(props);
-  
       this.state = {
-  
         series: [{
           data: []
         }],
