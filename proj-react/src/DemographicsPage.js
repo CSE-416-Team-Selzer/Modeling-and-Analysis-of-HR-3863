@@ -21,14 +21,23 @@ class DemographicsPage extends React.Component {
             boxPlotsSMD: [],
             boxPlotsMMD: [],
             boxPlotsCompared: [],
+            finishedUpdatingSMD: false,
+            finishedUpdatingMMD: false,
         }
         for(let tag in Enums.groups){ 
             this.state.dataSMD[tag] = [];
             this.state.dataMMD[tag] = []
         }
+        for(let tag in Enums.groups){
+            this.state.lineDataSMD[tag] = []
+            this.state.boxPlotsSMD.push([
+                <Tab id={Enums.groups[tag].toLowerCase() + "smd"} title={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1)} eventKey={Enums.groups[tag]}>
+                    <BoxandWhisker boxData={this.state.dataSMD[tag]} lineData={this.state.lineDataSMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " SMD"}/>
+                </Tab>
+            ])
+        }
        for(let tag in Enums.groups){ 
             console.log(tag)
-            let dataSMD = this.state.dataSMD;
             api.getSmdEnsembleDistrictsByTag(tag)
                 .then( (response)=> {
                     let data = response.data;
@@ -42,40 +51,33 @@ class DemographicsPage extends React.Component {
                             }
                         ) 
                     }
+                    for(let data of this.state.dataSMD[tag]){
+                        this.state.lineDataSMD[tag].push({x: data.x, y: data.y[2]})     // y[2] will always be the midpoint
+                    }
+                    this.setState({finishedUpdatingSMD:true});
             })
-            let dataMMD = this.state.dataMMD;
             api.getMmdEnsembleDistrictsByTag(tag)
-                .then( function (response) {
+                .then(  (response) => {
                     console.log(response)
                     let data = response.data;
 
                     for(let i = 0; i < data.length; i++){
                         let box = data[i].demographicsBox;
-                        dataMMD[tag].push(
+                        this.state.dataMMD[tag].push(
                             {
                                 x: `district ${i+1}`,
                                 y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
                             }
                         ) 
                     }
+                    for(let data of this.state.dataMMD[tag]){
+                        this.state.lineDataMMD[tag].push({x: data.x, y: data.y[2]})     // y[2] will always be the midpoint
+                    }
+                    this.setState({finishedUpdatingMMD:true})
             })
         }
         for(let tag in Enums.groups){
-            this.state.lineDataSMD[tag] = []
-            for(let data of this.state.dataSMD[tag]){
-                this.state.lineDataSMD[tag].push({x: data.x, y: data.y[2]})     // y[2] will always be the midpoint
-            }
-            this.state.boxPlotsSMD.push([
-                <Tab id={Enums.groups[tag].toLowerCase() + "smd"} title={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1)} eventKey={Enums.groups[tag]}>
-                    <BoxandWhisker boxData={this.state.dataSMD[tag]} lineData={this.state.lineDataSMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " SMD"}/>
-                </Tab>
-            ])
-        }
-        for(let tag in Enums.groups){
             this.state.lineDataMMD[tag] = []
-            for(let data of this.state.dataMMD[tag]){
-                this.state.lineDataMMD[tag].push({x: data.x, y: data.y[2]})     // y[2] will always be the midpoint
-            }
             this.state.boxPlotsMMD.push([
                 <Tab id={Enums.groups[tag].toLowerCase() + "mmd"} title={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1)} eventKey={Enums.groups[tag]}>
                     <BoxandWhisker boxData={this.state.dataMMD[tag]} lineData={this.state.lineDataMMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " MMD"}/>
@@ -136,7 +138,7 @@ class DemographicsPage extends React.Component {
         return(
             <div style={{width:"100%"}}>
                 <StatesNavbar stateSelect={true}/>
-                <Tabs defaultActiveKey="mix" id="tab-outer" className="mb-3">    
+                <Tabs defaultActiveKey="smd" id="tab-outer" className="mb-3">    
                     <Tab eventKey="smd" title="SMD">
                         <Tabs defaultActiveKey="democrat" id="tab-smd" className="mb-3">
                             {this.state.boxPlotsSMD}
