@@ -16,13 +16,7 @@ public class StateController {
     public StateController(StateService stateService) {
         this.stateService = stateService;
     }
-
-    private State loadedState;
-
-    @GetMapping
-    public State getState(@RequestParam String name){
-        return stateService.getState(name);
-    }
+    
 
     @GetMapping("/demographics")
     public Demographics getStateDemographics(@RequestParam String name){
