@@ -12,23 +12,11 @@ public class StateService {
 
     private State loadedState;
 
-    public State getState(String stateName){
+    public Demographics getDemographics(String stateName) {
         if(loadedState == null){
             loadedState = stateRepository.findByName(stateName);
         }
-        return loadedState;
-    }
-
-    public State saveState(State state) {
-        return stateRepository.save(state);
-    }
-
-    public List<EnsembleDistrict> getSmdEnsembleDistrictsByTag(DistrictTags tag) {
-        return loadedState.getEnsembleData().getSmdEnsembleDistrictsByTag(tag);
-    }
-
-    public List<EnsembleDistrict> getMmdEnsembleDistrictsByTag(DistrictTags tag) {
-        return loadedState.getEnsembleData().getMmdEnsembleDistrictsByTag(tag);
+        return loadedState.getDemographics();
     }
 
     public Plan getSmdPlanByTag(Tags tag, String stateName) {
@@ -45,10 +33,15 @@ public class StateService {
         return loadedState.getMmdPlanByTag(tag);
     }
 
-    public Demographics getDemographics(String stateName) {
-        if(loadedState == null){
-            loadedState = stateRepository.findByName(stateName);
-        }
-        return loadedState.getDemographics();
+    public List<EnsembleDistrict> getSmdEnsembleDistrictsByTag(DistrictTags tag) {
+        return loadedState.getEnsembleData().getSmdEnsembleDistrictsByTag(tag);
+    }
+
+    public List<EnsembleDistrict> getMmdEnsembleDistrictsByTag(DistrictTags tag) {
+        return loadedState.getEnsembleData().getMmdEnsembleDistrictsByTag(tag);
+    }
+
+    public State saveState(State state) {
+        return stateRepository.save(state);
     }
 }
