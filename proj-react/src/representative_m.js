@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import Chart from 'react-apexcharts';
-import SpecificElection from "./SpecificElection";
+import SpecificElection from "./specific_election";
 
 class Representative extends React.Component{
     construtor(props){

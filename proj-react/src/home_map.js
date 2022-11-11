@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, useMap, Popup, Marker, GeoJSON } from 'react-l
 import { useNavigate } from "react-router-dom";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import StateMap from "./StateMap.js";
+import StateMap from "./state_map.js";
 const states = require('./geoJSON/us-states-pruned.json');
 const az = require('./geoJSON/az.json')
 const tx = require('./geoJSON/tx.json')
@@ -14,38 +14,26 @@ const position = [39, -98];
 
 function SetBoundsStates() {
     const [bounds, setBounds] = useState()
-    
     const map = useMap();
-    
     let navigate = useNavigate(); 
     const routeChange = (state) =>{ 
       if(state != window.location.pathname)
         navigate(state);
     }
-
     function highlightState(e) {
-        var layer = e.target;
-
+        let layer = e.target;
         layer.setStyle({
             color: 'red',
         });
-    
-       
         layer.bringToFront();
     }
-
     function resetHighlight(e) {
-        var layer = e.target;
-
+        let layer = e.target;
         layer.setStyle({
             color: 'blue',
         });
-    
-       
         layer.bringToFront();
     }
-
-
     function zoomToState(e) {
         map.fitBounds(e.target.getBounds());
 
@@ -61,7 +49,6 @@ function SetBoundsStates() {
             click: zoomToState
         });
     }
-  
     return (
       <>
         <GeoJSON
@@ -76,7 +63,6 @@ function SetBoundsStates() {
 
 function HomeMap() {
     let location = useLocation();
-
     return(
         <MapContainer 
             style={{ height: 600, width: "100%" }} 

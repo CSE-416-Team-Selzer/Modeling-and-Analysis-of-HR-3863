@@ -40,7 +40,6 @@ class StatesNavbar extends React.Component {
               </> : <></>
             }
             <Nav.Link href="src">Sources</Nav.Link>
-            
           </Nav>
         </Navbar.Collapse>
       </Container>

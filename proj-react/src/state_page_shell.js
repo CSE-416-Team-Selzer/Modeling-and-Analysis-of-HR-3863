@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import StatesNavbar from './StatesNavbar.js';
+import StatesNavbar from './states_navbar.js';
 import { renderMatches, useParams } from "react-router-dom";
-import StatePage from "./StatePage.js";
-import ElectionsPage from "./ElectionsPage.js";
-import DemographicsPage from "./DemographicsPage.js";
-import SourcesPage from "./Sources.js";
+import StatePage from "./state_page.js";
+import ElectionsPage from "./elections_page.js";
+import DemographicsPage from "./demographics_page.js";
+import SourcesPage from "./sources_m.js";
 
 export default function StatePageShell(props){
     const params = useParams();
@@ -13,9 +13,6 @@ export default function StatePageShell(props){
     let returns = (<></>)
     if(stateName.localeCompare("elec") === 0 || stateName.localeCompare("src") === 0 || stateName.localeCompare("demo") === 0)  {
         path = false;
-    }
-    else{
-
     }
     if(path){
         returns = (<StatePage stateName={stateName}/>)

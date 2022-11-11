@@ -1,9 +1,9 @@
 import React from "react";
-import StatesNavbar from './StatesNavbar.js';
+import StatesNavbar from './states_navbar.js';
 import Chart from 'react-apexcharts';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import Enums from "./Enums.js";
+import Enums from "./enums_m.js";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -30,9 +30,7 @@ class ElectionsPage extends React.Component {
 class VotesChart extends React.Component {
     constructor(props) {
       super(props);
-  
       this.state = {
-  
         series: [{
           data: []
         }],

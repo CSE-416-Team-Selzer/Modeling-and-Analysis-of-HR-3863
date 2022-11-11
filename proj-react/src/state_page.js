@@ -1,10 +1,10 @@
 import React from "react";
-import StatesNavbar from './StatesNavbar.js';
+import StatesNavbar from './states_navbar.js';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import StateMap from "./StateMap.js";
+import StateMap from "./state_map.js";
 import Chart from 'react-apexcharts';
 import api from './api'
 import Tabs from 'react-bootstrap/Tabs';
@@ -16,13 +16,14 @@ class StatePage extends React.Component {
         this.state = {
             stateName: this.props.stateName,
             smdOpen: true,
+            test: false,
         }
         this.state.stateName = this.props.stateName;
         console.log(this.state.stateName);
         /* FOR ANEES - Same thing you did with Demographics, just for the plan geojsons.
         */
-
     }
+
     render(){
         var styledStateName = this.state.stateName[0].toUpperCase() + this.state.stateName.substring(1);
         // note: alter state map so that it can take a plan tag and pull the corresponding geojson out of the server
@@ -56,7 +57,7 @@ class StatePage extends React.Component {
                                     <PopulationChart stateName={this.state.stateName}/>
                                 </Tab>
                                 <Tab eventKey="electsplits" title="Electoral Splits">
-                                    <PopulationChart stateName={this.state.stateName}/>
+                                    [PLACEHOLDER]
                                 </Tab>
                             </Tabs>
                         </Col>
@@ -74,7 +75,6 @@ class SummaryData extends React.Component {
 
         }
     }
-
     render(){
         return(
         <Container>
@@ -141,7 +141,6 @@ class PopulationChart extends React.Component {
 
     componentDidMount() {
         const fetchData = async () => {
-            
             let currentState = this.props.stateName;
             const req = await api.getStateDemographics(currentState);
             let demographics = req.data;
