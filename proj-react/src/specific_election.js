@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import Chart from 'react-apexcharts';
-import Representative from "./representative";
+import Representative from "./representative_m";
 
 class SpecificElection extends React.Component {
     // rep struct passed as a prompt

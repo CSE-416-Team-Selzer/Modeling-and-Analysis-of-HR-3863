@@ -3,7 +3,7 @@ import StatesNavbar from './states_navbar.js';
 import Chart from 'react-apexcharts';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import Enums from "./enums.js";
+import Enums from "./enums_m.js";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

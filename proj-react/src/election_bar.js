@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import Chart from 'react-apexcharts';
 import SpecificElection from "./specific_election";
-import Representative from "./representative";
+import Representative from "./representative_m";
 import api from './api'
 
 class ElectionBar extends React.Component {

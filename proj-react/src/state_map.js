@@ -70,10 +70,7 @@ function resolveZoom(state) {
 
 function SetBoundsStates(props) {
     const [bounds, setBounds] = useState()
-    
-
     const map = useMap()
-  
     const innerHandlers = useMemo(
       () => ({
         click(e) {
@@ -85,26 +82,20 @@ function SetBoundsStates(props) {
     )
 
     function highlightState(e) {
-        var layer = e.target;
-
+        let layer = e.target;
         layer.setStyle({
             color: 'red',
         });
-    
         layer.openPopup();
-        
         layer.bringToFront();
     }
 
     function resetHighlight(e) {
-        var layer = e.target;
-
+        let layer = e.target;
         layer.setStyle({
             color: 'blue',
         });
-    
         layer.closePopup();
-        
         layer.bringToFront();
     }
 
@@ -139,19 +130,14 @@ function SetBoundsStates(props) {
 
 function StateMap(props) {
     console.log(props.smdOpen)
-
     const [isLoading, setLoading] = useState(true);
-
     useEffect(() => {
 
       const fetchData = async () => {
         let currentState = props.stateName
         let data = await api.getSmdPlanByTag("current", currentState);
-       
         let stateGeoJson = data.data.geojson;
-
         console.log(stateGeoJson)
-
         if(currentState == "texas"){
           txs = stateGeoJson;
         } else if(currentState == "utah"){
@@ -173,11 +159,9 @@ function StateMap(props) {
 
         setLoading(false)
       }
-
       fetchData()
         .catch(console.error);
     },[])
-
     if(!isLoading)
       return(
           <MapContainer 

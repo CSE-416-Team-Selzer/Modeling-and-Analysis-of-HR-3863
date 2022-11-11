@@ -4,7 +4,7 @@ import { renderMatches, useParams } from "react-router-dom";
 import StatePage from "./state_page.js";
 import ElectionsPage from "./elections_page.js";
 import DemographicsPage from "./demographics_page.js";
-import SourcesPage from "./sources.js";
+import SourcesPage from "./sources_m.js";
 
 export default function StatePageShell(props){
     const params = useParams();
