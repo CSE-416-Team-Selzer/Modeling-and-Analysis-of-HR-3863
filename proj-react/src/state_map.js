@@ -16,9 +16,6 @@ const utm = require('./geoJSON/utm.json')
 
 const position = [39, -98];
 
-api.getState()
-
-
 function resolveStateName(state, smdOpen) {
   console.log(state)
   console.log(smdOpen)
