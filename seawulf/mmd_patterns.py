@@ -12,20 +12,20 @@ def generate_patterns(number):
         patterns.append([5])
         return patterns
     elif number < 3:
-        return -1
+        return None
     else:
         patterns3 = generate_patterns(number-3)
         patterns4 = generate_patterns(number-4)
         patterns5 = generate_patterns(number-5)
-        if patterns3 != -1:
+        if patterns3 is not None:
             for i in patterns3:
                 i.append(3)
                 patterns.append(i)
-        if patterns4 != -1:
+        if patterns4 is not None:
             for i in patterns4:
                 i.append(4)
                 patterns.append(i)
-        if patterns5 != -1:
+        if patterns5 is not None:
             for i in patterns5:
                 i.append(5)
                 patterns.append(i)
