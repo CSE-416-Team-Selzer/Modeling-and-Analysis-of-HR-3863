@@ -1,9 +1,7 @@
-import matplotlib.pyplot as plt
 from gerrychain import (GeographicPartition, Partition, Graph, MarkovChain,
                         proposals, updaters, constraints, accept, Election)
 from gerrychain.proposals import recom
 from functools import partial
-import pandas
 from gerrychain import (Graph, Election)
 import json
 
@@ -62,7 +60,7 @@ chain = MarkovChain(
     ],
     accept=accept.always_accept,
     initial_state=initial_partition,
-    total_steps=10
+    total_steps=10000
 )
 
 ensemble = {}
