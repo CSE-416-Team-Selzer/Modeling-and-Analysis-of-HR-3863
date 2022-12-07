@@ -1,8 +1,6 @@
 package com.project.server.state;
 
 public class Demographics {
-    private int population;
-
     private int democratPopulation;
 
     private int republicanPopulation;
@@ -13,25 +11,14 @@ public class Demographics {
 
     private int hispanicPopulation;
 
-    private int otherVotes;
-
-    public Demographics(int population, int democratPopulation, int republicanPopulation, int whitePopulation, int blackPopulation, int hispanicPopulation, int otherVotes) {
-        this.population = population;
+    public Demographics(int democratPopulation, int republicanPopulation, int whitePopulation, int blackPopulation, int hispanicPopulation) {
         this.democratPopulation = democratPopulation;
         this.republicanPopulation = republicanPopulation;
         this.whitePopulation = whitePopulation;
         this.blackPopulation = blackPopulation;
         this.hispanicPopulation = hispanicPopulation;
-        this.otherVotes = otherVotes;
     }
 
-    public int getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(int population) {
-        this.population = population;
-    }
 
     public int getDemocratPopulation() {
         return democratPopulation;
@@ -73,11 +60,4 @@ public class Demographics {
         this.hispanicPopulation = hispanicPopulation;
     }
 
-    public int getOtherVotes() {
-        return otherVotes;
-    }
-
-    public void setOtherVotes(int otherVotes) {
-        this.otherVotes = otherVotes;
-    }
 }
