@@ -2,10 +2,11 @@ class Enums {
     static groups = {
         Democrat: "democrat",
         Republican: "republican",
-        Black: "black",
-        White: "white",
-        Hispanic: "hispanic",
-        Other: "other"
+        Black: "africanAmerican",
+        White: "caucasian",
+        Hispanic: "latino",
+        Asian: "asain",
+        Native: "nativeAmerican"
     }
 }
 

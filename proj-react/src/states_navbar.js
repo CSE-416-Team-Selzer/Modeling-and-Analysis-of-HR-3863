@@ -28,7 +28,7 @@ class StatesNavbar extends React.Component {
               title="States"
               menuVariant="dark"
             >
-              <NavDropdown.Item href="arizona">Arizona</NavDropdown.Item>
+              <NavDropdown.Item href="Arizona">Arizona</NavDropdown.Item>
               <NavDropdown.Item href="texas">Texas</NavDropdown.Item>
               <NavDropdown.Item href="utah">Utah</NavDropdown.Item>
             </NavDropdown>

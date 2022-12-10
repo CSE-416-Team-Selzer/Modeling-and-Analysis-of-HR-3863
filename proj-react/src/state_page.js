@@ -9,6 +9,9 @@ import Chart from 'react-apexcharts';
 import api from './api'
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import DemographicsPage from "./demographics_page.js";
 
 class StatePage extends React.Component {
     constructor(props){
@@ -34,24 +37,26 @@ class StatePage extends React.Component {
                 <Container fluid className="text-center w-100 pb-1">
                     <Row className="gx-3 w-100">
                         <Col fluid key = {this.state.smdOpen}>
-                            <Tabs defaultActiveKey="smd">
-                                <Tab eventKey="smd" title="SMD">
-                                    <Tabs defaultActiveKey="current" id="map-tabs" className="mb-3">
-                                        <Tab eventKey="current" title="Current SMD">
-                                            <StateMap stateName = {this.state.stateName} smdOpen={true}/>
-                                        </Tab>
-                                    </Tabs>
+                            <Tabs defaultActiveKey="current">
+                                <Tab eventKey="current" title="Current Plan & Comparisons">
+                                    <CurrentPlanSubpage/>
                                 </Tab>
-                                <Tab eventKey="mmd" title="MMD">
-                                    <Tabs defaultActiveKey="mmd-avg" id="map-tabs" className="mb-3">
-                                        <Tab eventKey="mmd-avg" title="Average MMD">
-                                            <StateMap stateName = {this.state.stateName} smdOpen={false}/>
-                                        </Tab>
-                                    </Tabs>
+                                <Tab eventKey="smd" title="SMD Ensemble">
+                                    <StateSubpage type="smd"/>
+                                </Tab>
+                                <Tab eventKey="mmd" title="MMD Ensemble">
+                                    <StateSubpage type="mmd"/>
                                 </Tab>
                             </Tabs>
                         </Col>
-                        <Col>
+                    </Row>
+                </Container>
+            </div>
+        );
+    }
+}
+/*
+<Col>
                             <Tabs defaultActiveKey="demog">
                                 <Tab eventKey="demog" title="Demographics">
                                     <PopulationChart stateName={this.state.stateName}/>
@@ -61,10 +66,93 @@ class StatePage extends React.Component {
                                 </Tab>
                             </Tabs>
                         </Col>
-                    </Row>
-                </Container>
-            </div>
-        );
+*/
+/*
+<Tabs defaultActiveKey="smd">
+                                <Tab eventKey="smd" title="SMD">
+                                    <Tabs defaultActiveKey="current" id="map-tabs" className="mb-3">
+                                        <Tab eventKey="current" title="Current SMD">
+                                            <StateMap stateName = {this.state.stateName} tag="extremeDemocrat" smdOpen={true}/>
+                                        </Tab>
+                                    </Tabs>
+                                </Tab>
+                                <Tab eventKey="mmd" title="MMD">
+                                    <Tabs defaultActiveKey="mmd-avg" id="map-tabs" className="mb-3">
+                                        <Tab eventKey="mmd-avg" title="Average MMD">
+                                            <StateMap stateName = {this.state.stateName} tag="extremeDemocrat" smdOpen={false}/>
+                                        </Tab>
+                                    </Tabs>
+                                </Tab>
+                            </Tabs>
+*/
+
+class CurrentPlanSubpage extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={};
+    }
+    render(){
+        return(
+        <Container fluid className="text-center w-100 pb-1">
+            <Row className="gx-3 w-100">
+                <Col>
+                    [MAP PLACEHOLDER]
+                </Col>
+                <Col fluid>
+                    <Tabs defaultActiveKey="demos">
+                        <Tab eventKey="demos" title="Demographics">
+                            <PopulationChart stateName={this.state.stateName}/>
+                        </Tab>
+                        <Tab eventKey="cursmd" title="Current Plan vs SMD">
+                            [COMPARED ENSEMBLE DATA]
+                        </Tab>
+                        <Tab eventKey="curmmd" title="Current Plan vs MMD">
+                            [COMPARED ENSEMBLE DATA]
+                        </Tab>
+                        <Tab eventKey="smdmmd" title="SMD vs MMD">
+                            [COMPARED ENSEMBLE DATA]
+                        </Tab>
+                        <Tab eventKey="bwmix" title="Box & Whisker Compared Points">
+                            <DemographicsPage type="mix"/>
+                        </Tab>
+                    </Tabs>
+                </Col>
+            </Row>
+        </Container>);
+    }
+}
+
+class StateSubpage extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            
+        }
+    }
+    render(){
+        return(
+        <Container fluid className="text-center w-100 pb-1">
+            <Row className="gx-3 w-100">
+                <Col>
+                <DropdownButton id="dropdown-select-plan" variant="secondary" title="Select a Plan">
+                    <Dropdown.Item href={"#/type/"+this.props.type+"/tag/example"}>{this.props.type.toUpperCase()} Example Plan</Dropdown.Item>
+                </DropdownButton>
+                </Col>
+                <Col fluid>
+                    <Tabs defaultActiveKey="demos">
+                        <Tab eventKey="demos" title="Plan vs Current">
+                            [COMPARED DATA]
+                        </Tab>
+                        <Tab eventKey="cursmd" title="Box & Whisker Demographic Breakdowns">
+                            <DemographicsPage type={this.props.type}/>
+                        </Tab>
+                        <Tab eventKey="curmmd" title="Election Data">
+                            [ELECTION DATA PER-DISTRICT]
+                        </Tab>
+                    </Tabs>
+                </Col>
+            </Row>
+        </Container>)
     }
 }
 
@@ -98,7 +186,7 @@ class PopulationChart extends React.Component {
         this.state = {
             series: [{
                 name: '',
-                data: [50000, 30000, 20000, 35874, 10000, 5000, 126]
+                data: [50000, 30000, 20000, 35874, 10000]
             }],
             options: {
                 chart: {
@@ -124,7 +212,7 @@ class PopulationChart extends React.Component {
                     colors: ["transparent"]
                 },
                 xaxis: {
-                    categories: ['Total', 'Democrat', 'Republican', 'White', 'Black', 'Hispanic', 'Other'],
+                    categories: ['Democrat', 'Republican', 'Caucasian', 'African American', 'Latino', 'Asian', 'Native American'],
                 },
                 yaxis: {
                     title: {
@@ -144,7 +232,7 @@ class PopulationChart extends React.Component {
             let currentState = this.props.stateName;
             const req = await api.getStateDemographics(currentState);
             let demographics = req.data;
-            let demographicsArray = [ demographics.population, demographics.democratPopulation, demographics.republicanPopulation, demographics.whitePopulation, demographics.blackPopulation, demographics.hispanicPopulation, demographics.otherVotes];
+            let demographicsArray = [ demographics.democratPopulation, demographics.republicanPopulation, demographics.whitePopulation, demographics.blackPopulation, demographics.hispanicPopulation];
             this.setState( {
                 series: [{
                     name: '',
