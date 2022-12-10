@@ -136,9 +136,31 @@ class DemographicsPage extends React.Component {
                     </Container>
  */
     render(){
+        let use;
+        if(this.props.type.localeCompare("smd")==0){
+            use = ( <Tabs defaultActiveKey="" id="tab-smd" className="mb-3">
+                        {this.state.boxPlotsSMD}
+                    </Tabs>)
+        }
+        else if(this.props.type.localeCompare("mmd")==0){
+            use = ( <Tabs defaultActiveKey="" id="tab-mmd" className="mb-3">
+                        {this.state.boxPlotsMMD}
+                    </Tabs>)
+        }
+        else{
+            use = ( <Tabs defaultActiveKey="" id="tab-mix" className="mb-3">
+                        {this.state.boxPlotsCompared}
+                    </Tabs>)
+        }
         return(
             <div style={{width:"100%"}}>
-                <StatesNavbar stateSelect={true}/>
+                {use}
+            </div>
+        )
+    }
+}
+/*
+<StatesNavbar stateSelect={true}/>
                 <Tabs defaultActiveKey="" id="tab-outer" className="mb-3">    
                     <Tab eventKey="smd" title="SMD">
                         <Tabs defaultActiveKey="" id="tab-smd" className="mb-3">
@@ -151,15 +173,12 @@ class DemographicsPage extends React.Component {
                         </Tabs>
                     </Tab>
                     <Tab eventKey="mix" title="Compared">
-                        <Tabs defaultActiveKey="" id="tab-mmd" className="mb-3">
+                        <Tabs defaultActiveKey="" id="tab-mix" className="mb-3">
                             {this.state.boxPlotsCompared}
                         </Tabs>
                     </Tab>
                 </Tabs>
-            </div>
-        )
-    }
-}
+*/
 
 class BoxandWhisker extends React.Component {
     constructor(props) {
