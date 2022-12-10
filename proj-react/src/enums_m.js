@@ -5,9 +5,19 @@ class Enums {
         Black: "africanAmerican",
         White: "caucasian",
         Hispanic: "latino",
-        Asian: "asain",
+        Asian: "asian",
         Native: "nativeAmerican"
     }
+    static abbrevs = {
+        democrat: "D.",
+        republican: "R.",
+        africanAmerican: "African Am.",
+        caucasian: "Caucasian",
+        latino: "Latino",
+        asian: "Asian",
+        nativeAmerican: "Native Am.",
+        win: "[W]",
+        loss: "[L]",
+    }
 }
-
 export default Enums

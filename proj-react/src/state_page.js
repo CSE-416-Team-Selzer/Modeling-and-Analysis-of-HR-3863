@@ -99,18 +99,41 @@ class CurrentPlanSubpage extends React.Component {
                     [MAP PLACEHOLDER]
                 </Col>
                 <Col fluid>
-                    <Tabs defaultActiveKey="demos">
-                        <Tab eventKey="demos" title="Demographics">
+                    <Tabs defaultActiveKey="statesum">
+                        <Tab eventKey="statesum" title="State Summary">
+                            <SummaryValueField name="Seats" value="9"/>
                             <PopulationChart stateName={this.state.stateName}/>
+                            <VoteSplitChart/>
                         </Tab>
                         <Tab eventKey="cursmd" title="Current Plan vs SMD">
-                            [COMPARED ENSEMBLE DATA]
+                            <Row>
+                                <Col>
+                                    [CURRENT PLAN DATA]
+                                </Col>
+                                <Col>
+                                    <SummaryData name="SMD" textAlign="text-right"/>
+                                </Col>
+                            </Row>
                         </Tab>
                         <Tab eventKey="curmmd" title="Current Plan vs MMD">
-                            [COMPARED ENSEMBLE DATA]
+                            <Row>
+                                <Col>
+                                    [CURRENT PLAN DATA]
+                                </Col>
+                                <Col>
+                                    <SummaryData name="MMD" textAlign="text-right"/>
+                                </Col>
+                            </Row>
                         </Tab>
                         <Tab eventKey="smdmmd" title="SMD vs MMD">
-                            [COMPARED ENSEMBLE DATA]
+                            <Row>
+                                <Col>
+                                    <SummaryData name="SMD" textAlign="text-left"/>
+                                </Col>
+                                <Col>
+                                    <SummaryData name="MMD" textAlign="text-right"/>
+                                </Col>
+                            </Row>
                         </Tab>
                         <Tab eventKey="bwmix" title="Box & Whisker Compared Points">
                             <DemographicsPage type="mix"/>
@@ -125,9 +148,17 @@ class CurrentPlanSubpage extends React.Component {
 class StateSubpage extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            
+        let isMmd = true;
+        if(this.props.type.localeCompare("smd")==0){
+            isMmd = false;
         }
+        this.state = {
+            mmd: isMmd,
+            planSelected: false,
+        }
+    }
+    selectPlan = () => {
+        this.setState({planSelected: true});
     }
     render(){
         return(
@@ -135,19 +166,19 @@ class StateSubpage extends React.Component {
             <Row className="gx-3 w-100">
                 <Col>
                 <DropdownButton id="dropdown-select-plan" variant="secondary" title="Select a Plan">
-                    <Dropdown.Item href={"#/type/"+this.props.type+"/tag/example"}>{this.props.type.toUpperCase()} Example Plan</Dropdown.Item>
+                    <Dropdown.Item onClick={this.selectPlan} href={"#/type/"+this.props.type+"/tag/example"}>{this.props.type.toUpperCase()} Example Plan</Dropdown.Item>
                 </DropdownButton>
                 </Col>
                 <Col fluid>
                     <Tabs defaultActiveKey="demos">
-                        <Tab eventKey="demos" title="Plan vs Current">
-                            [COMPARED DATA]
-                        </Tab>
                         <Tab eventKey="cursmd" title="Box & Whisker Demographic Breakdowns">
                             <DemographicsPage type={this.props.type}/>
                         </Tab>
+                        <Tab eventKey="demos" title="Plan vs Current">
+                            [COMPARED DATA]
+                        </Tab>
                         <Tab eventKey="curmmd" title="Election Data">
-                            [ELECTION DATA PER-DISTRICT]
+                            <VotesChart/>
                         </Tab>
                     </Tabs>
                 </Col>
@@ -156,27 +187,232 @@ class StateSubpage extends React.Component {
     }
 }
 
+class VotesChart extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        series: [{
+          data: []
+        }],
+        options: {
+          chart: {
+            type: 'bar',
+            width: "100%",
+            height: 100,
+            toolbar:{
+                show: false,
+            },
+            zoom: {
+                enabled: false,
+            }
+          },
+          plotOptions: {
+            bar: {
+              borderRadius: 4,
+              horizontal: true,
+            }
+          },
+          dataLabels: {
+            enabled: false
+          },
+          xaxis: {
+            categories: ["test"],
+          }
+        },
+      };
+    }
+    componentDidMount() { // just commenting this out for now
+      /*const fetchData = async () => {
+          
+  
+          const data = await api.getPlanWinners("dummy_smd_1")
+          
+          let voters = data.data[0].voterDemographic;
+          let votersArray = [voters.democratVotes, voters.republicanVotes, voters.whiteVotes, voters.blackVotes];
+          console.log(votersArray)
+  
+          this.setState( {
+              series: [{
+                  name: '',
+                  data: votersArray
+              }]
+          } );
+          
+      }
+  
+      fetchData()
+        .catch(console.error);*/
+        this.setState({
+            series:[{
+                name:'District X Votes',
+                data: [4000, 2000, 1000, 500] // district votes
+            }],
+            options: {
+                title: {
+                    text: "District X Votes"
+                },
+                xaxis:{
+                    categories: ["Rep 1 (D. Asain) [W]", "Rep 2 (R. Caucasian) [W]", "Rep 3 (D. Af. Am.) [L]", "Rep 4 (R. Nat. Am.) [L]"] // representative names
+                }
+            }
+        })
+    };
+    render() {
+      return (
+        <div id="chart">
+          <Chart options={this.state.options} series={this.state.series} type="bar" height={250} />
+        </div>
+      );
+    }
+  }
+
 class SummaryData extends React.Component {
     constructor(props){
         super(props);
+        // props: name, textAlign
         this.state = {
 
         }
     }
     render(){
         return(
-        <Container>
+        <Container fluid className={this.props.textAlign + " w-100 pb-1"}>
             <Row>
-                <Col>
-                    <h5>Summary Data</h5>
+                <Col className="text-left">
+                    <h5>{this.props.name} Summary Data</h5>
                 </Col>
             </Row>
             <Row>
-                <Col>
-                    
-                </Col>
+                    <MinAvgMax name="Safe Districts" values={[1,2,3]}/>
+            </Row>
+            <Row>
+                    <MinAvgMax name="Opportunity Reps" values={[1,2,3]}/>
+            </Row>
+            <Row>
+                    <MinAvgMax name="Democrat Reps" values={[1,2,3]}/>
+            </Row>
+            <Row>
+                <SummaryValueField name="Avg. Polsby Popper" value={3}/>
             </Row>
         </Container>);
+    }
+}
+
+class SummaryValueField extends React.Component{
+    constructor(props){
+        super(props);
+        // takes a property value, and another property name which is just a string
+    }
+    render(){
+        return(
+            <Container fluid className="text-left" style={{borderBottom:"1px solid black", marginBottom:"3px"}}>
+                <Row>
+                    <Col>
+                        <h6 style={{margin:"1px", fontWeight:"600", padding:"0px"}}>
+                            {this.props.name}: {this.props.value}
+                        </h6>
+                    </Col>
+                </Row>
+            </Container>
+        )
+    }
+}
+
+class MinAvgMax extends React.Component{
+    constructor(props){
+        super(props);
+        // takes a property values with fields [min, avg, max], and another property name which is just a string
+    }
+    render(){
+        return(
+            <Container fluid className="text-left" style={{borderBottom:"1px solid black", marginBottom:"3px"}}>
+                <Row>
+                    <Col>
+                        <h6 style={{margin:"1px", fontWeight:"600", padding:"0px"}}>
+                            {this.props.name}
+                        </h6>
+                    </Col>
+                </Row>
+                <Row style={{borderTop:"1px solid black"}}>
+                    <Col>
+                            <span>
+                                Minimum: {this.props.values[0]}
+                            </span>
+                        </Col>
+                        <Col>
+                            <span>
+                                Average: {this.props.values[1]}
+                            </span>
+                        </Col>
+                        <Col>
+                            <span>
+                                Maximum: {this.props.values[2]}
+                            </span>
+                        </Col>
+                    </Row>
+            </Container>
+        )
+    }
+}
+
+class VoteSplitChart extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            series: [{
+                name: 'Democratic Votes',
+                data: [153]
+              }, {
+                name: 'Republican Votes',
+                data: [634]
+              }],
+            options: {
+            chart: {
+                type: 'bar',
+                stacked: true,
+                stackType: '100%'
+              },
+              plotOptions: {
+                bar: {
+                  horizontal: true,
+                },
+              },
+              stroke: {
+                width: 1,
+                colors: ['#fff']
+              },
+              title: {
+                text: 'Vote Share Division',
+                align: 'center',
+                margin: 0,
+              },
+              xaxis: {
+                categories: ["Vote Split"],
+              },
+              tooltip: {
+                y: {
+                  formatter: function (val) {
+                    return val + " votes"
+                  }
+                }
+              },
+              fill: {
+                opacity: 1,
+                colors: ["#00AEF3", "#DE0100"]
+              },
+              legend:{
+                show:false
+              }
+            }
+        }
+    }
+    render(){
+        return(
+        <>
+            <div>
+                <Chart options={this.state.options} series={this.state.series} type="bar" height={200}/>
+            </div>
+        </>);
     }
 }
 
