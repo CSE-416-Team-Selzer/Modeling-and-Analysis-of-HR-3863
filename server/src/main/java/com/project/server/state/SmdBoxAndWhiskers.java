@@ -1,6 +1,6 @@
 package com.project.server.state;
 
-public class BoxAndWhiskers {
+public class SmdBoxAndWhiskers {
     private Box[] black;
     private Box[] white;
     private Box[] latino;
@@ -9,7 +9,7 @@ public class BoxAndWhiskers {
     private Box[] democrat;
     private Box[] republican;
 
-    public BoxAndWhiskers(Box[] black, Box[] white, Box[] latino, Box[] nativeAmerican, Box[] asian, Box[] democrat, Box[] republican) {
+    public SmdBoxAndWhiskers(Box[] black, Box[] white, Box[] latino, Box[] nativeAmerican, Box[] asian, Box[] democrat, Box[] republican) {
         this.black = black;
         this.white = white;
         this.latino = latino;

@@ -26,6 +26,13 @@ public class StateService {
         return loadedState.getVoteShare();
     }
 
+    public int getStateNumSeats(String stateName) {
+        if(loadedState == null){
+            loadedState = stateRepository.findByName(stateName);
+        }
+        return loadedState.getNumSeats();
+    }
+
     public Plan getSmdPlanByTag(Tags tag, String stateName) {
         if(loadedState == null){
             loadedState = stateRepository.findByName(stateName);
@@ -50,5 +57,33 @@ public class StateService {
 
     public State saveState(State state) {
         return stateRepository.save(state);
+    }
+
+    public EnsembleData getSmdEnsembleData(String name) {
+        if(loadedState == null){
+            loadedState = stateRepository.findByName(name);
+        }
+        return loadedState.getSmdEnsembleData();
+    }
+
+    public EnsembleData getMmdEnsembleData(String name) {
+        if(loadedState == null){
+            loadedState = stateRepository.findByName(name);
+        }
+        return loadedState.getMmdEnsembleData();
+    }
+
+    public SmdBoxAndWhiskers getSmdBoxAndWhisker(String name) {
+        if(loadedState == null){
+            loadedState = stateRepository.findByName(name);
+        }
+        return loadedState.getSmdBoxAndWhiskers();
+    }
+
+    public MmdBoxAndWhiskers[] getMmdBoxAndWhisker(String name) {
+        if(loadedState == null){
+            loadedState = stateRepository.findByName(name);
+        }
+        return loadedState.getMmdBoxAndWhiskers();
     }
 }

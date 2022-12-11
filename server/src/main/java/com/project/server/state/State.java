@@ -22,7 +22,11 @@ public class State {
 
     private VoteShare voteShare;
 
-    public State(String name, int numSeats, Demographics demographics, EnsembleData smdEnsembleData, EnsembleData mmdEnsembleData, Plan[] smdPlans, Plan[] mmdPlans, VoteShare voteShare) {
+    private SmdBoxAndWhiskers smdBoxAndWhiskers;
+
+    private MmdBoxAndWhiskers[] mmdBoxAndWhiskers;
+
+    public State(String name, int numSeats, Demographics demographics, EnsembleData smdEnsembleData, EnsembleData mmdEnsembleData, Plan[] smdPlans, Plan[] mmdPlans, VoteShare voteShare, SmdBoxAndWhiskers smdBoxAndWhiskers, MmdBoxAndWhiskers[] mmdBoxAndWhiskers) {
         this.name = name;
         this.numSeats = numSeats;
         this.demographics = demographics;
@@ -31,6 +35,24 @@ public class State {
         this.smdPlans = smdPlans;
         this.mmdPlans = mmdPlans;
         this.voteShare = voteShare;
+        this.smdBoxAndWhiskers = smdBoxAndWhiskers;
+        this.mmdBoxAndWhiskers = mmdBoxAndWhiskers;
+    }
+
+    public SmdBoxAndWhiskers getSmdBoxAndWhiskers() {
+        return smdBoxAndWhiskers;
+    }
+
+    public void setSmdBoxAndWhiskers(SmdBoxAndWhiskers smdBoxAndWhiskers) {
+        this.smdBoxAndWhiskers = smdBoxAndWhiskers;
+    }
+
+    public MmdBoxAndWhiskers[] getMmdBoxAndWhiskers() {
+        return mmdBoxAndWhiskers;
+    }
+
+    public void setMmdBoxAndWhiskers(MmdBoxAndWhiskers[] mmdBoxAndWhiskers) {
+        this.mmdBoxAndWhiskers = mmdBoxAndWhiskers;
     }
 
     public String getName() {

@@ -27,6 +27,11 @@ public class StateController {
         return stateService.getStateVoteShare(name);
     }
 
+    @GetMapping("/seats")
+    public int getStateNumSeats(@RequestParam String name){
+        return stateService.getStateNumSeats(name);
+    }
+
     @GetMapping("/plans/smd")
     public Plan getSmdPlanByTag(@RequestParam Tags tag, @RequestParam String name){
         return stateService.getSmdPlanByTag(tag, name);
@@ -37,19 +42,30 @@ public class StateController {
         return stateService.getMmdPlanByTag(tag, name);
     }
 
-//    @GetMapping("/ensemble/smd/district")
-//    public List<EnsembleDistrict> getSmdEnsembleDistrictsByTag(@RequestParam DistrictTags tag){
-//        return stateService.getSmdEnsembleDistrictsByTag(tag);
-//    }
-//
-//    @GetMapping("/ensemble/mmd/district")
-//    public List<EnsembleDistrict> getMmdEnsembleDistrictsByTag(@RequestParam DistrictTags tag){
-//        return stateService.getMmdEnsembleDistrictsByTag(tag);
-//    }
+    @GetMapping("/plans/smd/ensemble")
+    public EnsembleData getSmdEnsembleData(@RequestParam String name){
+        return stateService.getSmdEnsembleData(name);
+    }
+
+    @GetMapping("/plans/mmd/ensemble")
+    public EnsembleData getMmdEnsembleData(@RequestParam String name){
+        return stateService.getMmdEnsembleData(name);
+    }
+
+    @GetMapping("/plans/smd/boxandwhisker")
+    public SmdBoxAndWhiskers getSmdBoxAndWhisker(@RequestParam String name){
+        return stateService.getSmdBoxAndWhisker(name);
+    }
+
+    @GetMapping("/plans/mmd/boxandwhisker")
+    public MmdBoxAndWhiskers[] getMmdBoxAndWhisker(@RequestParam String name){
+        return stateService.getMmdBoxAndWhisker(name);
+    }
 
     @PostMapping("/addState")
     public String addState(@RequestBody State state){
         State s = stateService.saveState(state);
         return s.getName() + " added Successfully";
     }
+
 }

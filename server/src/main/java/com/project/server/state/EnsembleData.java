@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnsembleData {
-    private float avgPolsbyPopper;
-
     private float minOpportunityReps;
 
     private float maxOpportunityReps;
@@ -30,10 +28,7 @@ public class EnsembleData {
 
     private float avgRepublicanReps;
 
-    private BoxAndWhiskers boxAndWhiskers;
-
-    public EnsembleData(float avgPolsbyPopper, float minOpportunityReps, float maxOpportunityReps, float avgOpportunityReps, float minSafeDistricts, float maxSafeDistricts, float avgSafeDistrits, float maxDemocratReps, float minDemocratReps, float avgDemocratReps, float maxRepublicanReps, float minRepublicanReps, float avgRepublicanReps, BoxAndWhiskers boxAndWhiskers) {
-        this.avgPolsbyPopper = avgPolsbyPopper;
+    public EnsembleData(float minOpportunityReps, float maxOpportunityReps, float avgOpportunityReps, float minSafeDistricts, float maxSafeDistricts, float avgSafeDistrits, float maxDemocratReps, float minDemocratReps, float avgDemocratReps, float maxRepublicanReps, float minRepublicanReps, float avgRepublicanReps) {
         this.minOpportunityReps = minOpportunityReps;
         this.maxOpportunityReps = maxOpportunityReps;
         this.avgOpportunityReps = avgOpportunityReps;
@@ -46,15 +41,6 @@ public class EnsembleData {
         this.maxRepublicanReps = maxRepublicanReps;
         this.minRepublicanReps = minRepublicanReps;
         this.avgRepublicanReps = avgRepublicanReps;
-        this.boxAndWhiskers = boxAndWhiskers;
-    }
-
-    public float getAvgPolsbyPopper() {
-        return avgPolsbyPopper;
-    }
-
-    public void setAvgPolsbyPopper(float avgPolsbyPopper) {
-        this.avgPolsbyPopper = avgPolsbyPopper;
     }
 
     public float getMinOpportunityReps() {
@@ -151,13 +137,5 @@ public class EnsembleData {
 
     public void setAvgRepublicanReps(float avgRepublicanReps) {
         this.avgRepublicanReps = avgRepublicanReps;
-    }
-
-    public BoxAndWhiskers getBoxAndWhiskers() {
-        return boxAndWhiskers;
-    }
-
-    public void setBoxAndWhiskers(BoxAndWhiskers boxAndWhiskers) {
-        this.boxAndWhiskers = boxAndWhiskers;
     }
 }
