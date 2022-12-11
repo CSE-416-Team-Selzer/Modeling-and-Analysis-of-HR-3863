@@ -221,27 +221,45 @@ class VotesChart extends React.Component {
         },
       };
     }
-    componentDidMount() { // just commenting this out for now
-      /*const fetchData = async () => {
+    componentDidMount() { // just testing/showcasing requests here
+      const fetchData = async () => {
           
   
-          const data = await api.getPlanWinners("dummy_smd_1")
-          
-          let voters = data.data[0].voterDemographic;
-          let votersArray = [voters.democratVotes, voters.republicanVotes, voters.whiteVotes, voters.blackVotes];
-          console.log(votersArray)
-  
-          this.setState( {
-              series: [{
-                  name: '',
-                  data: votersArray
-              }]
-          } );
+          let res = await api.getStateDemographics("arizona");
+          console.log(res.data)
+
+          res = await api.getSmdPlanByTag("current", "arizona");
+          console.log(res.data)
+
+          res = await api.getMmdPlanByTag("current", "arizona");
+          console.log(res.data)
+
+          res = await api.getSmdEnsembleData("arizona");
+          console.log(res.data)
+
+          res = await api.getMmdEnsembleData("arizona");
+          console.log(res.data)
+
+          res = await api.getSmdBoxAndWhisker("arizona");
+          console.log(res.data)
+
+          res = await api.getMmdBoxAndWhisker("arizona");
+          console.log(res.data)
+
+          res = await api.getNumSeats("arizona");
+          console.log(res.data)
+
+          res = await api.getVoteShare("arizona");
+          console.log(res.data)
           
       }
   
       fetchData()
-        .catch(console.error);*/
+        .catch(console.error);
+
+
+        
+
         this.setState({
             series:[{
                 name:'District X Votes',
