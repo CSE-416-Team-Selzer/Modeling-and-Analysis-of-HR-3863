@@ -22,6 +22,11 @@ public class StateController {
         return stateService.getDemographics(name);
     }
 
+    @GetMapping("/voteshare")
+    public VoteShare getStateVoteShare(@RequestParam String name){
+        return stateService.getStateVoteShare(name);
+    }
+
     @GetMapping("/plans/smd")
     public Plan getSmdPlanByTag(@RequestParam Tags tag, @RequestParam String name){
         return stateService.getSmdPlanByTag(tag, name);
@@ -32,15 +37,15 @@ public class StateController {
         return stateService.getMmdPlanByTag(tag, name);
     }
 
-    @GetMapping("/ensemble/smd/district")
-    public List<EnsembleDistrict> getSmdEnsembleDistrictsByTag(@RequestParam DistrictTags tag){
-        return stateService.getSmdEnsembleDistrictsByTag(tag);
-    }
-
-    @GetMapping("/ensemble/mmd/district")
-    public List<EnsembleDistrict> getMmdEnsembleDistrictsByTag(@RequestParam DistrictTags tag){
-        return stateService.getMmdEnsembleDistrictsByTag(tag);
-    }
+//    @GetMapping("/ensemble/smd/district")
+//    public List<EnsembleDistrict> getSmdEnsembleDistrictsByTag(@RequestParam DistrictTags tag){
+//        return stateService.getSmdEnsembleDistrictsByTag(tag);
+//    }
+//
+//    @GetMapping("/ensemble/mmd/district")
+//    public List<EnsembleDistrict> getMmdEnsembleDistrictsByTag(@RequestParam DistrictTags tag){
+//        return stateService.getMmdEnsembleDistrictsByTag(tag);
+//    }
 
     @PostMapping("/addState")
     public String addState(@RequestBody State state){

@@ -15,15 +15,14 @@ public class Plan {
 
     private Object geojson;
 
-    private District districts[];
+    private Representative[] representatives;
 
-    public Plan(boolean smd, Tags tag, Object geojson, District[] districts) {
+    public Plan(boolean smd, Tags tag, Object geojson, Representative[] representatives) {
         this.smd = smd;
         this.tag = tag;
         this.geojson = geojson;
-        this.districts = districts;
+        this.representatives = representatives;
     }
-
     public boolean isSmd() {
         return smd;
     }
@@ -48,11 +47,11 @@ public class Plan {
         this.geojson = geojson;
     }
 
-    public District[] getDistricts() {
-        return districts;
+    public Representative[] getRepresentatives() {
+        return representatives;
     }
 
-    public void setDistricts(District[] districts) {
-        this.districts = districts;
+    public void setRepresentatives(Representative[] representatives) {
+        this.representatives = representatives;
     }
 }

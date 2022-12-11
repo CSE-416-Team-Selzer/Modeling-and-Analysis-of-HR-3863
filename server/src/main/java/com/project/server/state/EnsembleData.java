@@ -4,77 +4,160 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnsembleData {
+    private float avgPolsbyPopper;
 
-    private EnsembleFairness smdFairness;
+    private float minOpportunityReps;
 
-    private EnsembleFairness mmdFairness;
+    private float maxOpportunityReps;
 
-    private EnsembleDistrict smdDistricts[];
+    private float avgOpportunityReps;
 
-    private EnsembleDistrict mmdDistricts[];
+    private float minSafeDistricts;
 
-    public EnsembleData(EnsembleFairness smdFairness, EnsembleFairness mmdFairness, EnsembleDistrict[] smdDistricts, EnsembleDistrict[] mmdDistricts) {
-        this.smdFairness = smdFairness;
-        this.mmdFairness = mmdFairness;
-        this.smdDistricts = smdDistricts;
-        this.mmdDistricts = mmdDistricts;
+    private float maxSafeDistricts;
+
+    private float avgSafeDistrits;
+
+    private float maxDemocratReps;
+
+    private float minDemocratReps;
+
+    private float avgDemocratReps;
+
+    private float maxRepublicanReps;
+
+    private float minRepublicanReps;
+
+    private float avgRepublicanReps;
+
+    private BoxAndWhiskers boxAndWhiskers;
+
+    public EnsembleData(float avgPolsbyPopper, float minOpportunityReps, float maxOpportunityReps, float avgOpportunityReps, float minSafeDistricts, float maxSafeDistricts, float avgSafeDistrits, float maxDemocratReps, float minDemocratReps, float avgDemocratReps, float maxRepublicanReps, float minRepublicanReps, float avgRepublicanReps, BoxAndWhiskers boxAndWhiskers) {
+        this.avgPolsbyPopper = avgPolsbyPopper;
+        this.minOpportunityReps = minOpportunityReps;
+        this.maxOpportunityReps = maxOpportunityReps;
+        this.avgOpportunityReps = avgOpportunityReps;
+        this.minSafeDistricts = minSafeDistricts;
+        this.maxSafeDistricts = maxSafeDistricts;
+        this.avgSafeDistrits = avgSafeDistrits;
+        this.maxDemocratReps = maxDemocratReps;
+        this.minDemocratReps = minDemocratReps;
+        this.avgDemocratReps = avgDemocratReps;
+        this.maxRepublicanReps = maxRepublicanReps;
+        this.minRepublicanReps = minRepublicanReps;
+        this.avgRepublicanReps = avgRepublicanReps;
+        this.boxAndWhiskers = boxAndWhiskers;
     }
 
-    public EnsembleFairness getSmdFairness() {
-        return smdFairness;
+    public float getAvgPolsbyPopper() {
+        return avgPolsbyPopper;
     }
 
-    public void setSmdFairness(EnsembleFairness smdFairness) {
-        this.smdFairness = smdFairness;
+    public void setAvgPolsbyPopper(float avgPolsbyPopper) {
+        this.avgPolsbyPopper = avgPolsbyPopper;
     }
 
-    public EnsembleFairness getMmdFairness() {
-        return mmdFairness;
+    public float getMinOpportunityReps() {
+        return minOpportunityReps;
     }
 
-    public void setMmdFairness(EnsembleFairness mmdFairness) {
-        this.mmdFairness = mmdFairness;
+    public void setMinOpportunityReps(float minOpportunityReps) {
+        this.minOpportunityReps = minOpportunityReps;
     }
 
-    public EnsembleDistrict[] getSmdDistricts() {
-        return smdDistricts;
+    public float getMaxOpportunityReps() {
+        return maxOpportunityReps;
     }
 
-    public void setSmdDistricts(EnsembleDistrict[] smdDistricts) {
-        this.smdDistricts = smdDistricts;
+    public void setMaxOpportunityReps(float maxOpportunityReps) {
+        this.maxOpportunityReps = maxOpportunityReps;
     }
 
-    public EnsembleDistrict[] getMmdDistricts() {
-        return mmdDistricts;
+    public float getAvgOpportunityReps() {
+        return avgOpportunityReps;
     }
 
-    public void setMmdDistricts(EnsembleDistrict[] mmdDistricts) {
-        this.mmdDistricts = mmdDistricts;
+    public void setAvgOpportunityReps(float avgOpportunityReps) {
+        this.avgOpportunityReps = avgOpportunityReps;
     }
 
-    public List<EnsembleDistrict> getSmdEnsembleDistrictsByTag(DistrictTags tag) {
-        List<EnsembleDistrict> districts = new ArrayList<>();
-
-        for(int i = 0; i < smdDistricts.length;i++){
-            EnsembleDistrict district = smdDistricts[i];
-
-            if(tag == district.getTag()){
-                districts.add(district);
-            }
-        }
-        return districts;
+    public float getMinSafeDistricts() {
+        return minSafeDistricts;
     }
 
-    public List<EnsembleDistrict> getMmdEnsembleDistrictsByTag(DistrictTags tag) {
-        List<EnsembleDistrict> districts = new ArrayList<>();
+    public void setMinSafeDistricts(float minSafeDistricts) {
+        this.minSafeDistricts = minSafeDistricts;
+    }
 
-        for(int i = 0; i < mmdDistricts.length;i++){
-            EnsembleDistrict district = mmdDistricts[i];
+    public float getMaxSafeDistricts() {
+        return maxSafeDistricts;
+    }
 
-            if(tag == district.getTag()){
-                districts.add(district);
-            }
-        }
-        return districts;
+    public void setMaxSafeDistricts(float maxSafeDistricts) {
+        this.maxSafeDistricts = maxSafeDistricts;
+    }
+
+    public float getAvgSafeDistrits() {
+        return avgSafeDistrits;
+    }
+
+    public void setAvgSafeDistrits(float avgSafeDistrits) {
+        this.avgSafeDistrits = avgSafeDistrits;
+    }
+
+    public float getMaxDemocratReps() {
+        return maxDemocratReps;
+    }
+
+    public void setMaxDemocratReps(float maxDemocratReps) {
+        this.maxDemocratReps = maxDemocratReps;
+    }
+
+    public float getMinDemocratReps() {
+        return minDemocratReps;
+    }
+
+    public void setMinDemocratReps(float minDemocratReps) {
+        this.minDemocratReps = minDemocratReps;
+    }
+
+    public float getAvgDemocratReps() {
+        return avgDemocratReps;
+    }
+
+    public void setAvgDemocratReps(float avgDemocratReps) {
+        this.avgDemocratReps = avgDemocratReps;
+    }
+
+    public float getMaxRepublicanReps() {
+        return maxRepublicanReps;
+    }
+
+    public void setMaxRepublicanReps(float maxRepublicanReps) {
+        this.maxRepublicanReps = maxRepublicanReps;
+    }
+
+    public float getMinRepublicanReps() {
+        return minRepublicanReps;
+    }
+
+    public void setMinRepublicanReps(float minRepublicanReps) {
+        this.minRepublicanReps = minRepublicanReps;
+    }
+
+    public float getAvgRepublicanReps() {
+        return avgRepublicanReps;
+    }
+
+    public void setAvgRepublicanReps(float avgRepublicanReps) {
+        this.avgRepublicanReps = avgRepublicanReps;
+    }
+
+    public BoxAndWhiskers getBoxAndWhiskers() {
+        return boxAndWhiskers;
+    }
+
+    public void setBoxAndWhiskers(BoxAndWhiskers boxAndWhiskers) {
+        this.boxAndWhiskers = boxAndWhiskers;
     }
 }

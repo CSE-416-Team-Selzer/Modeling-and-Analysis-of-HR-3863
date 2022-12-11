@@ -1,62 +1,28 @@
 package com.project.server.state;
 
 public class Representative {
+    private Election winner;
 
-    private boolean winner;
+    private Election[] losers;
 
-    private String name;
-
-    private Race race;
-
-    private Party party;
-
-    private VoterDemographics voterDemographics;
-
-    public Representative(boolean winner, String name, Race race, Party party, VoterDemographics voterDemographics) {
+    public Representative(Election winner, Election[] losers) {
         this.winner = winner;
-        this.name = name;
-        this.race = race;
-        this.party = party;
-        this.voterDemographics = voterDemographics;
+        this.losers = losers;
     }
 
-    public boolean isWinner() {
+    public Election getWinner() {
         return winner;
     }
 
-    public void setWinner(boolean winner) {
+    public void setWinner(Election winner) {
         this.winner = winner;
     }
 
-    public String getName() {
-        return name;
+    public Election[] getLosers() {
+        return losers;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Race getRace() {
-        return race;
-    }
-
-    public void setRace(Race race) {
-        this.race = race;
-    }
-
-    public Party getParty() {
-        return party;
-    }
-
-    public void setParty(Party party) {
-        this.party = party;
-    }
-
-    public VoterDemographics getVoterDemographics() {
-        return voterDemographics;
-    }
-
-    public void setVoterDemographics(VoterDemographics voterDemographics) {
-        this.voterDemographics = voterDemographics;
+    public void setLosers(Election[] losers) {
+        this.losers = losers;
     }
 }
