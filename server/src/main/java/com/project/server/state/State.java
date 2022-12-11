@@ -13,18 +13,46 @@ public class State {
 
     private Demographics demographics;
 
-    private EnsembleData ensembleData;
+    private EnsembleData smdEnsembleData;
+
+    private EnsembleData mmdEnsembleData;
     private Plan[] smdPlans;
 
     private Plan[] mmdPlans;
 
-    public State(String name, int numSeats, Demographics demographics, EnsembleData ensembleData, Plan[] smdPlans, Plan[] mmdPlans) {
+    private VoteShare voteShare;
+
+    private SmdBoxAndWhiskers smdBoxAndWhiskers;
+
+    private MmdBoxAndWhiskers[] mmdBoxAndWhiskers;
+
+    public State(String name, int numSeats, Demographics demographics, EnsembleData smdEnsembleData, EnsembleData mmdEnsembleData, Plan[] smdPlans, Plan[] mmdPlans, VoteShare voteShare, SmdBoxAndWhiskers smdBoxAndWhiskers, MmdBoxAndWhiskers[] mmdBoxAndWhiskers) {
         this.name = name;
         this.numSeats = numSeats;
         this.demographics = demographics;
-        this.ensembleData = ensembleData;
+        this.smdEnsembleData = smdEnsembleData;
+        this.mmdEnsembleData = mmdEnsembleData;
         this.smdPlans = smdPlans;
         this.mmdPlans = mmdPlans;
+        this.voteShare = voteShare;
+        this.smdBoxAndWhiskers = smdBoxAndWhiskers;
+        this.mmdBoxAndWhiskers = mmdBoxAndWhiskers;
+    }
+
+    public SmdBoxAndWhiskers getSmdBoxAndWhiskers() {
+        return smdBoxAndWhiskers;
+    }
+
+    public void setSmdBoxAndWhiskers(SmdBoxAndWhiskers smdBoxAndWhiskers) {
+        this.smdBoxAndWhiskers = smdBoxAndWhiskers;
+    }
+
+    public MmdBoxAndWhiskers[] getMmdBoxAndWhiskers() {
+        return mmdBoxAndWhiskers;
+    }
+
+    public void setMmdBoxAndWhiskers(MmdBoxAndWhiskers[] mmdBoxAndWhiskers) {
+        this.mmdBoxAndWhiskers = mmdBoxAndWhiskers;
     }
 
     public String getName() {
@@ -51,12 +79,20 @@ public class State {
         this.demographics = demographics;
     }
 
-    public EnsembleData getEnsembleData() {
-        return ensembleData;
+    public EnsembleData getSmdEnsembleData() {
+        return smdEnsembleData;
     }
 
-    public void setEnsembleData(EnsembleData ensembleData) {
-        this.ensembleData = ensembleData;
+    public void setSmdEnsembleData(EnsembleData smdEnsembleData) {
+        this.smdEnsembleData = smdEnsembleData;
+    }
+
+    public EnsembleData getMmdEnsembleData() {
+        return mmdEnsembleData;
+    }
+
+    public void setMmdEnsembleData(EnsembleData mmdEnsembleData) {
+        this.mmdEnsembleData = mmdEnsembleData;
     }
 
     public Plan[] getSmdPlans() {
@@ -73,6 +109,14 @@ public class State {
 
     public void setMmdPlans(Plan[] mmdPlans) {
         this.mmdPlans = mmdPlans;
+    }
+
+    public VoteShare getVoteShare() {
+        return voteShare;
+    }
+
+    public void setVoteShare(VoteShare voteShare) {
+        this.voteShare = voteShare;
     }
 
     public Plan getSmdPlanByTag(Tags tag) {

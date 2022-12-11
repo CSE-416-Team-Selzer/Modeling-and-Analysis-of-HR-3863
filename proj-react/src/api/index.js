@@ -5,37 +5,34 @@ const api = axios.create({
 })
 
 
-export const getState = (name) => api.get(`/state?name=${name}`)
-
 export const getStateDemographics = (name) => api.get(`/state/demographics?name=${name}`)
-
-export const getPlan = (id) => api.get(`/plans?id=${id}`)
-
-export const getPlanGeoJson = (id) => api.get(`/plans/geojson?id=${id}`)
-
-export const getPlanWinners = (id) => api.get(`/plans/winners?id=${id}`)
-
-
-export const getSmdEnsembleDistrictsByTag = (tag, name) => api.get(`/state/ensemble/smd/district?tag=${tag}`)
-
-export const getMmdEnsembleDistrictsByTag = (tag, name) => api.get(`/state/ensemble/mmd/district?tag=${tag}`)
 
 export const getSmdPlanByTag = (tag, name) => api.get(`/state/plans/smd?tag=${tag}&name=${name}`)
 
 export const getMmdPlanByTag = (tag, name) => api.get(`/state/plans/mmd?tag=${tag}&name=${name}`)
 
+export const getSmdEnsembleData = (name) => api.get(`/state/plans/smd/ensemble?name=${name}`)
 
+export const getMmdEnsembleData = (name) => api.get(`/state/plans/mmd/ensemble?name=${name}`)
+
+export const getSmdBoxAndWhisker = (name) => api.get(`/state/plans/smd/boxandwhisker?name=${name}`)
+
+export const getMmdBoxAndWhisker = (name) => api.get(`/state/plans/mmd/boxandwhisker?name=${name}`)
+
+export const getNumSeats = (name) => api.get(`/state/seats?name=${name}`)
+
+export const getVoteShare = (name) => api.get(`/state/voteshare?name=${name}`)
 
 const apis = {
-    getState,
-    getPlan,
-    getPlanGeoJson,
     getStateDemographics,
-    getPlanWinners,
-    getSmdEnsembleDistrictsByTag,
-    getMmdEnsembleDistrictsByTag,
     getSmdPlanByTag,
-    getMmdPlanByTag
+    getMmdPlanByTag,
+    getSmdEnsembleData,
+    getMmdEnsembleData,
+    getSmdBoxAndWhisker,
+    getMmdBoxAndWhisker,
+    getNumSeats,
+    getVoteShare
 }
 
 

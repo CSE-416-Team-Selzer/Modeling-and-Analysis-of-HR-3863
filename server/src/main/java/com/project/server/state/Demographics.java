@@ -11,14 +11,22 @@ public class Demographics {
 
     private int hispanicPopulation;
 
-    public Demographics(int democratPopulation, int republicanPopulation, int whitePopulation, int blackPopulation, int hispanicPopulation) {
+    private int asianPopulation;
+
+    private int nativeAmericanPopulation;
+
+    private int totalPopulation;
+
+    public Demographics(int democratPopulation, int republicanPopulation, int whitePopulation, int blackPopulation, int hispanicPopulation, int asianPopulation, int nativeAmericanPopulation, int totalPopulation) {
         this.democratPopulation = democratPopulation;
         this.republicanPopulation = republicanPopulation;
         this.whitePopulation = whitePopulation;
         this.blackPopulation = blackPopulation;
         this.hispanicPopulation = hispanicPopulation;
+        this.asianPopulation = asianPopulation;
+        this.nativeAmericanPopulation = nativeAmericanPopulation;
+        this.totalPopulation = totalPopulation;
     }
-
 
     public int getDemocratPopulation() {
         return democratPopulation;
@@ -60,4 +68,27 @@ public class Demographics {
         this.hispanicPopulation = hispanicPopulation;
     }
 
+    public int getAsianPopulation() {
+        return asianPopulation;
+    }
+
+    public void setAsianPopulation(int asianPopulation) {
+        this.asianPopulation = asianPopulation;
+    }
+
+    public int getNativeAmericanPopulation() {
+        return nativeAmericanPopulation;
+    }
+
+    public void setNativeAmericanPopulation(int nativeAmericanPopulation) {
+        this.nativeAmericanPopulation = nativeAmericanPopulation;
+    }
+
+    public int getTotalPopulation() {
+        return totalPopulation;
+    }
+
+    public void setTotalPopulation(int totalPopulation) {
+        this.totalPopulation = totalPopulation;
+    }
 }

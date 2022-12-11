@@ -39,43 +39,43 @@ class DemographicsPage extends React.Component {
         }
        for(let tag in Enums.groups){ 
             console.log(tag)
-            api.getSmdEnsembleDistrictsByTag(tag)
-                .then( (response)=> {
-                    let data = response.data;
+            // api.getSmdEnsembleDistrictsByTag(tag)
+            //     .then( (response)=> {
+            //         let data = response.data;
 
-                    for(let i = 0; i < data.length; i++){
-                        let box = data[i].demographicsBox;
-                        this.state.dataSMD[tag].push(
-                            {
-                                x: `District ${i+1}`,
-                                y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
-                            }
-                        ) 
-                    }
-                    for(let data of this.state.dataSMD[tag]){
-                        this.state.lineDataSMD[tag].push({x: data.x, y: data.y[median]})     // y[2] will always be the midpoint
-                    }
-                    this.setState({finishedUpdatingSMD:true});
-            })
-            api.getMmdEnsembleDistrictsByTag(tag)
-                .then(  (response) => {
-                    console.log(response)
-                    let data = response.data;
+            //         for(let i = 0; i < data.length; i++){
+            //             let box = data[i].demographicsBox;
+            //             this.state.dataSMD[tag].push(
+            //                 {
+            //                     x: `District ${i+1}`,
+            //                     y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
+            //                 }
+            //             ) 
+            //         }
+            //         for(let data of this.state.dataSMD[tag]){
+            //             this.state.lineDataSMD[tag].push({x: data.x, y: data.y[median]})     // y[2] will always be the midpoint
+            //         }
+            //         this.setState({finishedUpdatingSMD:true});
+            // })
+            // api.getMmdEnsembleDistrictsByTag(tag)
+            //     .then(  (response) => {
+            //         console.log(response)
+            //         let data = response.data;
 
-                    for(let i = 0; i < data.length; i++){
-                        let box = data[i].demographicsBox;
-                        this.state.dataMMD[tag].push(
-                            {
-                                x: `District ${i+1}`,
-                                y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
-                            }
-                        ) 
-                    }
-                    for(let data of this.state.dataMMD[tag]){
-                        this.state.lineDataMMD[tag].push({x: data.x, y: data.y[2]})     // y[2] will always be the midpoint
-                    }
-                    this.setState({finishedUpdatingMMD:true})
-            })
+            //         for(let i = 0; i < data.length; i++){
+            //             let box = data[i].demographicsBox;
+            //             this.state.dataMMD[tag].push(
+            //                 {
+            //                     x: `District ${i+1}`,
+            //                     y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
+            //                 }
+            //             ) 
+            //         }
+            //         for(let data of this.state.dataMMD[tag]){
+            //             this.state.lineDataMMD[tag].push({x: data.x, y: data.y[2]})     // y[2] will always be the midpoint
+            //         }
+            //         this.setState({finishedUpdatingMMD:true})
+            // })
         }
         for(let tag in Enums.groups){
             this.state.lineDataMMD[tag] = []

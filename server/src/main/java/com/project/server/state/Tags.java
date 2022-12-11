@@ -6,6 +6,10 @@ public enum Tags {
     extremeAfricanAmerican,
     extremeCaucasian,
     extremeLatino,
+    maximumOpportunityDistricts,
+    minimumOpportunityDistricts,
+    maximumSafeDistricts,
+    minimumSafeDistricts,
     current,
     average
 }
