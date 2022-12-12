@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import StateMap from "./state_map.js";
-import TestMap from "./state_map.js";
+import TestMap from "./test_map.js";
 import Chart from 'react-apexcharts';
 import api from './api'
 import Tabs from 'react-bootstrap/Tabs';
