@@ -164,18 +164,38 @@ class StateSubpage extends React.Component {
         this.state = {
             mmd: isMmd,
             planSelected: false,
+            plan: {},
         }
     }
-    selectPlan = () => {
+    selectPlan = (tag) => {
         this.setState({planSelected: true});
+        if(!this.state.mmd){
+            api.getSmdPlanByTag(tag, this.props.state).then(response =>{
+                this.setState({plan: response.data});
+                console.log(this.state.plan);
+            })
+        }
+        else {
+            api.getMmdPlanByTag(tag, this.props.state).then(response =>{
+                this.setState({plan: response.data});
+                console.log(this.state.plan);
+            })
+        }
     }
     render(){
         return(
         <Container fluid className="text-center w-100 pb-1">
             <Row className="gx-3 w-100">
                 <Col>
-                <DropdownButton id="dropdown-select-plan" variant="secondary" title="Select a Plan">
-                    <Dropdown.Item onClick={this.selectPlan} href={"#/type/"+this.props.type+"/tag/example"}>{this.props.type.toUpperCase()} Example Plan</Dropdown.Item>
+                <DropdownButton id="dropdown-select-plan" variant="secondary" title="Select an 'Interesting' Plan">
+                    {this.state.mmd ? 
+                    <Dropdown.Item onClick={() => this.selectPlan("average")} href={"#/selected-plan"}>Average {this.props.type.toUpperCase()} Plan</Dropdown.Item> : <></>}
+                    <Dropdown.Item onClick={() => this.selectPlan("extremeDemocrat")} href={"#/selected-plan"}>Extreme Democrat {this.props.type.toUpperCase()} Plan</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.selectPlan("extremeRepublican")} href={"#/selected-plan"}>Extreme Republican {this.props.type.toUpperCase()} Plan</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.selectPlan("maximumOpportunityDistricts")} href={"#/selected-plan"}>Maximum Opportunity Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.selectPlan("minimumOpportunityDistricts")} href={"#/selected-plan"}>Minimum Opportunity Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.selectPlan("maximumSafeDistricts")} href={"#/selected-plan"}>Maximum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.selectPlan("minimumSafeDistricts")} href={"#/selected-plan"}>Minimum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
                 </DropdownButton>
                 </Col>
                 <Col fluid>
@@ -240,7 +260,7 @@ class VotesChart extends React.Component {
           res = await api.getSmdPlanByTag("current", "arizona");
           console.log(res.data)
 
-          res = await api.getMmdPlanByTag("current", "arizona");
+          res = await api.getMmdPlanByTag("average", "arizona");
           console.log(res.data)
 
           res = await api.getSmdEnsembleData("arizona");
