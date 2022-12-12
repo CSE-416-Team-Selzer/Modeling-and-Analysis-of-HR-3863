@@ -39,13 +39,13 @@ class StatePage extends React.Component {
                         <Col fluid key = {this.state.smdOpen}>
                             <Tabs defaultActiveKey="current">
                                 <Tab eventKey="current" title="Current Plan & Comparisons">
-                                    <CurrentPlanSubpage/>
+                                    <CurrentPlanSubpage state={this.state.stateName}/>
                                 </Tab>
                                 <Tab eventKey="smd" title="SMD Ensemble">
-                                    <StateSubpage type="smd"/>
+                                    <StateSubpage type="smd" state={this.state.stateName}/>
                                 </Tab>
                                 <Tab eventKey="mmd" title="MMD Ensemble">
-                                    <StateSubpage type="mmd"/>
+                                    <StateSubpage type="mmd" state={this.state.stateName}/>
                                 </Tab>
                             </Tabs>
                         </Col>
@@ -136,7 +136,7 @@ class CurrentPlanSubpage extends React.Component {
                             </Row>
                         </Tab>
                         <Tab eventKey="bwmix" title="Box & Whisker Compared Points">
-                            <DemographicsPage type="mix"/>
+                            <DemographicsPage type="mix" stateName={this.props.stateName}/>
                         </Tab>
                     </Tabs>
                 </Col>
@@ -172,7 +172,7 @@ class StateSubpage extends React.Component {
                 <Col fluid>
                     <Tabs defaultActiveKey="demos">
                         <Tab eventKey="cursmd" title="Box & Whisker Demographic Breakdowns">
-                            <DemographicsPage type={this.props.type}/>
+                            <DemographicsPage type={this.props.type} stateName={this.props.stateName}/>
                         </Tab>
                         <Tab eventKey="demos" title="Plan vs Current">
                             [COMPARED DATA]
@@ -486,7 +486,7 @@ class PopulationChart extends React.Component {
             let currentState = this.props.stateName;
             const req = await api.getStateDemographics(currentState);
             let demographics = req.data;
-            let demographicsArray = [ demographics.democratPopulation, demographics.republicanPopulation, demographics.whitePopulation, demographics.blackPopulation, demographics.hispanicPopulation];
+            let demographicsArray = [ demographics.democratPopulation, demographics.republicanPopulation, demographics.whitePopulation, demographics.blackPopulation, demographics.hispanicPopulation, demographics.asianPopulation, demographics.nativeAmericanPopulation];
             this.setState( {
                 series: [{
                     name: '',

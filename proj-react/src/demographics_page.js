@@ -27,7 +27,6 @@ class DemographicsPage extends React.Component {
         }
         for(let tag in Enums.groups){ 
             this.state.dataSMD[tag] = [];
-            this.state.dataMMD[tag] = []
         }
         for(let tag in Enums.groups){
             this.state.lineDataSMD[tag] = []
@@ -37,54 +36,14 @@ class DemographicsPage extends React.Component {
                 </Tab>
             ])
         }
-       for(let tag in Enums.groups){ 
-            console.log(tag)
-            // api.getSmdEnsembleDistrictsByTag(tag)
-            //     .then( (response)=> {
-            //         let data = response.data;
-
-            //         for(let i = 0; i < data.length; i++){
-            //             let box = data[i].demographicsBox;
-            //             this.state.dataSMD[tag].push(
-            //                 {
-            //                     x: `District ${i+1}`,
-            //                     y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
-            //                 }
-            //             ) 
-            //         }
-            //         for(let data of this.state.dataSMD[tag]){
-            //             this.state.lineDataSMD[tag].push({x: data.x, y: data.y[median]})     // y[2] will always be the midpoint
-            //         }
-            //         this.setState({finishedUpdatingSMD:true});
-            // })
-            // api.getMmdEnsembleDistrictsByTag(tag)
-            //     .then(  (response) => {
-            //         console.log(response)
-            //         let data = response.data;
-
-            //         for(let i = 0; i < data.length; i++){
-            //             let box = data[i].demographicsBox;
-            //             this.state.dataMMD[tag].push(
-            //                 {
-            //                     x: `District ${i+1}`,
-            //                     y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
-            //                 }
-            //             ) 
-            //         }
-            //         for(let data of this.state.dataMMD[tag]){
-            //             this.state.lineDataMMD[tag].push({x: data.x, y: data.y[2]})     // y[2] will always be the midpoint
-            //         }
-            //         this.setState({finishedUpdatingMMD:true})
-            // })
-        }
-        for(let tag in Enums.groups){
+        /*for(let tag in Enums.groups){
             this.state.lineDataMMD[tag] = []
             this.state.boxPlotsMMD.push([
                 <Tab id={Enums.groups[tag].toLowerCase() + "mmd"} title={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1)} eventKey={Enums.groups[tag]}>
                     <BoxandWhisker boxData={this.state.dataMMD[tag]} lineData={this.state.lineDataMMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " MMD"}/>
                 </Tab>
             ])
-        }
+        }*/
         for(let tag in Enums.groups){
             this.state.boxPlotsCompared.push([
                 <Tab id={Enums.groups[tag].toLowerCase() + "mix"} title={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1)} eventKey={Enums.groups[tag]}>
@@ -95,60 +54,108 @@ class DemographicsPage extends React.Component {
             ])
         }
     }
-    //failed attempts at overlaying them
-    /*<BoxandWhiskerCompared boxDataSMD={this.state.dataSMD[tag]} lineDataSMD={this.state.lineDataSMD[tag]}
-                    boxDataMMD={this.state.dataMMD[tag]} lineDataMMD={this.state.lineDataMMD[tag]} 
-                    type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " Mix"}/>
-    */
-   /*
-   <Container fluid id={Enums.groups[tag].toLowerCase() + "mix-cont"}>
-                    <Row id={Enums.groups[tag].toLowerCase() + "mix-row"}>
-                        <Col id={Enums.groups[tag].toLowerCase() + "mix-col1"}>
-                    <BoxandWhisker boxData={this.state.dataSMD[tag]} lineData={this.state.lineDataSMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " SMD"}/><br/>
-                    </Col>
-                        <Col id={Enums.groups[tag].toLowerCase() + "mix-col2"}>
-                    <BoxandWhisker boxData={this.state.dataMMD[tag]} lineData={this.state.lineDataMMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " MMD"}/>
-                        </Col>
-                    </Row>
-                    </Container>
-   */
-  /*<Container fluid id={Enums.groups[tag].toLowerCase() + "mix-cont"}>
-                    <Row id={Enums.groups[tag].toLowerCase() + "mix-row"}>
-                        <Col id={Enums.groups[tag].toLowerCase() + "mix-col1"} style={{position:'absolute', top: 170, left: 0}}>
-                    <BoxandWhisker boxData={this.state.dataSMD[tag]} lineData={this.state.lineDataSMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " Mix"}/><br/>
-                        </Col>
-                        <Col id={Enums.groups[tag].toLowerCase() + "mix-col2"} style={{position:'absolute', top: 170, left: 0}}>
-                    <BoxandWhisker boxData={this.state.dataMMD[tag]} lineData={this.state.lineDataMMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " Mix"}/>
-                        </Col>
-                    </Row>
-                    </Container>
-  */
- /* SIDE BY SIDE
- <Container fluid id={Enums.groups[tag].toLowerCase() + "mix-cont"}>
-                    <Row id={Enums.groups[tag].toLowerCase() + "mix-row"}>
-                        <Col id={Enums.groups[tag].toLowerCase() + "mix-col1"}>
-                    <BoxandWhisker boxData={this.state.dataSMD[tag]} lineData={this.state.lineDataSMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " SMD"}/><br/>
-                    </Col>
-                        <Col id={Enums.groups[tag].toLowerCase() + "mix-col2"}>
-                    <BoxandWhisker boxData={this.state.dataMMD[tag]} lineData={this.state.lineDataMMD[tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " MMD"}/>
-                        </Col>
-                    </Row>
-                    </Container>
- */
+    componentDidMount(){
+        api.getSmdBoxAndWhisker(this.props.stateName)
+            .then((response)=> {
+                let data = response.data;
+                let dataArr = [];
+                for(let tag in Enums.groups){
+                    if(Enums.groups[tag].localeCompare(Enums.groups.Asian) == 0){
+                        dataArr[tag] = data.asian;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.Black) == 0){
+                        dataArr[tag] = data.black;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.White) == 0){
+                        dataArr[tag] = data.white;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.Hispanic) == 0){
+                        dataArr[tag] = data.latino;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.Native) == 0){
+                        dataArr[tag] = data.nativeAmerican;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.Democrat) == 0){
+                        dataArr[tag] = data.democrat;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.Republican) == 0){
+                        dataArr[tag] = data.republican;
+                    }
+                }
+                for(let tag in Enums.groups){
+                    for(let i = 0; i < dataArr[tag].length; i++){
+                        let box = dataArr[tag][i];
+                        this.state.dataSMD[tag].push(
+                            {
+                                x: `District ${i+1}`,
+                                y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
+                            }
+                        ) 
+                        this.state.lineDataSMD[tag].push({x: `District ${i+1}`, y: box.currentValue});
+                    }
+                }
+                this.setState({finishedUpdatingSMD:true});
+         })/*
+         api.getMmdBoxAndWhisker(this.props.stateName)
+            .then((response)=> {
+                let data = response.data;
+                let dataArr = [];
+                for(let tag in Enums.groups){
+                    if(Enums.groups[tag].localeCompare(Enums.groups.Asian) == 0){
+                        dataArr[tag] = data.asian;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.Black) == 0){
+                        dataArr[tag] = data.black;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.White) == 0){
+                        dataArr[tag] = data.white;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.Hispanic) == 0){
+                        dataArr[tag] = data.latino;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.Native) == 0){
+                        dataArr[tag] = data.nativeAmerican;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.Democrat) == 0){
+                        dataArr[tag] = data.democrat;
+                    }
+                    else if(Enums.groups[tag].localeCompare(Enums.groups.Republican) == 0){
+                        dataArr[tag] = data.republican;
+                    }
+                }
+                for(let tag in Enums.groups){
+                    console.log(dataArr);
+                    for(let i = 0; i < dataArr[tag].length; i++){
+                        let box = dataArr[tag][i];
+                        this.state.dataMMD[tag].push(
+                            {
+                                x: `District ${i+1}`,
+                                y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
+                            }
+                        ) 
+                        this.state.lineDataMMD[tag].push({x: `District ${i+1}`, y: box.currentValue});
+                    }
+                }
+                this.setState({finishedUpdatingMMD:true});
+         })*/
+    }
     render(){
         let use;
         if(this.props.type.localeCompare("smd")==0){
             use = ( <Tabs defaultActiveKey="" id="tab-smd" className="mb-3">
+                        {this.state.finishedUpdatingSMD ? <></> : <>t</> }
                         {this.state.boxPlotsSMD}
                     </Tabs>)
         }
         else if(this.props.type.localeCompare("mmd")==0){
             use = ( <Tabs defaultActiveKey="" id="tab-mmd" className="mb-3">
+                        {this.state.finishedUpdatingMMD ? <></> : <>t</> }
                         {this.state.boxPlotsMMD}
                     </Tabs>)
         }
         else{
             use = ( <Tabs defaultActiveKey="" id="tab-mix" className="mb-3">
+                        {this.state.finishedUpdatingSMD & this.state.finishedUpdatingMMD ? <></> : <>t</> }
                         {this.state.boxPlotsCompared}
                     </Tabs>)
         }
