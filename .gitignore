@@ -5,6 +5,7 @@ frontend/package-lock.json
 frontend/package.json
 preprocessing/unsorted/
 preprocessing/data/
+preprocessing/server/
 preprocessing/data_11_28.zip
 preprocessing/data_11_29.zip
 seawulf/Untitled.ipynb
