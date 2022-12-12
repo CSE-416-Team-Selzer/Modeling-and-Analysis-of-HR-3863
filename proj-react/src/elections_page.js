@@ -7,19 +7,41 @@ import Enums from "./enums_m.js";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Util from "./util.js";
 
 class ElectionsPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-        
+          repArrays: [],
+          curElectStruct: {
+            winners: [
+              {
+                party: "silly",
+                votesReceived: 1234,
+                wonBy: 1,
+              }
+            ],
+            losers:[
+              {
+                party:"very silly",
+                votesReceived: 1233,
+                wonBy: -1,
+              }
+            ]
+          }
         }
     }
     render(){
         return(
             <div style={{width:"100%"}}>
                 <StatesNavbar stateSelect={true}/>
-                <VotesChart/>
+                <Dropdown id="select-district-election" variant="secondary" title="Select District to View">
+                    [POPULATE WITH DISTRICTS]
+                </Dropdown>
+                <VotesChart electStruct={this.state.curElectStruct}/>
             </div>
         )
     }
@@ -30,15 +52,27 @@ class ElectionsPage extends React.Component {
 class VotesChart extends React.Component {
     constructor(props) {
       super(props);
+      let catBuilder = [];
+      let dataBuilder = [];
+      //        wonByBuilder.push(this.props.electStruct.winners[i].wonBy)
+      for(let i = 0; i < this.props.electStruct.winners.length; i++){
+        catBuilder.push(Util.capitalizeFirst(this.props.electStruct.winners[i].party).substring(0,1) + ". Rep. " + Enums.abbrevs.win)
+        dataBuilder.push(this.props.electStruct.winners[i].votesReceived)
+      }
+      for(let i = 0; i < this.props.electStruct.losers.length; i++){
+        catBuilder.push(Util.capitalizeFirst(this.props.electStruct.losers[i].party).substring(0,1) + ". Rep. " + Enums.abbrevs.loss)
+        dataBuilder.push(this.props.electStruct.losers[i].votesReceived)
+      }
       this.state = {
         series: [{
-          data: []
+          name: "votes",
+          data: dataBuilder,
         }],
         options: {
           chart: {
             type: 'bar',
             width: "100%",
-            height: 100,
+            height: 200,
             toolbar:{
                 show: false,
             },
@@ -56,7 +90,7 @@ class VotesChart extends React.Component {
             enabled: false
           },
           xaxis: {
-            categories: ["test"],
+            categories: catBuilder,
           }
         },
       };
@@ -81,10 +115,10 @@ class VotesChart extends React.Component {
       }
   
       fetchData()
-        .catch(console.error);*/
+        .catch(console.error);
         this.setState({
             series:[{
-                name:'District X Votes',
+                name:'votes',
                 data: [4000, 2000, 1000, 500] // district votes
             }],
             options: {
@@ -95,12 +129,12 @@ class VotesChart extends React.Component {
                     categories: ["M. Amin (R. Other)", "J. Sheryl (D. Black)", "W. Hayes (R. White)", "R. Shmidt (D. Black)"] // representative names
                 }
             }
-        })
+        })*/
     };
     render() {
       return (
         <div id="chart">
-          <Chart options={this.state.options} series={this.state.series} type="bar" height={250} />
+          <Chart options={this.state.options} series={this.state.series} type="bar" height={this.state.options.chart.height} />
         </div>
       );
     }
