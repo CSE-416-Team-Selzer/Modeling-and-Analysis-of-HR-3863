@@ -194,7 +194,7 @@ class BoxandWhisker extends React.Component {
         this.state = {
             series: [
                 {
-                    name: 'Line of Best Fit',
+                    name: 'Current Value',
                     type: 'line',
                     data: this.props.lineData,
                 },
@@ -234,7 +234,7 @@ class BoxandWhisker extends React.Component {
     render() {
         return (
             <div id="chart">
-                <Chart options={this.state.options} series={this.state.series} type="boxPlot" height={350} />
+                <Chart options={this.state.options} series={this.state.series} type="boxPlot" height={600} />
             </div>
         );
     }

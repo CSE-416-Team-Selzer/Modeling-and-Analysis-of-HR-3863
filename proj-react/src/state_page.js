@@ -103,7 +103,7 @@ class CurrentPlanSubpage extends React.Component {
                         <Tab eventKey="statesum" title="State Summary">
                             <SummaryValueField name="Seats" value="9"/>
                             <PopulationChart stateName={this.props.state}/>
-                            <VoteSplitChart/>
+                            <VoteSplitChart stateName={this.props.state}/>
                         </Tab>
                         <Tab eventKey="cursmd" title="Current Plan vs SMD">
                             <Row>
@@ -111,7 +111,7 @@ class CurrentPlanSubpage extends React.Component {
                                     [CURRENT PLAN DATA]
                                 </Col>
                                 <Col>
-                                    <SummaryData name="SMD" textAlign="text-right"/>
+                                    <SummaryData name="SMD" textAlign="text-right" stateName={this.props.state}/>
                                 </Col>
                             </Row>
                         </Tab>
@@ -121,17 +121,17 @@ class CurrentPlanSubpage extends React.Component {
                                     [CURRENT PLAN DATA]
                                 </Col>
                                 <Col>
-                                    <SummaryData name="MMD" textAlign="text-right"/>
+                                    <SummaryData name="MMD" textAlign="text-right" stateName={this.props.state}/>
                                 </Col>
                             </Row>
                         </Tab>
                         <Tab eventKey="smdmmd" title="SMD vs MMD">
                             <Row>
                                 <Col>
-                                    <SummaryData name="SMD" textAlign="text-left"/>
+                                    <SummaryData name="SMD" textAlign="text-left" stateName={this.props.state}/>
                                 </Col>
                                 <Col>
-                                    <SummaryData name="MMD" textAlign="text-right"/>
+                                    <SummaryData name="MMD" textAlign="text-right" stateName={this.props.state}/>
                                 </Col>
                             </Row>
                         </Tab>
@@ -178,7 +178,7 @@ class StateSubpage extends React.Component {
                             [COMPARED DATA]
                         </Tab>
                         <Tab eventKey="curmmd" title="Election Data">
-                            <VotesChart/>
+                            <VotesChart stateName={this.props.state}/>
                         </Tab>
                     </Tabs>
                 </Col>
@@ -289,28 +289,58 @@ class SummaryData extends React.Component {
         super(props);
         // props: name, textAlign
         this.state = {
-
+            safeDistricts: [1,2,3],
+            opportunityReps: [1,2,3],
+            democratReps: [1,2,3],
+            repReps: [1,2,3],
+            
+        }
+    }
+    changeData(data){
+        this.setState({
+            safeDistricts:[data.minSafeDistricts, data.avgSafeDistrits,data.maxSafeDistricts],
+            opportunityReps:[data.minOpportunityReps, data.avgOpportunityReps, data.maxOpportunityReps],
+            democratReps: [data.minDemocratReps, data.avgDemocratReps, data.maxDemocratReps],
+            repReps: [data.minRepublicanReps, data.avgRepublicanReps, data.maxRepublicanReps],
+        })
+    }
+    componentDidMount(){
+        if(this.props.name.localeCompare("SMD")==0){
+            api.getSmdEnsembleData(this.props.stateName).then(
+                response => {
+                    let data = response.data;
+                    this.changeData(data);
+                }
+            )
+        }
+        else if(this.props.name.localeCompare("MMD")==0){
+            api.getMmdEnsembleData(this.props.stateName).then(
+                response => {
+                    let data = response.data;
+                    this.changeData(data)
+                }
+            )
         }
     }
     render(){
         return(
         <Container fluid className={this.props.textAlign + " w-100 pb-1"}>
             <Row>
-                <Col className="text-left">
+                <Col>
                     <h5>{this.props.name} Summary Data</h5>
                 </Col>
             </Row>
             <Row>
-                    <MinAvgMax name="Safe Districts" values={[1,2,3]}/>
+                    <MinAvgMax name="Safe Districts" values={this.state.safeDistricts}/>
             </Row>
             <Row>
-                    <MinAvgMax name="Opportunity Reps" values={[1,2,3]}/>
+                    <MinAvgMax name="Opportunity Reps" values={this.state.opportunityReps}/>
             </Row>
             <Row>
-                    <MinAvgMax name="Democrat Reps" values={[1,2,3]}/>
+                    <MinAvgMax name="Democrat Reps" values={this.state.democratReps}/>
             </Row>
             <Row>
-                <SummaryValueField name="Avg. Polsby Popper" value={3}/>
+                    <MinAvgMax name="Republican Reps" values={this.state.repReps}/>
             </Row>
         </Container>);
     }
@@ -423,6 +453,20 @@ class VoteSplitChart extends React.Component {
               }
             }
         }
+    }
+    componentDidMount(){
+        api.getVoteShare(this.props.stateName)
+            .then((response)=> {
+                let data = response.data;
+                this.setState({series: [{
+                    name: 'Democratic Votes',
+                    data: [data.democrateVotesVotes]
+                  }, {
+                    name: 'Republican Votes',
+                    data: [data.republicanVotes]
+                  }]})
+                  console.log("Doesn't work as well as it should")
+            })
     }
     render(){
         return(
