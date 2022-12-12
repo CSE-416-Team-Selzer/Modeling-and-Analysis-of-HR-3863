@@ -89,7 +89,16 @@ class StatePage extends React.Component {
 class CurrentPlanSubpage extends React.Component {
     constructor(props){
         super(props);
-        this.state={};
+        this.state={
+            seats: 9,
+        };
+    }
+    componentDidMount(){
+        api.getNumSeats(this.props.state).then(
+            response => {
+                this.setState({seats: response.data});
+            }
+        )
     }
     render(){
         return(
@@ -101,7 +110,7 @@ class CurrentPlanSubpage extends React.Component {
                 <Col fluid>
                     <Tabs defaultActiveKey="statesum">
                         <Tab eventKey="statesum" title="State Summary">
-                            <SummaryValueField name="Seats" value="9"/>
+                            <SummaryValueField name="Seats" value={this.state.seats}/>
                             <PopulationChart stateName={this.props.state}/>
                             <VoteSplitChart stateName={this.props.state}/>
                         </Tab>
