@@ -92,6 +92,8 @@ class CurrentPlanSubpage extends React.Component {
         super(props);
         this.state={
             seats: 9,
+            plan: {},
+            planGeoJson: {},
         };
     }
     componentDidMount(){
@@ -100,6 +102,13 @@ class CurrentPlanSubpage extends React.Component {
                 this.setState({seats: response.data});
             }
         )
+        api.getSmdPlanByTag("current", this.props.state).then(
+            response=>{
+                let data = response.data;
+                this.setState({plan: data});
+                let geojson = require("./"+data.geojson)
+                this.setState({planGeoJson: geojson})
+        })
     }
     render(){
         return(
@@ -166,20 +175,25 @@ class StateSubpage extends React.Component {
             mmd: isMmd,
             planSelected: false,
             plan: {},
+            planGeoJson: {},
         }
     }
     selectPlan = (tag) => {
         this.setState({planSelected: true});
         if(!this.state.mmd){
             api.getSmdPlanByTag(tag, this.props.state).then(response =>{
-                this.setState({plan: response.data});
-                console.log(this.state.plan);
+                let data = response.data;
+                this.setState({plan: data});
+                let geojson = require("./"+data.geojson)
+                this.setState({planGeoJson: geojson})
             })
         }
         else {
             api.getMmdPlanByTag(tag, this.props.state).then(response =>{
-                this.setState({plan: response.data});
-                console.log(this.state.plan);
+                let data = response.data;
+                this.setState({plan: data});
+                let geojson = require("./"+data.geojson)
+                this.setState({planGeoJson: geojson})
             })
         }
     }
@@ -205,7 +219,7 @@ class StateSubpage extends React.Component {
                             <DemographicsPage type={this.props.type} stateName={this.props.state}/>
                         </Tab>
                         <Tab eventKey="demos" title="Plan vs Current">
-                            [COMPARED DATA]
+                            {this.state.planSelected ? this.state.plan.tag : <>[PLACEHOLDER]</>}
                         </Tab>
                         <Tab eventKey="curmmd" title="Election Data">
                             <VotesChart stateName={this.props.state}/>
@@ -258,7 +272,7 @@ class VotesChart extends React.Component {
           let res = await api.getStateDemographics("arizona");
           console.log(res.data)
 
-          res = await api.getSmdPlanByTag("current", "arizona");
+          res = await api.getSmdPlanByTag("extremeDemocrat", "arizona");
           console.log(res.data)
 
           res = await api.getMmdPlanByTag("average", "arizona");
