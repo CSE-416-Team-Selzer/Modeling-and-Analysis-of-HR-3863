@@ -1,21 +1,21 @@
 package com.project.server.state;
 
 public class Representative {
-    private Election winner;
+    private Election[] winners;
 
     private Election[] losers;
 
-    public Representative(Election winner, Election[] losers) {
-        this.winner = winner;
+    public Representative(Election[] winners, Election[] losers) {
+        this.winners = winners;
         this.losers = losers;
     }
 
-    public Election getWinner() {
-        return winner;
+    public Election[] getWinners() {
+        return winners;
     }
 
-    public void setWinner(Election winner) {
-        this.winner = winner;
+    public void setWinners(Election[] winners) {
+        this.winners = winners;
     }
 
     public Election[] getLosers() {

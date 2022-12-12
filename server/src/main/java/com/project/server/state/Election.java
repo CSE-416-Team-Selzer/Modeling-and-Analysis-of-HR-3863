@@ -5,9 +5,9 @@ public class Election {
 
     private int votesReceived;
 
-    private int wonBy;
+    private Integer wonBy;
 
-    public Election(String party, int votesReceived, int wonBy) {
+    public Election(String party, int votesReceived, Integer wonBy) {
         this.party = party;
         this.votesReceived = votesReceived;
         this.wonBy = wonBy;
@@ -29,11 +29,11 @@ public class Election {
         this.votesReceived = votesReceived;
     }
 
-    public int getWonBy() {
+    public Integer getWonBy() {
         return wonBy;
     }
 
-    public void setWonBy(int wonBy) {
+    public void setWonBy(Integer wonBy) {
         this.wonBy = wonBy;
     }
 }
