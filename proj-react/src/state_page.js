@@ -39,13 +39,13 @@ class StatePage extends React.Component {
                         <Col fluid key = {this.state.smdOpen}>
                             <Tabs defaultActiveKey="current">
                                 <Tab eventKey="current" title="Current Plan & Comparisons">
-                                    <CurrentPlanSubpage state={this.state.stateName}/>
+                                    <CurrentPlanSubpage state={this.props.stateName}/>
                                 </Tab>
                                 <Tab eventKey="smd" title="SMD Ensemble">
-                                    <StateSubpage type="smd" state={this.state.stateName}/>
+                                    <StateSubpage type="smd" state={this.props.stateName}/>
                                 </Tab>
                                 <Tab eventKey="mmd" title="MMD Ensemble">
-                                    <StateSubpage type="mmd" state={this.state.stateName}/>
+                                    <StateSubpage type="mmd" state={this.props.stateName}/>
                                 </Tab>
                             </Tabs>
                         </Col>
@@ -102,7 +102,7 @@ class CurrentPlanSubpage extends React.Component {
                     <Tabs defaultActiveKey="statesum">
                         <Tab eventKey="statesum" title="State Summary">
                             <SummaryValueField name="Seats" value="9"/>
-                            <PopulationChart stateName={this.state.stateName}/>
+                            <PopulationChart stateName={this.props.state}/>
                             <VoteSplitChart/>
                         </Tab>
                         <Tab eventKey="cursmd" title="Current Plan vs SMD">
@@ -136,7 +136,7 @@ class CurrentPlanSubpage extends React.Component {
                             </Row>
                         </Tab>
                         <Tab eventKey="bwmix" title="Box & Whisker Compared Points">
-                            <DemographicsPage type="mix" stateName={this.props.stateName}/>
+                            <DemographicsPage type="mix" stateName={this.props.state}/>
                         </Tab>
                     </Tabs>
                 </Col>
@@ -172,7 +172,7 @@ class StateSubpage extends React.Component {
                 <Col fluid>
                     <Tabs defaultActiveKey="demos">
                         <Tab eventKey="cursmd" title="Box & Whisker Demographic Breakdowns">
-                            <DemographicsPage type={this.props.type} stateName={this.props.stateName}/>
+                            <DemographicsPage type={this.props.type} stateName={this.props.state}/>
                         </Tab>
                         <Tab eventKey="demos" title="Plan vs Current">
                             [COMPARED DATA]
