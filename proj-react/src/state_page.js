@@ -494,7 +494,6 @@ class VoteSplitChart extends React.Component {
                     name: 'Republican Votes',
                     data: [data.republicanVotes]
                   }]})
-                  console.log("Doesn't work as well as it should")
             })
     }
     render(){

@@ -25,10 +25,8 @@ class DemographicsPage extends React.Component {
             finishedUpdatingSMD: false,
             finishedUpdatingMMD: false,
         }
-        for(let tag in Enums.groups){ 
-            this.state.dataSMD[tag] = [];
-        }
         for(let tag in Enums.groups){
+            this.state.dataSMD[tag] = [];
             this.state.lineDataSMD[tag] = []
             this.state.boxPlotsSMD.push([
                 <Tab id={Enums.groups[tag].toLowerCase() + "smd"} title={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1)} eventKey={Enums.groups[tag]}>
@@ -94,6 +92,7 @@ class DemographicsPage extends React.Component {
                         this.state.lineDataSMD[tag].push({x: `District ${i+1}`, y: box.currentValue});
                     }
                 }
+                console.log(this.state.dataSMD);
                 this.setState({finishedUpdatingSMD:true});
          })/*
          api.getMmdBoxAndWhisker(this.props.stateName)
@@ -241,6 +240,10 @@ class BoxandWhisker extends React.Component {
 }
 
 class BoxandWhiskerCompared extends React.Component {
+    // note to self: construct three lines, one with SMD averages, multiple with MMD averages across different plan orientations, and one with current
+    /*
+    Example: SMD, MMD 345, MMD 335, MMD 445, ETC
+    */
     constructor(props) {
         super(props);
         this.state = {
