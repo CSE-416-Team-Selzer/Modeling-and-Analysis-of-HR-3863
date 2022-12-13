@@ -196,6 +196,7 @@ class StateSubpage extends React.Component {
             planSelected: false,
             plan: {},
             selectedTag: "",
+            jankIdea: <></>
         }
     }
     selectPlan = (tag) => {
@@ -204,8 +205,8 @@ class StateSubpage extends React.Component {
                 let data = response.data;
                 this.setState({plan: data});
                 this.setState({planSelected: true})
-                
-        this.setState({selectedTag: tag});
+                this.setState({selectedTag: tag});
+                this.setState({jankIdea: <StateMap name="StateMap" plan={data.geojson}/>})
             })
         }
         else {
@@ -213,12 +214,12 @@ class StateSubpage extends React.Component {
                 let data = response.data;
                 this.setState({plan: data});
                 this.setState({planSelected: true});
-                
-        this.setState({selectedTag: tag});
+                this.setState({selectedTag: tag});
+                this.setState({jankIdea: <StateMap name="StateMap" plan={data.geojson}/>})
             })
         }
     }
-    render(){// <StateMap name="StateMap" plan={this.state.plan.geojson}/>
+    render(){//{this.state.planSelected ? <StateMap name="StateMap" plan={this.state.plan.geojson} /> : <></> }
         return(
         <Container fluid className="text-center w-100 pb-1">
             <Row className="gx-3 w-100">
@@ -233,7 +234,7 @@ class StateSubpage extends React.Component {
                     <Dropdown.Item onClick={() => this.selectPlan("maximumSafeDistricts")} href={"#/selected-plan"}>Maximum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
                     <Dropdown.Item onClick={() => this.selectPlan("minimumSafeDistricts")} href={"#/selected-plan"}>Minimum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
                 </DropdownButton>
-                {this.state.planSelected ? <StateMap name="StateMap" plan={this.state.plan.geojson}/> : <></> }
+                {this.state.jankIdea}
                 </Col>
                 <Col fluid>
                     <Tabs defaultActiveKey="demos">
