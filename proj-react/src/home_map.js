@@ -10,7 +10,7 @@ const az = require('./geoJSON/az.json')
 const tx = require('./geoJSON/tx.json')
 const ut = require('./geoJSON/ut.json')
 
-const position = [39, -98];
+const position = [34, -107];
 
 function SetBoundsStates() {
     const [bounds, setBounds] = useState()
@@ -67,7 +67,7 @@ function HomeMap() {
         <MapContainer 
             style={{ height: 600, width: "100%" }} 
             center={position} 
-            zoom={2.5} 
+            zoom={5} 
             scrollWheelZoom={true}
         >
            { location.pathname ? <SetBoundsStates /> : <StateMap stateName = {location.pathname}/> }
