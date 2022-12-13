@@ -152,7 +152,7 @@ class DemographicsPage extends React.Component {
                     for(let tag in Enums.groups){
                         this.state.lineDataMMD[tag] = []
                         this.state.boxPlotsMMD[x.tag].push([
-                            <Tab id={Enums.groups[tag].toLowerCase() + "mmd" + x.tag} title={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1)} eventKey={Enums.groups[tag]}>
+                            <Tab id={Enums.groups[tag].toLowerCase() + "mmd" + x.tag + tag} title={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1)} eventKey={Enums.groups[tag]}>
                                 <BoxandWhisker boxData={this.state.dataMMD[x.tag][tag]} lineData={this.state.lineDataMMD[x.tag][tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " MMD " + x.tag}/>
                             </Tab>
                         ])

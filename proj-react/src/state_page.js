@@ -13,6 +13,7 @@ import Tab from 'react-bootstrap/Tab';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import DemographicsPage from "./demographics_page.js";
+import ElectionsPage from "./elections_page.js";
 
 class StatePage extends React.Component {
     constructor(props){
@@ -33,6 +34,7 @@ class StatePage extends React.Component {
             response=>{
                 let data = response.data;
                 this.setState({currentPlan: data});
+                console.log(data)
         })
     }
 
@@ -131,6 +133,7 @@ class CurrentPlanSubpage extends React.Component {
                             <SummaryValueField name="Seats" value={this.state.seats}/>
                             <PopulationChart stateName={this.props.state}/>
                             <VoteSplitChart stateName={this.props.state}/>
+                            <ElectionsPage stateName={this.props.state} tag="current" mmd={false}/>
                         </Tab>
                         <Tab eventKey="cursmd" title="Current Plan vs SMD">
                             <Row>
@@ -192,16 +195,19 @@ class StateSubpage extends React.Component {
             api.getSmdPlanByTag(tag, this.props.state).then(response =>{
                 let data = response.data;
                 this.setState({plan: data});
+                this.setState({planSelected: true})
             })
         }
         else {
             api.getMmdPlanByTag(tag, this.props.state).then(response =>{
                 let data = response.data;
                 this.setState({plan: data});
+                this.setState({planSelected: true});
             })
         }
     }
     render(){// <StateMap name="StateMap" plan={this.state.plan.geojson}/>
+        console.log(this.state.plan)
         return(
         <Container fluid className="text-center w-100 pb-1">
             <Row className="gx-3 w-100">
@@ -238,7 +244,7 @@ class StateSubpage extends React.Component {
                             {this.state.planSelected ? this.state.plan.tag : <>[PLACEHOLDER]</>}
                         </Tab>
                         <Tab eventKey="curmmd" title="Election Data">
-                            <VotesChart stateName={this.props.state}/>
+                            {this.state.planSelected ? <ElectionsPage tag={this.state.selectedTag} stateName={this.props.state} mmd={this.state.mmd}/> : <h4>Select a Plan</h4> }
                         </Tab>
                     </Tabs>
                 </Col>
