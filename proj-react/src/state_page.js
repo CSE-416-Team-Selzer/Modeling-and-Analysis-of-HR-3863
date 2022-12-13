@@ -200,7 +200,8 @@ class StateSubpage extends React.Component {
         }
     }
     selectPlan = (tag) => {
-        if(!this.state.mmd){
+        this.setState({jankIdea: <></>})
+        if(!this.state.mmd){ 
             api.getSmdPlanByTag(tag, this.props.state).then(response =>{
                 let data = response.data;
                 this.setState({plan: data});
