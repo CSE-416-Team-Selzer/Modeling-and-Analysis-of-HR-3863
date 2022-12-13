@@ -493,7 +493,7 @@ class OpportunityChart extends React.Component {
 
 
     <div id="chart">
-        <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={150} />
+        <Chart options={this.state.options} series={this.state.series} type="bar" height={150} />
     </div>
 
 
