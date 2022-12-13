@@ -21,11 +21,21 @@ class StatePage extends React.Component {
             stateName: this.props.stateName,
             smdOpen: true,
             test: false,
+            currentPlan: {},
         }
         this.state.stateName = this.props.stateName;
         console.log(this.state.stateName);
         /* FOR ANEES - Same thing you did with Demographics, just for the plan geojsons.
         */
+    }
+    componentDidMount(){
+        console.log("test")
+        api.getSmdPlanByTag("current", this.props.stateName).then(
+            response=>{
+                console.log("works here")
+                let data = response.data;
+                this.setState({currentPlan: data});
+        })
     }
 
     render(){
@@ -40,13 +50,21 @@ class StatePage extends React.Component {
                         <Col fluid key = {this.state.smdOpen}>
                             <Tabs defaultActiveKey="current">
                                 <Tab eventKey="current" title="Current Plan & Comparisons">
-                                    <CurrentPlanSubpage state={this.props.stateName}/>
+                                    <CurrentPlanSubpage 
+                                        state={this.props.stateName} 
+                                        curplan={this.state.currentPlan}
+                                    />
                                 </Tab>
                                 <Tab eventKey="smd" title="SMD Ensemble">
-                                    <StateSubpage type="smd" state={this.props.stateName}/>
+                                    <StateSubpage 
+                                        type="smd" 
+                                        state={this.props.stateName}
+                                        />
                                 </Tab>
                                 <Tab eventKey="mmd" title="MMD Ensemble">
-                                    <StateSubpage type="mmd" state={this.props.stateName}/>
+                                    <StateSubpage 
+                                        type="mmd" 
+                                        state={this.props.stateName}/>
                                 </Tab>
                             </Tabs>
                         </Col>
@@ -92,8 +110,7 @@ class CurrentPlanSubpage extends React.Component {
         super(props);
         this.state={
             seats: 9,
-            plan: {},
-            planGeoJson: {},
+            plan: this.props.curplan,
         };
     }
     componentDidMount(){
@@ -102,13 +119,6 @@ class CurrentPlanSubpage extends React.Component {
                 this.setState({seats: response.data});
             }
         )
-        api.getSmdPlanByTag("current", this.props.state).then(
-            response=>{
-                let data = response.data;
-                this.setState({plan: data});
-                let geojson = require("./"+data.geojson)
-                this.setState({planGeoJson: geojson})
-        })
     }
     render(){
         return(
@@ -127,20 +137,20 @@ class CurrentPlanSubpage extends React.Component {
                         <Tab eventKey="cursmd" title="Current Plan vs SMD">
                             <Row>
                                 <Col>
-                                    [CURRENT PLAN DATA]
+                                    <SingleSummaryData isMmd={false} tag="current" stateName={this.props.state}/>
                                 </Col>
                                 <Col>
-                                    <SummaryData name="SMD" textAlign="text-right" stateName={this.props.state}/>
+                                    <SummaryData name="SMD Ensemble" textAlign="text-right" stateName={this.props.state}/>
                                 </Col>
                             </Row>
                         </Tab>
                         <Tab eventKey="curmmd" title="Current Plan vs MMD">
                             <Row>
                                 <Col>
-                                    [CURRENT PLAN DATA]
+                                    <SingleSummaryData isMmd={false} tag="current" stateName={this.props.state}/>
                                 </Col>
                                 <Col>
-                                    <SummaryData name="MMD" textAlign="text-right" stateName={this.props.state}/>
+                                    <SummaryData name="MMD Ensemble" textAlign="text-right" stateName={this.props.state}/>
                                 </Col>
                             </Row>
                         </Tab>
@@ -175,25 +185,21 @@ class StateSubpage extends React.Component {
             mmd: isMmd,
             planSelected: false,
             plan: {},
-            planGeoJson: {},
+            selectedTag: "",
         }
     }
     selectPlan = (tag) => {
-        this.setState({planSelected: true});
+        this.setState({selectedTag: tag});
         if(!this.state.mmd){
             api.getSmdPlanByTag(tag, this.props.state).then(response =>{
                 let data = response.data;
                 this.setState({plan: data});
-                let geojson = require("./"+data.geojson)
-                this.setState({planGeoJson: geojson})
             })
         }
         else {
             api.getMmdPlanByTag(tag, this.props.state).then(response =>{
                 let data = response.data;
                 this.setState({plan: data});
-                let geojson = require("./"+data.geojson)
-                this.setState({planGeoJson: geojson})
             })
         }
     }
@@ -219,6 +225,17 @@ class StateSubpage extends React.Component {
                             <DemographicsPage type={this.props.type} stateName={this.props.state}/>
                         </Tab>
                         <Tab eventKey="demos" title="Plan vs Current">
+                            <Row>
+                                <Col>
+                                    <SingleSummaryData isMmd={false} tag="current" stateName={this.props.state}/>
+                                </Col>
+                                <Col>
+                                    {this.state.planSelected ?
+                                        <SingleSummaryData isMmd={this.state.mmd} tag={this.state.selectedTag} stateName={this.props.state}/> 
+                                        : <h4>Select a Plan</h4>
+                                    }
+                                </Col>
+                            </Row>
                             {this.state.planSelected ? this.state.plan.tag : <>[PLACEHOLDER]</>}
                         </Tab>
                         <Tab eventKey="curmmd" title="Election Data">
@@ -267,7 +284,7 @@ class VotesChart extends React.Component {
     }
     componentDidMount() { // just testing/showcasing requests here
       const fetchData = async () => {
-          
+          /*
   
           let res = await api.getStateDemographics("arizona");
           console.log(res.data)
@@ -295,7 +312,7 @@ class VotesChart extends React.Component {
 
           res = await api.getVoteShare("arizona");
           console.log(res.data)
-          
+          */
       }
   
       fetchData()
@@ -390,6 +407,94 @@ class SummaryData extends React.Component {
     }
 }
 
+class SingleSummaryData extends React.Component {
+    constructor(props){
+        super(props);
+        // recieved props are fed geojson property data 'props'
+        this.state = {
+            safeDistricts: 3,
+            opportunityReps: 3,
+            democratReps: 3,
+            repubReps: 3,
+            rVotes: 3,
+            dVotes: 3,
+            mmd: this.props.isMmd,
+            tag: this.props.tag
+        }
+    }
+    componentDidMount(){
+        // recieved props are fed geojson property data 'props'
+        if(!this.state.mmd){
+            api.getSmdPlanByTag(this.state.tag, this.props.stateName).then(
+                response=>{
+                    let properties = require("./"+response.data.geojson.substring(0, response.data.geojson.length-5)+"_nogeo.json");
+                    console.log(properties)
+                    let safeDTotal = 0;
+                    for(let x in properties.safeDistrict){
+                        if(properties.safeDistrict[x]){
+                            safeDTotal += 1;
+                        }
+                    }
+                    let oppRepTotal = 0;
+                    for(let x in properties.opportunityDistrict){
+                        if(properties.opportunityDistrict[x]){
+                            oppRepTotal+=1;
+                        }
+                    }
+                    let demRepTotal = 0;
+                    // ???
+                    let repRepTotal = 0;
+                    // ???
+                    let dVoteTotal = 0;
+                    for(let x in properties.demVotes){
+                        dVoteTotal += properties.demVotes[x];
+                    }
+                    let rVoteTotal = 0;
+                    for(let x in properties.repVotes){
+                        console.log(properties.repVotes[x]);
+                        rVoteTotal += properties.repVotes[x];
+                    }
+                    console.log(rVoteTotal);
+                    this.setState({
+                        safeDistricts: safeDTotal,
+                        opportunityReps: oppRepTotal,
+                        democratReps: demRepTotal,
+                        repubReps: repRepTotal,
+                        dVotes: dVoteTotal,
+                        rVotes: rVoteTotal
+                    })
+                }
+            )
+        }
+    }
+    render(){
+        return(
+            <Container fluid className={this.props.textAlign + " w-100 pb-1"}>
+                <Row>
+                    <Col>
+                        <h5>{this.props.name} Summary Data</h5>
+                    </Col>
+                </Row>
+                <Row>
+                    <SummaryValueField name="Safe Districts" value={this.state.safeDistricts}/>
+                </Row>
+                <Row>
+                    <SummaryValueField name="Opportunity Reps" value={this.state.opportunityReps}/>
+                </Row>
+                <Row>
+                    <SummaryValueField name="Democrat Reps" value={this.state.democratReps}/>
+                </Row>
+                <Row>
+                    <SummaryValueField name="Republican Reps" value={this.state.repubReps}/>
+                </Row>
+                <Row>
+                    <VoteSplitChartMini democratVotes={this.state.dVotes} republicanVotes={this.state.rVotes}/>
+                </Row>
+            </Container>
+        )
+    }
+}
+
 class SummaryValueField extends React.Component{
     constructor(props){
         super(props);
@@ -401,8 +506,15 @@ class SummaryValueField extends React.Component{
                 <Row>
                     <Col>
                         <h6 style={{margin:"1px", fontWeight:"600", padding:"0px"}}>
-                            {this.props.name}: {this.props.value}
+                            {this.props.name}
                         </h6>
+                    </Col>
+                </Row>
+                <Row style={{borderTop:"1px solid black"}}>
+                    <Col>
+                        <span>
+                           Value: {this.props.value}
+                        </span>
                     </Col>
                 </Row>
             </Container>
@@ -516,6 +628,74 @@ class VoteSplitChart extends React.Component {
         <>
             <div>
                 <Chart options={this.state.options} series={this.state.series} type="bar" height={200}/>
+            </div>
+        </>);
+    }
+}
+
+
+class VoteSplitChartMini extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            series: [{
+                name: 'Democratic Votes',
+                data: [3]
+              }, {
+                name: 'Republican Votes',
+                data: [3]
+              }],
+            options: {
+            chart: {
+                type: 'bar',
+                stacked: true,
+                stackType: '100%'
+              },
+              plotOptions: {
+                bar: {
+                  horizontal: true,
+                },
+              },
+              stroke: {
+                width: 1,
+                colors: ['#fff']
+              },
+              title: {
+                text: 'Vote Share Division',
+                align: 'center',
+                margin: 0,
+              },
+              xaxis: {
+                categories: ["Vote Split"],
+              },
+              tooltip: {
+                y: {
+                  formatter: function (val) {
+                    return val + " votes"
+                  }
+                }
+              },
+              fill: {
+                opacity: 1,
+                colors: ["#00AEF3", "#DE0100"]
+              },
+              legend:{
+                show:false
+              }
+            }
+        }
+    }
+    render(){
+        return(
+        <>
+            <div>
+                <Chart options={this.state.options} series={[{
+                name: 'Democratic Votes',
+                data: [this.props.democratVotes]
+              }, {
+                name: 'Republican Votes',
+                data: [this.props.republicanVotes]
+              }]} type="bar" height={150}/>
             </div>
         </>);
     }
