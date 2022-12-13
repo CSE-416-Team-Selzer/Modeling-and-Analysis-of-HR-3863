@@ -150,7 +150,7 @@ class CurrentPlanSubpage extends React.Component {
                                     <SingleSummaryData isMmd={false} tag="current" stateName={this.props.state} name={"Current Plan"}/>
                                 </Col>
                                 <Col>
-                                    <SummaryData name="SMD Ensemble" textAlign="text-right" stateName={this.props.state}/>
+                                    <SummaryData name="SMD" textAlign="text-right" stateName={this.props.state}/>
                                 </Col>
                             </Row>
                         </Tab>
@@ -160,7 +160,7 @@ class CurrentPlanSubpage extends React.Component {
                                     <SingleSummaryData isMmd={false} tag="current" stateName={this.props.state} name={"Current Plan"}/>
                                 </Col>
                                 <Col>
-                                    <SummaryData name="MMD Ensemble" textAlign="text-right" stateName={this.props.state}/>
+                                    <SummaryData name="MMD" textAlign="text-right" stateName={this.props.state}/>
                                 </Col>
                             </Row>
                         </Tab>
