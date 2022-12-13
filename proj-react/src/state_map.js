@@ -4,7 +4,6 @@ import { MapContainer, TileLayer, useMap, Popup, Marker, GeoJSON } from 'react-l
 import { useNavigate } from "react-router-dom";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import StateMap from "./old_state_map.js";
 
 
 const position = [39, -98];
@@ -83,9 +82,9 @@ function SetBoundsStates(props) {
   }
 
 
-function TestMap(props) {
+function StateMap(props) {
     let location = useLocation();
-
+    console.log(props)
     let name = props.plan.split("/")[1].split("_")[0]
     let stateData = require('./'+props.plan)
 
@@ -107,4 +106,4 @@ function TestMap(props) {
     );
 }
 
-export default TestMap;
+export default StateMap;
