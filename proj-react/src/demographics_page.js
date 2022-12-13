@@ -8,6 +8,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import api from './api'
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const median = 2;
 class DemographicsPage extends React.Component {
@@ -22,6 +24,9 @@ class DemographicsPage extends React.Component {
             boxPlotsSMD: [],
             boxPlotsMMD: [],
             boxPlotsCompared: [],
+            dropdownsMMD: [],
+            mmdTag: "",
+            mmdSelected: false,
             finishedUpdatingSMD: false,
             finishedUpdatingMMD: false,
         }
@@ -92,51 +97,76 @@ class DemographicsPage extends React.Component {
                         this.state.lineDataSMD[tag].push({x: `District ${i+1}`, y: box.currentValue});
                     }
                 }
-                console.log(this.state.dataSMD);
                 this.setState({finishedUpdatingSMD:true});
-         })/*
+         })
          api.getMmdBoxAndWhisker(this.props.stateName)
             .then((response)=> {
                 let data = response.data;
-                let dataArr = [];
-                for(let tag in Enums.groups){
-                    if(Enums.groups[tag].localeCompare(Enums.groups.Asian) == 0){
-                        dataArr[tag] = data.asian;
+                this.state.dropdownsMMD = [];
+                for(let x of data){
+                    this.state.boxPlotsMMD[x.tag] = [];
+                    this.state.dataMMD[x.tag] = [];
+                    this.state.lineDataMMD[x.tag] = [];
+                    this.state.dataMMD[x.tag].push([]);
+                    let dataArr = [];
+                    this.state.dropdownsMMD.push(
+                        <Dropdown.Item onClick={() => this.mmdFilter(x.tag)} href={"#/selected-box"} id={x.tag + "dropdown"}>{x.tag} Plans</Dropdown.Item>
+                        )
+                    for(let tag in Enums.groups){
+                        this.state.dataMMD[x.tag][tag] = [];
+                        this.state.lineDataMMD[x.tag][tag] = []
+                        if(Enums.groups[tag].localeCompare(Enums.groups.Asian) == 0){
+                            dataArr[tag] = x.asian;
+                        }
+                        else if(Enums.groups[tag].localeCompare(Enums.groups.Black) == 0){
+                            dataArr[tag] = x.black;
+                        }
+                        else if(Enums.groups[tag].localeCompare(Enums.groups.White) == 0){
+                            dataArr[tag] = x.white;
+                        }
+                        else if(Enums.groups[tag].localeCompare(Enums.groups.Hispanic) == 0){
+                            dataArr[tag] = x.latino;
+                        }
+                        else if(Enums.groups[tag].localeCompare(Enums.groups.Native) == 0){
+                            dataArr[tag] = x.nativeAmerican;
+                        }
+                        else if(Enums.groups[tag].localeCompare(Enums.groups.Democrat) == 0){
+                            dataArr[tag] = x.democrat;
+                        }
+                        else if(Enums.groups[tag].localeCompare(Enums.groups.Republican) == 0){
+                            dataArr[tag] = x.republican;
+                        }
                     }
-                    else if(Enums.groups[tag].localeCompare(Enums.groups.Black) == 0){
-                        dataArr[tag] = data.black;
+                    for(let tag in Enums.groups){
+                        for(let i = 0; i < dataArr[tag].length; i++){
+                            let box = dataArr[tag][i];
+                            this.state.dataMMD[x.tag][tag].push(
+                                {
+                                    x: `Representative ${i+1}`,
+                                    y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
+                                }
+                            ) 
+                            this.state.lineDataMMD[x.tag][tag].push({x: `Representative ${i+1}`, y: box.median});
+                        }
                     }
-                    else if(Enums.groups[tag].localeCompare(Enums.groups.White) == 0){
-                        dataArr[tag] = data.white;
-                    }
-                    else if(Enums.groups[tag].localeCompare(Enums.groups.Hispanic) == 0){
-                        dataArr[tag] = data.latino;
-                    }
-                    else if(Enums.groups[tag].localeCompare(Enums.groups.Native) == 0){
-                        dataArr[tag] = data.nativeAmerican;
-                    }
-                    else if(Enums.groups[tag].localeCompare(Enums.groups.Democrat) == 0){
-                        dataArr[tag] = data.democrat;
-                    }
-                    else if(Enums.groups[tag].localeCompare(Enums.groups.Republican) == 0){
-                        dataArr[tag] = data.republican;
+                    for(let tag in Enums.groups){
+                        this.state.lineDataMMD[tag] = []
+                        this.state.boxPlotsMMD[x.tag].push([
+                            <Tab id={Enums.groups[tag].toLowerCase() + "mmd" + x.tag} title={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1)} eventKey={Enums.groups[tag]}>
+                                <BoxandWhisker boxData={this.state.dataMMD[x.tag][tag]} lineData={this.state.lineDataMMD[x.tag][tag]} type={Enums.groups[tag][0].toUpperCase() + Enums.groups[tag].substring(1) + " MMD " + x.tag}/>
+                            </Tab>
+                        ])
                     }
                 }
-                for(let tag in Enums.groups){
-                    console.log(dataArr);
-                    for(let i = 0; i < dataArr[tag].length; i++){
-                        let box = dataArr[tag][i];
-                        this.state.dataMMD[tag].push(
-                            {
-                                x: `District ${i+1}`,
-                                y: [box.min, box.firstQuartile, box.median, box.thirdQuartile, box.max]          // boxplot data
-                            }
-                        ) 
-                        this.state.lineDataMMD[tag].push({x: `District ${i+1}`, y: box.currentValue});
-                    }
-                }
+
                 this.setState({finishedUpdatingMMD:true});
-         })*/
+         })
+    }
+    mmdFilter(tag){
+        this.setState({mmdSelected:false})
+        this.setState({
+            mmdTag: tag, mmdSelected: true
+        })
     }
     render(){
         let use;
@@ -147,10 +177,15 @@ class DemographicsPage extends React.Component {
                     </Tabs>)
         }
         else if(this.props.type.localeCompare("mmd")==0){
-            use = ( <Tabs defaultActiveKey="" id="tab-mmd" className="mb-3">
-                        {this.state.finishedUpdatingMMD ? <></> : <>t</> }
-                        {this.state.boxPlotsMMD}
-                    </Tabs>)
+            use = (<>
+                <DropdownButton id="dropdown-select-plan" variant="secondary" title="Select a District Arrangement">
+                    {this.state.dropdownsMMD}
+                </DropdownButton>
+                <Tabs defaultActiveKey="" id="tab-mmd" className="mb-3">
+                    {this.state.finishedUpdatingMMD ? <></> : <>t</> }
+                    {this.state.mmdSelected ? this.state.boxPlotsMMD[this.state.mmdTag] : <></>}
+                    
+                </Tabs></>)
         }
         else{
             use = ( <Tabs defaultActiveKey="" id="tab-mix" className="mb-3">

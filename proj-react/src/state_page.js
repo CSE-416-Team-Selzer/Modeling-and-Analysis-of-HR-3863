@@ -29,10 +29,8 @@ class StatePage extends React.Component {
         */
     }
     componentDidMount(){
-        console.log("test")
         api.getSmdPlanByTag("current", this.props.stateName).then(
             response=>{
-                console.log("works here")
                 let data = response.data;
                 this.setState({currentPlan: data});
         })
@@ -120,12 +118,12 @@ class CurrentPlanSubpage extends React.Component {
             }
         )
     }
-    render(){
+    render(){//<StateMap name="StateMap" plan={this.state.plan.geojson}/>
         return(
         <Container fluid className="text-center w-100 pb-1">
             <Row className="gx-3 w-100">
                 <Col>
-                    <StateMap name="StateMap" plan={"sample_plans/texas_smd_current.json"}/>
+                    [PUT STATEMAP HERE] 
                 </Col>
                 <Col fluid>
                     <Tabs defaultActiveKey="statesum">
@@ -137,7 +135,7 @@ class CurrentPlanSubpage extends React.Component {
                         <Tab eventKey="cursmd" title="Current Plan vs SMD">
                             <Row>
                                 <Col>
-                                    <SingleSummaryData isMmd={false} tag="current" stateName={this.props.state}/>
+                                    <SingleSummaryData isMmd={false} tag="current" stateName={this.props.state} name={"Current Plan"}/>
                                 </Col>
                                 <Col>
                                     <SummaryData name="SMD Ensemble" textAlign="text-right" stateName={this.props.state}/>
@@ -147,7 +145,7 @@ class CurrentPlanSubpage extends React.Component {
                         <Tab eventKey="curmmd" title="Current Plan vs MMD">
                             <Row>
                                 <Col>
-                                    <SingleSummaryData isMmd={false} tag="current" stateName={this.props.state}/>
+                                    <SingleSummaryData isMmd={false} tag="current" stateName={this.props.state} name={"Current Plan"}/>
                                 </Col>
                                 <Col>
                                     <SummaryData name="MMD Ensemble" textAlign="text-right" stateName={this.props.state}/>
@@ -203,7 +201,7 @@ class StateSubpage extends React.Component {
             })
         }
     }
-    render(){
+    render(){// <StateMap name="StateMap" plan={this.state.plan.geojson}/>
         return(
         <Container fluid className="text-center w-100 pb-1">
             <Row className="gx-3 w-100">
@@ -218,6 +216,7 @@ class StateSubpage extends React.Component {
                     <Dropdown.Item onClick={() => this.selectPlan("maximumSafeDistricts")} href={"#/selected-plan"}>Maximum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
                     <Dropdown.Item onClick={() => this.selectPlan("minimumSafeDistricts")} href={"#/selected-plan"}>Minimum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
                 </DropdownButton>
+                [PUT STATEMAP HERE]
                 </Col>
                 <Col fluid>
                     <Tabs defaultActiveKey="demos">
@@ -227,11 +226,11 @@ class StateSubpage extends React.Component {
                         <Tab eventKey="demos" title="Plan vs Current">
                             <Row>
                                 <Col>
-                                    <SingleSummaryData isMmd={false} tag="current" stateName={this.props.state}/>
+                                    <SingleSummaryData isMmd={false} tag="current" stateName={this.props.state} name={"Current Plan"}/>
                                 </Col>
                                 <Col>
                                     {this.state.planSelected ?
-                                        <SingleSummaryData isMmd={this.state.mmd} tag={this.state.selectedTag} stateName={this.props.state}/> 
+                                        <SingleSummaryData isMmd={this.state.mmd} tag={this.state.selectedTag} stateName={this.props.state} name={this.state.selectedTag + " Plan"}/> 
                                         : <h4>Select a Plan</h4>
                                     }
                                 </Col>
@@ -428,7 +427,6 @@ class SingleSummaryData extends React.Component {
             api.getSmdPlanByTag(this.state.tag, this.props.stateName).then(
                 response=>{
                     let properties = require("./"+response.data.geojson.substring(0, response.data.geojson.length-5)+"_nogeo.json");
-                    console.log(properties)
                     let safeDTotal = 0;
                     for(let x in properties.safeDistrict){
                         if(properties.safeDistrict[x]){
@@ -451,10 +449,8 @@ class SingleSummaryData extends React.Component {
                     }
                     let rVoteTotal = 0;
                     for(let x in properties.repVotes){
-                        console.log(properties.repVotes[x]);
                         rVoteTotal += properties.repVotes[x];
                     }
-                    console.log(rVoteTotal);
                     this.setState({
                         safeDistricts: safeDTotal,
                         opportunityReps: oppRepTotal,
