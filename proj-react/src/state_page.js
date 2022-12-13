@@ -4,8 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import OldStateMap from "./old_state_map.js";
 import StateMap from "./state_map.js";
-import TestMap from "./test_map.js";
 import Chart from 'react-apexcharts';
 import api from './api'
 import Tabs from 'react-bootstrap/Tabs';
@@ -125,7 +125,7 @@ class CurrentPlanSubpage extends React.Component {
         <Container fluid className="text-center w-100 pb-1">
             <Row className="gx-3 w-100">
                 <Col>
-                    <TestMap name="StateMap"/>
+                    <StateMap name="StateMap" plan={"sample_plans/texas_smd_current.json"}/>
                 </Col>
                 <Col fluid>
                     <Tabs defaultActiveKey="statesum">
