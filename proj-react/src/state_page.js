@@ -418,6 +418,9 @@ class SummaryData extends React.Component {
                 <MinAvgMax name="Republican Reps" values={this.state.repReps}/>
             </Row>
             <Row>
+                <SummaryValueField name="Number of Generated Plans" value="10,000"/>
+            </Row>
+            <Row>
                 <VoteSplitChart stateName={this.props.stateName}/>
             </Row>
             <Row>
