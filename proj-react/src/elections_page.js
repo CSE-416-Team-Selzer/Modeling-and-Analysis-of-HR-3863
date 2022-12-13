@@ -74,11 +74,9 @@ class ElectionsPage extends React.Component {
     selectDistrict(district){
       this.setState({selectedDistrict: district});
       this.select= district;
-      console.log(this.select);
     }
     select = -1;
     render(){
-       console.log("ran again")
         return(
             <div style={{width:"100%"}}>
                 <DropdownButton id="select-district-election" variant="secondary" title="Select District to View">
@@ -100,11 +98,11 @@ class VotesChart extends React.Component {
       let dataBuilder = [];
       //        wonByBuilder.push(this.props.electStruct.winners[i].wonBy)
       for(let i = 0; i < this.props.electStruct.winners.length; i++){
-        catBuilder.push(Util.capitalizeFirst(this.props.electStruct.winners[i].party).substring(0,1) + ". Rep. " + Enums.abbrevs.win)
+        catBuilder.push(Util.capitalizeFirst(this.props.electStruct.winners[i].party).substring(0,1) + ". Rep. " + i+1 + " " + Enums.abbrevs.win)
         dataBuilder.push(this.props.electStruct.winners[i].votesReceived)
       }
       for(let i = 0; i < this.props.electStruct.losers.length; i++){
-        catBuilder.push(Util.capitalizeFirst(this.props.electStruct.losers[i].party).substring(0,1) + ". Rep. " + Enums.abbrevs.loss)
+        catBuilder.push(Util.capitalizeFirst(this.props.electStruct.losers[i].party).substring(0,1) + ". Rep. " + i+1 + " " + Enums.abbrevs.loss)
         dataBuilder.push(this.props.electStruct.losers[i].votesReceived)
       }
       this.state = {
@@ -116,7 +114,7 @@ class VotesChart extends React.Component {
           chart: {
             type: 'bar',
             width: "100%",
-            height: 150,
+            height: 300,
             toolbar:{
                 show: false,
             },

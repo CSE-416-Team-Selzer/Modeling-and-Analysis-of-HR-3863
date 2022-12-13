@@ -163,11 +163,15 @@ class DemographicsPage extends React.Component {
          })
     }
     mmdFilter(tag){
+        
+        this.selectedMMD = tag;
         this.setState({mmdSelected:false})
         this.setState({
             mmdTag: tag, mmdSelected: true
         })
+        console.log(this.selectedMMD);
     }
+    selectedMMD = "";
     render(){
         let use;
         if(this.props.type.localeCompare("smd")==0){
@@ -183,7 +187,7 @@ class DemographicsPage extends React.Component {
                 </DropdownButton>
                 <Tabs defaultActiveKey="" id="tab-mmd" className="mb-3">
                     {this.state.finishedUpdatingMMD ? <></> : <>t</> }
-                    {this.state.mmdSelected ? this.state.boxPlotsMMD[this.state.mmdTag] : <></>}
+                    {this.state.mmdSelected ? this.state.boxPlotsMMD[this.selectedMMD] : <></>}
                     
                 </Tabs></>)
         }

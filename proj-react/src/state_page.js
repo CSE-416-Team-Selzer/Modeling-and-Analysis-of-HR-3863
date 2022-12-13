@@ -35,7 +35,6 @@ class StatePage extends React.Component {
                 let data = response.data;
                 this.setState({currentPlan: data});
                 console.log(data)
-                console.log("HELLOOOOOO")
         })
     }
 
@@ -112,6 +111,7 @@ class CurrentPlanSubpage extends React.Component {
         this.state={
             seats: 9,
             plan: this.props.curplan,
+            loaded: false,
         };
     }
     componentDidMount(){
@@ -120,13 +120,21 @@ class CurrentPlanSubpage extends React.Component {
                 this.setState({seats: response.data});
             }
         )
+        api.getSmdPlanByTag("current", this.props.stateName).then(
+            response=>{
+                let data = response.data;
+                this.setState({plan: data});
+                console.log(data)
+                this.setState({loaded: true});
+        })
     }
     render(){//<StateMap name="StateMap" plan={this.state.plan.geojson}/>
         return(
         <Container fluid className="text-center w-100 pb-1">
             <Row className="gx-3 w-100">
                 <Col>
-                    <StateMap name="StateMap" plan={this.props.curplan.geojson}/>
+                    {this.state.loaded ? 
+                    <StateMap name="StateMap" plan={this.state.plan.geojson}/>: <></>}
                 </Col>
                 <Col fluid>
                     <Tabs defaultActiveKey="statesum">
@@ -191,12 +199,13 @@ class StateSubpage extends React.Component {
         }
     }
     selectPlan = (tag) => {
-        this.setState({selectedTag: tag});
         if(!this.state.mmd){
             api.getSmdPlanByTag(tag, this.props.state).then(response =>{
                 let data = response.data;
                 this.setState({plan: data});
                 this.setState({planSelected: true})
+                
+        this.setState({selectedTag: tag});
             })
         }
         else {
@@ -204,11 +213,12 @@ class StateSubpage extends React.Component {
                 let data = response.data;
                 this.setState({plan: data});
                 this.setState({planSelected: true});
+                
+        this.setState({selectedTag: tag});
             })
         }
     }
     render(){// <StateMap name="StateMap" plan={this.state.plan.geojson}/>
-        console.log(this.state.plan)
         return(
         <Container fluid className="text-center w-100 pb-1">
             <Row className="gx-3 w-100">
@@ -223,7 +233,7 @@ class StateSubpage extends React.Component {
                     <Dropdown.Item onClick={() => this.selectPlan("maximumSafeDistricts")} href={"#/selected-plan"}>Maximum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
                     <Dropdown.Item onClick={() => this.selectPlan("minimumSafeDistricts")} href={"#/selected-plan"}>Minimum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
                 </DropdownButton>
-                    [HI]
+                [PUT STATEMAP HERE]
                 </Col>
                 <Col fluid>
                     <Tabs defaultActiveKey="demos">
@@ -242,7 +252,6 @@ class StateSubpage extends React.Component {
                                     }
                                 </Col>
                             </Row>
-                            {this.state.planSelected ? this.state.plan.tag : <>[PLACEHOLDER]</>}
                         </Tab>
                         <Tab eventKey="curmmd" title="Election Data">
                             {this.state.planSelected ? <ElectionsPage tag={this.state.selectedTag} stateName={this.props.state} mmd={this.state.mmd}/> : <h4>Select a Plan</h4> }
@@ -425,16 +434,22 @@ class SingleSummaryData extends React.Component {
             rVotes: 3,
             dVotes: 3,
             mmd: this.props.isMmd,
-            tag: this.props.tag
+            tag: this.props.tag,
+            doneUpdating: false
         }
     }
     componentDidMount(){
         // recieved props are fed geojson property data 'props'
-        if(!this.state.mmd){
-            api.getSmdPlanByTag(this.state.tag, this.props.stateName).then(
+        console.log(this.props.tag)
+        this.setState({tag: this.props.tag})
+        if(!this.props.mmd){
+            api.getSmdPlanByTag(this.props.tag, this.props.stateName).then(
                 response=>{
                     let properties = require("./"+response.data.geojson.substring(0, response.data.geojson.length-5)+"_nogeo.json");
                     let safeDTotal = 0;
+                    
+                    console.log(response.data)
+                    console.log(properties)
                     for(let x in properties.safeDistrict){
                         if(properties.safeDistrict[x]){
                             safeDTotal += 1;
@@ -446,10 +461,28 @@ class SingleSummaryData extends React.Component {
                             oppRepTotal+=1;
                         }
                     }
+                    // SMD: winningParty array
+                    // MMD: democratReps vs republicanReps
                     let demRepTotal = 0;
-                    // ???
                     let repRepTotal = 0;
-                    // ???
+                    if(this.props.isMmd){
+                        for(let x in properties.democratReps){
+                            demRepTotal += properties.democratReps[x];
+                        }
+                        for(let x in properties.republicanReps){
+                            repRepTotal += properties.republicanReps[x];
+                        }
+                    }
+                    else{
+                        for(let x in properties.winningParty){
+                            if(properties.winningParty[x].localeCompare("democrat") == 0){
+                                demRepTotal += 1;
+                            }
+                            else {
+                                repRepTotal += 1;
+                            }
+                        }
+                    }
                     let dVoteTotal = 0;
                     for(let x in properties.demVotes){
                         dVoteTotal += properties.demVotes[x];
@@ -466,9 +499,77 @@ class SingleSummaryData extends React.Component {
                         dVotes: dVoteTotal,
                         rVotes: rVoteTotal
                     })
+                    this.setState({doneUpdating: true})
                 }
             )
         }
+    }
+    componentDidUpdate(prevProps){
+        // recieved props are fed geojson property data 'props'
+        if(prevProps.tag !== this.state.tag){
+        console.log(this.props.tag)
+        this.setState({tag: this.props.tag})
+        if(!this.props.mmd){
+            api.getSmdPlanByTag(this.props.tag, this.props.stateName).then(
+                response=>{
+                    let properties = require("./"+response.data.geojson.substring(0, response.data.geojson.length-5)+"_nogeo.json");
+                    let safeDTotal = 0;
+                    
+                    console.log(response.data)
+                    console.log(properties)
+                    for(let x in properties.safeDistrict){
+                        if(properties.safeDistrict[x]){
+                            safeDTotal += 1;
+                        }
+                    }
+                    let oppRepTotal = 0;
+                    for(let x in properties.opportunityDistrict){
+                        if(properties.opportunityDistrict[x]){
+                            oppRepTotal+=1;
+                        }
+                    }
+                    // SMD: winningParty array
+                    // MMD: democratReps vs republicanReps
+                    let demRepTotal = 0;
+                    let repRepTotal = 0;
+                    if(this.props.isMmd){
+                        for(let x in properties.democratReps){
+                            demRepTotal += properties.democratReps[x];
+                        }
+                        for(let x in properties.republicanReps){
+                            repRepTotal += properties.republicanReps[x];
+                        }
+                    }
+                    else{
+                        for(let x in properties.winningParty){
+                            if(properties.winningParty[x].localeCompare("democrat") == 0){
+                                demRepTotal += 1;
+                            }
+                            else {
+                                repRepTotal += 1;
+                            }
+                        }
+                    }
+                    let dVoteTotal = 0;
+                    for(let x in properties.demVotes){
+                        dVoteTotal += properties.demVotes[x];
+                    }
+                    let rVoteTotal = 0;
+                    for(let x in properties.repVotes){
+                        rVoteTotal += properties.repVotes[x];
+                    }
+                    this.setState({
+                        safeDistricts: safeDTotal,
+                        opportunityReps: oppRepTotal,
+                        democratReps: demRepTotal,
+                        repubReps: repRepTotal,
+                        dVotes: dVoteTotal,
+                        rVotes: rVoteTotal
+                    })
+                    this.setState({doneUpdating: true})
+                }
+            )
+        }}
     }
     render(){
         return(
