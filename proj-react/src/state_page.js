@@ -22,7 +22,7 @@ class StatePage extends React.Component {
             stateName: this.props.stateName,
             smdOpen: true,
             test: false,
-            currentPlan: {},
+            currentPlan: {geojson: "sample_plans/arizona_smd_current.json"},
         }
         this.state.stateName = this.props.stateName;
         console.log(this.state.stateName);
@@ -35,6 +35,7 @@ class StatePage extends React.Component {
                 let data = response.data;
                 this.setState({currentPlan: data});
                 console.log(data)
+                console.log("HELLOOOOOO")
         })
     }
 
@@ -125,7 +126,7 @@ class CurrentPlanSubpage extends React.Component {
         <Container fluid className="text-center w-100 pb-1">
             <Row className="gx-3 w-100">
                 <Col>
-                    [PUT STATEMAP HERE] 
+                    <StateMap name="StateMap" plan={this.props.curplan.geojson}/>
                 </Col>
                 <Col fluid>
                     <Tabs defaultActiveKey="statesum">
@@ -222,7 +223,7 @@ class StateSubpage extends React.Component {
                     <Dropdown.Item onClick={() => this.selectPlan("maximumSafeDistricts")} href={"#/selected-plan"}>Maximum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
                     <Dropdown.Item onClick={() => this.selectPlan("minimumSafeDistricts")} href={"#/selected-plan"}>Minimum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
                 </DropdownButton>
-                [PUT STATEMAP HERE]
+                    [HI]
                 </Col>
                 <Col fluid>
                     <Tabs defaultActiveKey="demos">
