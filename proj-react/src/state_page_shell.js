@@ -18,7 +18,7 @@ export default function StatePageShell(props){
         returns = (<StatePage stateName={stateName}/>)
     }
     else if(stateName.localeCompare("elec") === 0){
-        returns = (<ElectionsPage/>) // TODO: place election page here
+        returns = (<ElectionsPage tag="current" stateName={"arizona"} mmd={false}/>) // TODO: place election page here
     }
     else if(stateName.localeCompare("src") === 0){
         returns = (<SourcesPage/>) // TODO: place source page here

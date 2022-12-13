@@ -10,12 +10,17 @@ import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Util from "./util.js";
+import apis from "./api/index.js";
 
 class ElectionsPage extends React.Component {
     constructor(props){
         super(props);
+        // takes props tag (plan tag) and stateName (state name) and mmd (boolean true/false) and generates election data based on that
         this.state = {
-          repArrays: [],
+          voteArrays: [[<></>]],
+          dropDowns: [],
+          selectedDistrict: -1,
+          finishedUpdating: false,
           curElectStruct: {
             winners: [
               {
@@ -34,14 +39,53 @@ class ElectionsPage extends React.Component {
           }
         }
     }
+    componentDidMount(){
+      if(!this.props.mmd){
+        apis.getSmdPlanByTag(this.props.tag, this.props.stateName).then(response=>{
+          this.state.voteArrays[0] = [];
+          let reps=response.data.representatives;
+          console.log(reps);
+          for(let i = 0; i < reps.length; i++){
+            this.state.voteArrays[0].push(<VotesChart electStruct={reps[i]} district={i+1} key={"votechartd"+i} id={"votechartd"+i}/>)
+            this.state.dropDowns.push(<Dropdown.Item key={"dropdowndist"+i} id={"dropdowndist"+i} onClick={() => this.selectDistrict(i)} href={"#/selected-district"}>District {i+1}</Dropdown.Item>
+            )
+          }
+          console.log(this.state.voteArrays[0])
+          console.log(this.state.dropDowns)
+          this.setState({finishedUpdating: true});
+        })
+      }
+      else{
+        apis.getMmdPlanByTag(this.props.tag, this.props.stateName).then(response=>{
+          this.state.voteArrays[0] = [];
+          let reps=response.data.representatives;
+          console.log(reps);
+          for(let i = 0; i < reps.length; i++){
+            this.state.voteArrays[0].push(<VotesChart electStruct={reps[i]} district={i+1} key={"votechartd"+i} id={"votechartd"+i}/>)
+            this.state.dropDowns.push(<Dropdown.Item key={"dropdowndist"+i} id={"dropdowndist"+i} onClick={() => this.selectDistrict(i)} href={"#/selected-district"}>District {i+1}</Dropdown.Item>
+            )
+          }
+          console.log(this.state.voteArrays[0])
+          console.log(this.state.dropDowns)
+          this.setState({finishedUpdating: true});
+        })
+      }
+    }
+    selectDistrict(district){
+      this.setState({selectedDistrict: district});
+      this.select= district;
+      console.log(this.select);
+    }
+    select = -1;
     render(){
+       console.log("ran again")
         return(
             <div style={{width:"100%"}}>
-                <StatesNavbar stateSelect={true}/>
-                <Dropdown id="select-district-election" variant="secondary" title="Select District to View">
-                    [POPULATE WITH DISTRICTS]
-                </Dropdown>
-                <VotesChart electStruct={this.state.curElectStruct}/>
+                <DropdownButton id="select-district-election" variant="secondary" title="Select District to View">
+                    {this.state.dropDowns}
+                </DropdownButton>
+                {this.state.finishedUpdating ? <></> : "Loading..."}
+                {this.select == -1 ? <></> : this.state.voteArrays[0][this.select]}
             </div>
         )
     }
@@ -72,7 +116,7 @@ class VotesChart extends React.Component {
           chart: {
             type: 'bar',
             width: "100%",
-            height: 200,
+            height: 150,
             toolbar:{
                 show: false,
             },
@@ -91,45 +135,14 @@ class VotesChart extends React.Component {
           },
           xaxis: {
             categories: catBuilder,
+          },
+          title:{
+            text: "District " + this.props.district,
           }
         },
       };
     }
-    componentDidMount() { // just commenting this out for now
-      /*const fetchData = async () => {
-          
-  
-          const data = await api.getPlanWinners("dummy_smd_1")
-          
-          let voters = data.data[0].voterDemographic;
-          let votersArray = [voters.democratVotes, voters.republicanVotes, voters.whiteVotes, voters.blackVotes];
-          console.log(votersArray)
-  
-          this.setState( {
-              series: [{
-                  name: '',
-                  data: votersArray
-              }]
-          } );
-          
-      }
-  
-      fetchData()
-        .catch(console.error);
-        this.setState({
-            series:[{
-                name:'votes',
-                data: [4000, 2000, 1000, 500] // district votes
-            }],
-            options: {
-                title: {
-                    text: "District X Votes"
-                },
-                xaxis:{
-                    categories: ["M. Amin (R. Other)", "J. Sheryl (D. Black)", "W. Hayes (R. White)", "R. Shmidt (D. Black)"] // representative names
-                }
-            }
-        })*/
+    componentDidMount() {
     };
     render() {
       return (
