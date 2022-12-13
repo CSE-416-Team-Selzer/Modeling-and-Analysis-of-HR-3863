@@ -174,9 +174,6 @@ class CurrentPlanSubpage extends React.Component {
                                 </Col>
                             </Row>
                         </Tab>
-                        <Tab eventKey="bwmix" title="Box & Whisker Compared Points">
-                            <DemographicsPage type="mix" stateName={this.props.state}/>
-                        </Tab>
                     </Tabs>
                 </Col>
             </Row>
@@ -409,21 +406,98 @@ class SummaryData extends React.Component {
                 </Col>
             </Row>
             <Row>
-                    <MinAvgMax name="Safe Districts" values={this.state.safeDistricts}/>
+                <MinAvgMax name="Safe Districts" values={this.state.safeDistricts}/>
             </Row>
             <Row>
-                    <MinAvgMax name="Opportunity Reps" values={this.state.opportunityReps}/>
+                <MinAvgMax name="Opportunity Reps" values={this.state.opportunityReps}/>
             </Row>
             <Row>
-                    <MinAvgMax name="Democrat Reps" values={this.state.democratReps}/>
+                <MinAvgMax name="Democrat Reps" values={this.state.democratReps}/>
             </Row>
             <Row>
-                    <MinAvgMax name="Republican Reps" values={this.state.repReps}/>
+                <MinAvgMax name="Republican Reps" values={this.state.repReps}/>
+            </Row>
+            <Row>
+                <VoteSplitChart stateName={this.props.stateName}/>
+            </Row>
+            <Row>
+                <OpportunityChart min={this.state.opportunityReps[0]} max={this.state.opportunityReps[2]}/>
             </Row>
         </Container>);
     }
 }
+class OpportunityChart extends React.Component {
+    constructor(props) {
+      super(props);
 
+      this.state = {
+      
+        series: [{
+          name: 'Opportuniy Representative Range',
+          data: [this.props.min, this.props.max]
+        }],
+        options: {
+          chart: {
+            type: 'bar',
+            height: 150,
+            stacked: true,
+          },
+          plotOptions: {
+            bar: {
+              horizontal: true,
+              dataLabels: {
+                total: {
+                  enabled: true,
+                  offsetX: 0,
+                  style: {
+                    fontSize: '13px',
+                    fontWeight: 900
+                  }
+                }
+              }
+            },
+          },
+          stroke: {
+            width: 1,
+            colors: ['#fff']
+          },
+          title: {
+            text: 'Opportunity Representative Range'
+          },
+          xaxis: {
+          },
+          yaxis: {
+            title: {
+              text: undefined
+            },
+          },
+          tooltip: {
+          },
+          fill: {
+            opacity: 1
+          },
+        },
+      
+      
+      };
+    }
+
+  
+
+    render() {
+      return (
+        
+
+
+    <div id="chart">
+        <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={150} />
+    </div>
+
+
+
+      );
+    }
+  }
 class SingleSummaryData extends React.Component {
     constructor(props){
         super(props);
@@ -534,7 +608,7 @@ class SingleSummaryData extends React.Component {
                     // MMD: democratReps vs republicanReps
                     let demRepTotal = 0;
                     let repRepTotal = 0;
-                    if(this.props.isMmd){
+                    if(this.props.mmd){
                         for(let x in properties.democratReps){
                             demRepTotal += properties.democratReps[x];
                         }

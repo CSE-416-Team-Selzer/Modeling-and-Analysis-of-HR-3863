@@ -32,13 +32,6 @@ class StatesNavbar extends React.Component {
               <NavDropdown.Item href="texas">Texas</NavDropdown.Item>
               <NavDropdown.Item href="utah">Utah</NavDropdown.Item>
             </NavDropdown>
-            {
-              this.state.stateSelect ? 
-              <>
-                <Nav.Link href="elec">Elections</Nav.Link>
-                <Nav.Link href="demo">Demographics</Nav.Link>
-              </> : <></>
-            }
             <Nav.Link href="src">Sources</Nav.Link>
           </Nav>
         </Navbar.Collapse>
