@@ -365,7 +365,7 @@ class SummaryData extends React.Component {
         // props: name, textAlign
         this.state = {
             safeDistricts: [1,2,3],
-            opportunityReps: [1,2,3],
+            opportunityReps: [-1,-1,-1],
             democratReps: [1,2,3],
             repReps: [1,2,3],
             
@@ -493,7 +493,10 @@ class OpportunityChart extends React.Component {
 
 
     <div id="chart">
-        <Chart options={this.state.options} series={this.state.series} type="bar" height={150} />
+        <Chart options={this.state.options} series={[{
+          name: 'Opportuniy Representative Range',
+          data: [this.props.min, this.props.max]
+        }]} type="bar" height={150} />
     </div>
 
 
