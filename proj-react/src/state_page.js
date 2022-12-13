@@ -120,7 +120,7 @@ class CurrentPlanSubpage extends React.Component {
                 this.setState({seats: response.data});
             }
         )
-        api.getSmdPlanByTag("current", this.props.stateName).then(
+        api.getSmdPlanByTag("current", this.props.state).then(
             response=>{
                 let data = response.data;
                 this.setState({plan: data});
@@ -233,7 +233,7 @@ class StateSubpage extends React.Component {
                     <Dropdown.Item onClick={() => this.selectPlan("maximumSafeDistricts")} href={"#/selected-plan"}>Maximum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
                     <Dropdown.Item onClick={() => this.selectPlan("minimumSafeDistricts")} href={"#/selected-plan"}>Minimum Safe Districts {this.props.type.toUpperCase()} Plan</Dropdown.Item>
                 </DropdownButton>
-                [PUT STATEMAP HERE]
+                {this.state.planSelected ? <StateMap name="StateMap" plan={this.state.plan.geojson}/> : <></> }
                 </Col>
                 <Col fluid>
                     <Tabs defaultActiveKey="demos">
